@@ -1,0 +1,7 @@
+{
+  "name": "nom-kitties-v3",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
