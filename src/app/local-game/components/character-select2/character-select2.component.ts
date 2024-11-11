@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -8,6 +8,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class CharacterSelect2Component  implements OnInit {
 
+  @Input() score: number = 0;
+
+  @Output() colorChange = new EventEmitter<any>();
 
   form = new FormGroup({
     color: new FormControl('#000'),
@@ -16,6 +19,10 @@ export class CharacterSelect2Component  implements OnInit {
   })
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form.valueChanges.subscribe((value) => {
+      this.colorChange.emit(value.color);
+    });
+  }
 
 }

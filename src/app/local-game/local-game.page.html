@@ -8,16 +8,19 @@
 
   <div style="display:flex; flex-direction: row; justify-content: space-between; margin:2rem">
   <div style="width:25%">
-  <app-character-select></app-character-select>
+  <app-character-select [score]="player1Score" (colorChange)="colorChange($event, 'player1')"></app-character-select>
 </div>
 
 <div>
-  <app-gameboard></app-gameboard>
+  <!-- <div>
+    {{timer}}
+  </div> -->
+  <app-gameboard (scoreChanges)="scoreChange($event)" [player1Color]="player1Color" [player2Color]="player2Color"></app-gameboard>
 </div>
 
 
 <div style="width:25%">
-  <app-character-select2></app-character-select2>
+  <app-character-select2 [score]="player2Score" (colorChange)="colorChange($event, 'player2')"></app-character-select2>
 </div>
 </div>
 
