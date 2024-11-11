@@ -5,9 +5,18 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">localGame</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+  <div style="display:flex; flex-direction: row; justify-content: space-between; margin:2rem">
+  <div style="width:25%">
+  <app-character-select></app-character-select>
+</div>
+
+
+<div style="width:25%">
+  <app-character-select2></app-character-select2>
+</div>
+</div>
+
+
+
 </ion-content>
