@@ -1,4 +1,4 @@
-<div style="max-width: 40ch; margin: 1rem;">
+<div style="max-width: 20ch; width:100%; margin: 1rem;">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 329.78 263.22"><metadata> Created by potrace 1.15, written by Peter Selinger 2001-2017 </metadata>
   <defs>
     <style>
@@ -268,5 +268,5 @@
 
 </form>
 
-<ion-button *ngIf="form.dirty" (click)="save()">Save </ion-button>
+<ion-button *ngIf="form.dirty" expand="block" (click)="save()">Save &nbsp; <ion-icon name="save-outline"></ion-icon></ion-button>
 </div>

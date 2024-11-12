@@ -62,9 +62,9 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
     name
     color
     type
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -81,9 +81,9 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser(
     name
     color
     type
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -100,9 +100,9 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
     name
     color
     type
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -126,9 +126,9 @@ export const onCreateRoom = /* GraphQL */ `subscription OnCreateRoom(
       name
       color
       type
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     simpleCode
@@ -158,9 +158,9 @@ export const onUpdateRoom = /* GraphQL */ `subscription OnUpdateRoom(
       name
       color
       type
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     simpleCode
@@ -190,9 +190,9 @@ export const onDeleteRoom = /* GraphQL */ `subscription OnDeleteRoom(
       name
       color
       type
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     simpleCode

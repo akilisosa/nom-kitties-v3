@@ -2,30 +2,53 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { generateClient } from 'aws-amplify/api';
 import { createUser, updateUser } from 'src/graphql/mutations';
+import { usersByOwner } from 'src/graphql/queries';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  user = new BehaviorSubject({});
+  user = new BehaviorSubject<any>(null);
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   userShared() {
     return this.user.asObservable();
   }
 
-  async save(user: any) {
+  async getUser() {
+    const client = generateClient({ authMode: 'userPool' });
+    const owner = (await this.authService.getCurrentUser()).userId;
+    console.log('owner', owner);
+    let res;
 
-    let { id, ...userToSave } = { ...user };
-    if (user.id) {
-      await this.updateUser(user);
-    } else {
-      await this.createUser(userToSave);
+    try {
+      res = await client.graphql({
+        query: usersByOwner,
+        variables: {
+          owner
+        }
+      })
+      console.log('user', res.data.usersByOwner.items[0]);
+    } catch (error) {
+      console.log(error);
     }
+    this.user.next(res?.data.usersByOwner.items[0]);
+  }
+  
 
-    this.user.next(user);
+  async save(user: any) {
+    let { id = '', ...userToSave } = { ...user };
+
+    let res = user;
+    if (user.id) {
+      res = await this.updateUser(user);
+    } else {
+     res = await this.createUser(userToSave);
+    }
+    this.user.next(res);
   }
 
   async updateUser(user: any) {
@@ -47,6 +70,8 @@ export class UserService {
   async createUser(user: any) {
     const client = generateClient({ authMode: 'userPool' });
     let res;
+    const owner = (await this.authService.getCurrentUser()).userId;
+    user.owner = owner;
     try {
       res = await client.graphql({
         query: createUser,

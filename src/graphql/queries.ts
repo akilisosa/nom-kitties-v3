@@ -49,9 +49,9 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     name
     color
     type
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -67,9 +67,9 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       name
       color
       type
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     nextToken
@@ -77,6 +77,38 @@ export const listUsers = /* GraphQL */ `query ListUsers(
   }
 }
 ` as GeneratedQuery<APITypes.ListUsersQueryVariables, APITypes.ListUsersQuery>;
+export const usersByOwner = /* GraphQL */ `query UsersByOwner(
+  $owner: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  usersByOwner(
+    owner: $owner
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      name
+      color
+      type
+      owner
+      createdAt
+      updatedAt
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.UsersByOwnerQueryVariables,
+  APITypes.UsersByOwnerQuery
+>;
 export const getRoom = /* GraphQL */ `query GetRoom($id: ID!) {
   getRoom(id: $id) {
     id
@@ -90,9 +122,9 @@ export const getRoom = /* GraphQL */ `query GetRoom($id: ID!) {
       name
       color
       type
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     simpleCode

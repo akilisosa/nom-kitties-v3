@@ -8,6 +8,7 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { QuickStartComponent } from './components/quick-start/quick-start.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     IonicModule,
     DashboardPageRoutingModule
   ],
-  declarations: [DashboardPage, UserProfileComponent]
+  declarations: [DashboardPage, UserProfileComponent, QuickStartComponent]
 })
 export class DashboardPageModule {}

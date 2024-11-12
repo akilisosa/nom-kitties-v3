@@ -1,0 +1,39 @@
+<div  class="flex-column" style="justify-content: center; margin:1rem;">
+  <ng-container *ngIf="view === 'quickstart'">
+  <ion-button (click)="view = 'start'">Start A Game</ion-button>
+  <ion-button (click)="joinGame()">Join Game</ion-button>
+  <ion-button (click)="joinPrivate()">Enter A Code</ion-button>
+</ng-container>
+  <ng-container *ngIf="view == 'start'">
+    <form [formGroup]="newGameForm">
+      <ion-toggle formControlName="public">{{ newGameForm.controls.public.value ? 'Public' : 'Private'}}</ion-toggle>
+    
+      <ion-select formControlName="players" label="No of Players" labelPlacement="floating" placeholder="Players">
+        <ion-select-option value="1">1</ion-select-option>
+        <ion-select-option value="2">2</ion-select-option>
+        <ion-select-option value="3">3</ion-select-option>
+        <ion-select-option value="4">4</ion-select-option>
+      </ion-select>
+    
+      <ion-select formControlName="timeLimit" label="Time Limit" labelPlacement="floating" placeholder="Time Limit">
+        <ion-select-option value="10">10s</ion-select-option>
+        <ion-select-option value="20">20s</ion-select-option>
+        <ion-select-option value="30">30s</ion-select-option>
+        <ion-select-option value="60">60s</ion-select-option>
+        <ion-select-option value="90">90s</ion-select-option>
+      </ion-select>
+
+      <ion-select formControlName="rounds" label="Rounds" labelPlacement="floating" placeholder="Rounds">
+        <ion-select-option value="1">1</ion-select-option>
+        <ion-select-option value="2">2</ion-select-option>
+        <ion-select-option value="3">3</ion-select-option>
+      </ion-select>
+      </form>
+      
+    <ion-button (click)="startGame()">Start A Game</ion-button>
+    <ion-button color="warning" (click)="view = 'quickstart'">Cancel</ion-button>"
+  </ng-container>
+
+
+
+</div>

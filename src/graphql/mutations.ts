@@ -71,9 +71,9 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     name
     color
     type
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -90,9 +90,9 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     name
     color
     type
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -109,9 +109,9 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     name
     color
     type
+    owner
     createdAt
     updatedAt
-    owner
     __typename
   }
 }
@@ -135,9 +135,9 @@ export const createRoom = /* GraphQL */ `mutation CreateRoom(
       name
       color
       type
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     simpleCode
@@ -167,9 +167,9 @@ export const updateRoom = /* GraphQL */ `mutation UpdateRoom(
       name
       color
       type
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     simpleCode
@@ -199,9 +199,9 @@ export const deleteRoom = /* GraphQL */ `mutation DeleteRoom(
       name
       color
       type
+      owner
       createdAt
       updatedAt
-      owner
       __typename
     }
     simpleCode

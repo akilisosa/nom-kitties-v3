@@ -7,7 +7,15 @@
 <ion-content [fullscreen]="true">
 
 
-<div>
-  <app-user-profile></app-user-profile>
-</div>
+  <div class="flex-row" style="flex-wrap: wrap; justify-content: space-around;">
+    <app-user-profile></app-user-profile>
+    <div class="flex-column" style="justify-content: center;">
+      <app-quick-start></app-quick-start>
+    </div>
+
+  </div>
+
+  <ion-item>
+  </ion-item>
+
 </ion-content>

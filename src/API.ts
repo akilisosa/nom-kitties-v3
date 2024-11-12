@@ -86,18 +86,19 @@ export type CreateUserInput = {
   name: string,
   color?: string | null,
   type?: string | null,
+  owner?: string | null,
 };
 
 export type ModelUserConditionInput = {
   name?: ModelStringInput | null,
   color?: ModelStringInput | null,
   type?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
 };
 
 export type User = {
@@ -106,9 +107,9 @@ export type User = {
   name: string,
   color?: string | null,
   type?: string | null,
+  owner?: string | null,
   createdAt: string,
   updatedAt: string,
-  owner?: string | null,
 };
 
 export type UpdateUserInput = {
@@ -116,6 +117,7 @@ export type UpdateUserInput = {
   name?: string | null,
   color?: string | null,
   type?: string | null,
+  owner?: string | null,
 };
 
 export type DeleteUserInput = {
@@ -227,12 +229,12 @@ export type ModelUserFilterInput = {
   name?: ModelStringInput | null,
   color?: ModelStringInput | null,
   type?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
-  owner?: ModelStringInput | null,
 };
 
 export type ModelUserConnection = {
@@ -240,6 +242,12 @@ export type ModelUserConnection = {
   items:  Array<User | null >,
   nextToken?: string | null,
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelRoomFilterInput = {
   id?: ModelIDInput | null,
@@ -262,12 +270,6 @@ export type ModelRoomConnection = {
   items:  Array<Room | null >,
   nextToken?: string | null,
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelSubscriptionKittyFilterInput = {
   id?: ModelSubscriptionIDInput | null,
@@ -412,9 +414,9 @@ export type CreateUserMutation = {
     name: string,
     color?: string | null,
     type?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -430,9 +432,9 @@ export type UpdateUserMutation = {
     name: string,
     color?: string | null,
     type?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -448,9 +450,9 @@ export type DeleteUserMutation = {
     name: string,
     color?: string | null,
     type?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -474,9 +476,9 @@ export type CreateRoomMutation = {
       name: string,
       color?: string | null,
       type?: string | null,
+      owner?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null > | null,
     simpleCode?: string | null,
     createdAt: string,
@@ -505,9 +507,9 @@ export type UpdateRoomMutation = {
       name: string,
       color?: string | null,
       type?: string | null,
+      owner?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null > | null,
     simpleCode?: string | null,
     createdAt: string,
@@ -536,9 +538,9 @@ export type DeleteRoomMutation = {
       name: string,
       color?: string | null,
       type?: string | null,
+      owner?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null > | null,
     simpleCode?: string | null,
     createdAt: string,
@@ -596,9 +598,9 @@ export type GetUserQuery = {
     name: string,
     color?: string | null,
     type?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -617,9 +619,34 @@ export type ListUsersQuery = {
       name: string,
       color?: string | null,
       type?: string | null,
+      owner?: string | null,
       createdAt: string,
       updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type UsersByOwnerQueryVariables = {
+  owner: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UsersByOwnerQuery = {
+  usersByOwner?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      name: string,
+      color?: string | null,
+      type?: string | null,
       owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -644,9 +671,9 @@ export type GetRoomQuery = {
       name: string,
       color?: string | null,
       type?: string | null,
+      owner?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null > | null,
     simpleCode?: string | null,
     createdAt: string,
@@ -769,9 +796,9 @@ export type OnCreateUserSubscription = {
     name: string,
     color?: string | null,
     type?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -787,9 +814,9 @@ export type OnUpdateUserSubscription = {
     name: string,
     color?: string | null,
     type?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -805,9 +832,9 @@ export type OnDeleteUserSubscription = {
     name: string,
     color?: string | null,
     type?: string | null,
+    owner?: string | null,
     createdAt: string,
     updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -831,9 +858,9 @@ export type OnCreateRoomSubscription = {
       name: string,
       color?: string | null,
       type?: string | null,
+      owner?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null > | null,
     simpleCode?: string | null,
     createdAt: string,
@@ -862,9 +889,9 @@ export type OnUpdateRoomSubscription = {
       name: string,
       color?: string | null,
       type?: string | null,
+      owner?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null > | null,
     simpleCode?: string | null,
     createdAt: string,
@@ -893,9 +920,9 @@ export type OnDeleteRoomSubscription = {
       name: string,
       color?: string | null,
       type?: string | null,
+      owner?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null > | null,
     simpleCode?: string | null,
     createdAt: string,
