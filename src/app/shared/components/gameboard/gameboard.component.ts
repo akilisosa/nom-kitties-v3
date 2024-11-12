@@ -18,6 +18,7 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Input() player1Color: string = 'red';
   @Input() player2Color: string = 'blue';
+  @Input() active = false;
 
   @Output() scoreChanges = new EventEmitter<{ player1Score: number, player2Score: number }>();
 
@@ -84,6 +85,12 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
     }
     if (changes.player2Color) {
       this.player2.color = changes.player2Color.currentValue;
+    }
+
+    if (changes.active) {
+      if (changes.active.currentValue) {
+        this.gameLoop();
+      }
     }
   }
 
@@ -261,134 +268,10 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
     this.ctx.fillStyle = this.player2.color;
     this.ctx.fillRect(this.player2.x, this.player2.y, this.player2.width, this.player2.height);
 
+    if(this.active) {
     requestAnimationFrame(() => this.gameLoop());
+    }
   }
-
-
-  // gameLoop() {
-
-  //   // Add this to your gameLoop before updating player position
-  //   // Update player 1 position (WASD)
-  //   const newP1X = this.player1.x + (this.keys.d ? this.player1.speed : (this.keys.a ? -this.player1.speed : 0));
-  //   const newP1Y = this.player1.y + (this.keys.s ? this.player1.speed : (this.keys.w ? -this.player1.speed : 0));
-
-  //   // Update player 2 position (Arrow keys)
-  //   const newP2X = this.player2.x + (this.keys.ArrowRight ? this.player2.speed : (this.keys.ArrowLeft ? -this.player2.speed : 0));
-  //   const newP2Y = this.player2.y + (this.keys.ArrowDown ? this.player2.speed : (this.keys.ArrowUp ? -this.player2.speed : 0));
-
-  //   // Clamp the positions within canvas boundaries
-  //   this.player1.x = Math.max(0, Math.min(newP1X, this.canvas.width - this.player1.size));
-  //   this.player1.y = Math.max(0, Math.min(newP1Y, this.canvas.height - this.player1.size));
-
-  //   this.player2.x = Math.max(0, Math.min(newP2X, this.canvas.width - this.player2.size));
-  //   this.player2.y = Math.max(0, Math.min(newP2Y, this.canvas.height - this.player2.size));
-
-
-
-  //   const willCollide = (x1: number, y1: number, x2: number, y2: number) => {
-  //     return (x1 < x2 + this.player2.size &&
-  //       x1 + this.player1.size > x2 &&
-  //       y1 < y2 + this.player2.size &&
-  //       y1 + this.player1.size > y2);
-  //   };
-
-  //   console.log('will collide', willCollide(newP1X, newP1Y, newP2X, newP2Y));
-
-  //   // Update player 1 position if no collision would occur
-  //   if (!willCollide(newP1X, newP1Y, newP2X, newP2Y)) {
-  //     this.player1.x = Math.max(0, Math.min(newP1X, this.canvas.width - this.player1.size));
-  //     this.player1.y = Math.max(0, Math.min(newP1Y, this.canvas.height - this.player1.size));
-  //   }
-
-  //   // Update player 2 position if no collision would occur
-  //   if (!willCollide(newP1X, newP1Y, newP2X, newP2Y)) {
-  //     this.player2.x = Math.max(0, Math.min(newP2X, this.canvas.width - this.player2.size));
-  //     this.player2.y = Math.max(0, Math.min(newP2Y, this.canvas.height - this.player2.size));
-  //   }
-
-
-  //   // // Update player position
-  //   // if (this.keys.ArrowUp) this.player.y -= this.player.speed;
-  //   // if (this.keys.ArrowDown) this.player.y += this.player.speed;
-  //   // if (this.keys.ArrowLeft) this.player.x -= this.player.speed;
-  //   // if (this.keys.ArrowRight) this.player.x += this.player.speed;
-
-  //   // Clear canvas
-  //   this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-  //   // Draw player 1
-  //   this.ctx.fillStyle = this.player1.color;
-  //   this.ctx.fillRect(this.player1.x, this.player1.y, this.player1.size, this.player1.size);
-
-  //   // Draw player 2
-  //   this.ctx.fillStyle = this.player2.color;
-  //   this.ctx.fillRect(this.player2.x, this.player2.y, this.player2.size, this.player2.size);
-
-  //   // Continue game loop
-  //   requestAnimationFrame(this.gameLoop);
-  // }
-
-  //   gameLoop() {
-
-  // // Add this to your gameLoop before updating player position
-  //     // Update player 1 position (WASD)
-  //     const newP1X = this.player1.x + (this.keys.d ? this.player1.speed : (this.keys.a ? -this.player1.speed : 0));
-  //     const newP1Y = this.player1.y + (this.keys.s ? this.player1.speed : (this.keys.w ? -this.player1.speed : 0));
-
-  //     // Update player 2 position (Arrow keys)
-  //     const newP2X = this.player2.x + (this.keys.ArrowRight ? this.player2.speed : (this.keys.ArrowLeft ? -this.player2.speed : 0));
-  //     const newP2Y = this.player2.y + (this.keys.ArrowDown ? this.player2.speed : (this.keys.ArrowUp ? -this.player2.speed : 0));
-
-  // // Clamp the positions within canvas boundaries
-  // this.player1.x = Math.max(0, Math.min(newP1X, this.canvas.width - this.player1.size));
-  // this.player1.y = Math.max(0, Math.min(newP1Y, this.canvas.height - this.player1.size));
-
-  // this.player2.x = Math.max(0, Math.min(newP2X, this.canvas.width - this.player2.size));
-  // this.player2.y = Math.max(0, Math.min(newP2Y, this.canvas.height - this.player2.size));
-
-
-
-  // const willCollide = (x1: number, y1: number, x2: number, y2: number) => {
-  //   return (x1 < x2 + this.player2.size &&
-  //           x1 + this.player1.size > x2 &&
-  //           y1 < y2 + this.player2.size &&
-  //           y1 + this.player1.size > y2);
-  // };
-
-  // // Update player 1 position if no collision would occur
-  // if (!willCollide(newP1X, newP1Y, this.player2.x, this.player2.y)) {
-  //   this.player1.x = Math.max(0, Math.min(newP1X, this.canvas.width - this.player1.size));
-  //   this.player1.y = Math.max(0, Math.min(newP1Y, this.canvas.height - this.player1.size));
-  // }
-
-  // // Update player 2 position if no collision would occur
-  // if (!willCollide(this.player1.x, this.player1.y, newP2X, newP2Y)) {
-  //   this.player2.x = Math.max(0, Math.min(newP2X, this.canvas.width - this.player2.size));
-  //   this.player2.y = Math.max(0, Math.min(newP2Y, this.canvas.height - this.player2.size));
-  // }
-
-
-  //     // // Update player position
-  //     // if (this.keys.ArrowUp) this.player.y -= this.player.speed;
-  //     // if (this.keys.ArrowDown) this.player.y += this.player.speed;
-  //     // if (this.keys.ArrowLeft) this.player.x -= this.player.speed;
-  //     // if (this.keys.ArrowRight) this.player.x += this.player.speed;
-
-  //     // Clear canvas
-  //     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-  //     // Draw player 1
-  //     this.ctx.fillStyle = this.player1.color;
-  //     this.ctx.fillRect(this.player1.x, this.player1.y, this.player1.size, this.player1.size);
-
-  //     // Draw player 2
-  //     this.ctx.fillStyle = this.player2.color;
-  //     this.ctx.fillRect(this.player2.x, this.player2.y, this.player2.size, this.player2.size);
-
-  //     // Continue game loop
-  //     requestAnimationFrame(this.gameLoop);
-  // }
-
 
 
 }
