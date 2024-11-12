@@ -52,8 +52,8 @@ export class AppComponent {
       this.title = 'Local Game'
     } else if(segment === 'online-game') {
       this.title = 'Online Game'
-    } else if(segment === 'settings') {
-      this.title = 'Settings'
+    } else if(segment === 'learn-more') {
+      this.title = 'Learn More'
     } else {
       this.title = 'Nom Kitties'
     }
