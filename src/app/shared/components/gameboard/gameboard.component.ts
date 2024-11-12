@@ -19,6 +19,7 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() player1Color: string = 'red';
   @Input() player2Color: string = 'blue';
   @Input() active = false;
+  @Input() treatsOnFloor = 3; 
 
   @Output() scoreChanges = new EventEmitter<{ player1Score: number, player2Score: number }>();
 
@@ -157,7 +158,7 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
 
   // Add this method to spawn new collectibles
   spawnCollectible() {
-    if (this.collectibles.length < this.MAX_COLLECTIBLES) {
+    if (this.collectibles.length < this.treatsOnFloor) {
       const position = this.generateRandomPosition();
       this.collectibles.push({
         x: position.x,
@@ -250,7 +251,7 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
 
     // Remove collected circles and spawn new ones if needed
     this.collectibles = this.collectibles.filter(c => c.active);
-    while (this.collectibles.length < this.MAX_COLLECTIBLES) {
+    while (this.collectibles.length < this.treatsOnFloor) {
       this.spawnCollectible();
     }
 

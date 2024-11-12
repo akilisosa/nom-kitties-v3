@@ -1,4 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   templateUrl: './local-game.page.html',
   styleUrls: ['./local-game.page.scss'],
 })
-export class LocalGamePage implements OnInit, OnDestroy {
+export class LocalGamePage implements OnInit, OnDestroy, AfterViewInit {
 
   active: boolean = false;
   timer: number = 30;
@@ -22,13 +22,19 @@ export class LocalGamePage implements OnInit, OnDestroy {
   settingsView = false;
 
   form = new FormGroup({
-    timeLimit: new FormControl('30'),
-    treatsOnFloor: new FormControl('3'),
+    timeLimit: new FormControl(30),
+    treatsOnFloor: new FormControl(3),
   });
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit(): void {
+    this.form.valueChanges.subscribe((value) => {
+      console.log(value);
+    });
   }
 
   ngOnDestroy() {
@@ -67,10 +73,11 @@ handleSpaceBar(event: KeyboardEvent) {
 
    startGame() {
     this.active = true;
-    this.timer = 30;
+    this.timer = Number(this.form.controls.timeLimit.value) || 30;
     this.player1Score = 0;
     this.player2Score = 0; 
     this.isPaused = false;
+    this.settingsView = false;
     this.startTimer();
   }
 

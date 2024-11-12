@@ -14,14 +14,17 @@
     </div>
 
     <div>
-      <div style="display:flex; flex-direction: row; padding: .25rem; position: relative; width: 100%;">
-        <ion-button color="timer" style="position: absolute; left: 50%; transform: translateX(-50%);">
+      <div style="display:flex;  flex-direction: row; padding: .25rem; position: relative; width: 100%; justify-content: center;">
+        <ion-button color="timer" style="display:flex; justify-self: center; align-self: cen;">
           <p style="font-size: 1.5rem; margin:0rem"><strong>{{timer}}</strong></p>
         </ion-button>
       
-        <ion-button *ngIf="!active" (click)="settingsView = !settingsView" color="medium" style="margin-left: auto;">
+        <ion-button *ngIf="!active" (click)="settingsView = !settingsView" color="medium" 
+        style="display:flex; justify-self: end;">
           <p style="font-size: 1.5rem; margin:0rem"><ion-icon name="settings-outline"></ion-icon></p>
         </ion-button>
+
+
       </div>
 
       <div *ngIf="!active && !settingsView" style="width: 600px; height:600px; background-color: bisque; display: flex; justify-content: center; align-items: center;">
@@ -69,7 +72,7 @@
 
       <!-- Gameboard -->
       <app-gameboard [ngClass]="{'hide': !active, 'show': active }" [active]="active" (scoreChanges)="scoreChange($event)" [player1Color]="player1Color"
-        [player2Color]="player2Color"></app-gameboard>
+        [player2Color]="player2Color" [treatsOnFloor]="form.controls.treatsOnFloor.value || 0"></app-gameboard>
 
       <div style="width: 100%; padding-inline:1rem; text-align: center; ">
         <ion-button expand="block" *ngIf="!active && (timer ===30 || timer <1)" (click)="startGame()">
