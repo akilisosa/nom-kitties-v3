@@ -46,7 +46,22 @@
           <form [formGroup]="form">
             <ion-item>
               
+              <ion-select formControlName="timeLimit" label="Time Limit" labelPlacement="floating" placeholder="30s">
+                <ion-select-option value="10">15s</ion-select-option>
+                <ion-select-option value="20">20s</ion-select-option>
+                <ion-select-option value="30">30s</ion-select-option>
+                <ion-select-option value="60">1m</ion-select-option>
+                <ion-select-option value="90">1m 30s</ion-select-option>
+              </ion-select>
             </ion-item>
+
+              <!-- TODO  rounds? -->
+
+              <!-- treats on the floor-->
+               
+              <ion-item>
+                <ion-input labelPlacement="floating" label="Treats on the Floor"  max="10" formControlName="treatsOnFloor" type="number"></ion-input>
+              </ion-item>
           </form>
 
         </div>
