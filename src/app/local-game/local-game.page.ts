@@ -1,4 +1,5 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-local-game',
@@ -18,6 +19,13 @@ export class LocalGamePage implements OnInit, OnDestroy {
   player1Color: string = '#a85c32';
   player2Color: string = '#000';
 
+  settingsView = false;
+
+  form = new FormGroup({
+    timeLimit: new FormControl('30'),
+    treatsOnFloor: new FormControl('3'),
+  });
+
   constructor() { }
 
   ngOnInit() {
@@ -30,12 +38,10 @@ export class LocalGamePage implements OnInit, OnDestroy {
   @HostListener('window:keydown.space', ['$event'])
 handleSpaceBar(event: KeyboardEvent) {
   event.preventDefault(); // Prevent page scrolling
-  console.log('Space pressed');
-
   if(this.active) {
     this.pauseGame()
   } else {
-    if(this.timer === 30){
+    if(this.timer === 30 || this.timer < 1) {
  
       this.startGame()
     } else {
@@ -51,7 +57,6 @@ handleSpaceBar(event: KeyboardEvent) {
   }
 
   colorChange(event: any, player: string) {
-    console.log(event, player);
     if (player === 'player1') {
       this.player1Color = event;
     } else if (player === 'player2') {
@@ -60,9 +65,11 @@ handleSpaceBar(event: KeyboardEvent) {
 
   }
 
-  startGame() {
+   startGame() {
     this.active = true;
     this.timer = 30;
+    this.player1Score = 0;
+    this.player2Score = 0; 
     this.isPaused = false;
     this.startTimer();
   }

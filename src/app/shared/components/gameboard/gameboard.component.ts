@@ -79,7 +79,6 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnInit() { }
 
   ngOnChanges(changes: any): void {
-    console.log('changes', changes);
     if (changes?.player1Color) {
       this.player1.color = changes.player1Color.currentValue;
     }
@@ -98,7 +97,6 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
     // Check if the pressed key exists in our keys object
-    console.log(event.key);
     if (event.key in this.keys) {
       event.preventDefault(); // Prevent default browser scrolling
       this.keys[event.key as keyof typeof this.keys] = true;
@@ -195,6 +193,28 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
   }
 
   gameLoop() {
+
+    const getPlayerDirection = (keys: any) => {
+      if (keys.w || keys.ArrowUp) return 'up';
+      if (keys.s || keys.ArrowDown) return 'down';
+      if (keys.a || keys.ArrowLeft) return 'left';
+      if (keys.d || keys.ArrowRight) return 'right';
+      return 'idle';
+    }
+
+    const player1Direction = getPlayerDirection({
+      w: this.keys.w,
+      s: this.keys.s,
+      a: this.keys.a,
+      d: this.keys.d
+    });
+  
+    const player2Direction = getPlayerDirection({
+      ArrowUp: this.keys.ArrowUp,
+      ArrowDown: this.keys.ArrowDown,
+      ArrowLeft: this.keys.ArrowLeft,
+      ArrowRight: this.keys.ArrowRight
+    });
     // Calculate potential new positions
     const newP1X = this.player1.x + (this.keys.d ? this.player1.speed : (this.keys.a ? -this.player1.speed : 0));
     const newP1Y = this.player1.y + (this.keys.s ? this.player1.speed : (this.keys.w ? -this.player1.speed : 0));
@@ -263,15 +283,98 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
 
     // Draw players
     this.ctx.fillStyle = this.player1.color;
-    this.ctx.fillRect(this.player1.x, this.player1.y, this.player1.width, this.player1.height);
+   // this.ctx.fillRect(this.player1.x, this.player1.y, this.player1.width, this.player1.height);
+  //  this.drawCat(this.player1.x, this.player1.y, this.player1.width, this.player1.height, this.player1.color);
+    this.drawKitty(this.player1.x, this.player1.y, this.player1.width, this.player1.height, this.player1.color);
 
     this.ctx.fillStyle = this.player2.color;
-    this.ctx.fillRect(this.player2.x, this.player2.y, this.player2.width, this.player2.height);
+   // this.ctx.fillRect(this.player2.x, this.player2.y, this.player2.width, this.player2.height);
+   //this.drawCat(this.player2.x, this.player2.y, this.player2.width, this.player2.height, this.player2.color);
+    this.drawKitty(this.player2.x, this.player2.y, this.player2.width, this.player2.height, this.player2.color);
 
     if(this.active) {
     requestAnimationFrame(() => this.gameLoop());
     }
   }
 
+  
+drawKitty(x: number, y: number, width: number, height: number, color: string = '#040607') {
+  // Scale factor to maintain proportions
+  const scale = width / 50; // SVG viewBox is 50x50
+  
+  this.ctx.save();
+  this.ctx.translate(x, y);
+  this.ctx.scale(scale, scale);
+
+  // Main body outline (cls-3)
+  this.ctx.fillStyle = color;
+  this.ctx.beginPath();
+  this.ctx.moveTo(8.6, 1.52);
+  this.ctx.bezierCurveTo(11, 1.05, 14.3, 6.83, 15.71, 8.51);
+  this.ctx.bezierCurveTo(21.03, 7.84, 26.45, 7.8, 31.77, 8.51);
+  this.ctx.bezierCurveTo(32.78, 7.27, 33.61, 5.86, 34.65, 4.65);
+  this.ctx.bezierCurveTo(38.29, 0.4, 39.08, -0.01, 42.49, 6.12);
+  this.ctx.bezierCurveTo(46.73, 13.74, 50.19, 28.3, 44.21, 35.66);
+  this.ctx.bezierCurveTo(42.24, 38.08, 39.32, 39.73, 36.49, 40.93);
+  this.ctx.lineTo(36.49, 44.24);
+  this.ctx.bezierCurveTo(38.52, 44.19, 41.78, 44.76, 43.41, 43.69);
+  this.ctx.bezierCurveTo(44.77, 42.79, 44.94, 40.64, 46.96, 40.5);
+  this.ctx.bezierCurveTo(51.74, 40.17, 50.93, 47.79, 42.67, 49.69);
+  this.ctx.bezierCurveTo(38.39, 49.44, 13.76, 50.02, 12.27, 49.69);
+  this.ctx.bezierCurveTo(10.13, 49.22, 11.49, 42.81, 11.11, 41.05);
+  this.ctx.bezierCurveTo(-1.14, 36.5, -1.51, 24.72, 1.8, 13.72);
+  this.ctx.bezierCurveTo(2.45, 11.53, 6.53, 1.93, 8.6, 1.52);
+  this.ctx.closePath();
+  this.ctx.fill();
+
+  this.ctx.restore();
+}
+
+
+  drawCat(x: number, y: number, width: number, height: number, color: string) {
+    // Save the current context state
+    this.ctx.save();
+    
+    // Body
+    this.ctx.fillStyle = color;
+    this.ctx.beginPath();
+    this.ctx.ellipse(x + width/2, y + height/2, width/2, height/3, 0, 0, Math.PI * 2);
+    this.ctx.fill();
+    
+    // Head
+    this.ctx.beginPath();
+    this.ctx.arc(x + width/2, y + height/3, width/3, 0, Math.PI * 2);
+    this.ctx.fill();
+    
+    // Ears
+    this.ctx.beginPath();
+    this.ctx.moveTo(x + width/3, y + height/3);
+    this.ctx.lineTo(x + width/4, y + height/6);
+    this.ctx.lineTo(x + width/2, y + height/3);
+    this.ctx.fill();
+    
+    this.ctx.beginPath();
+    this.ctx.moveTo(x + 2*width/3, y + height/3);
+    this.ctx.lineTo(x + 3*width/4, y + height/6);
+    this.ctx.lineTo(x + width/2, y + height/3);
+    this.ctx.fill();
+    
+    // Eyes
+    this.ctx.fillStyle = 'white';
+    this.ctx.beginPath();
+    this.ctx.arc(x + 2*width/5, y + height/3, width/10, 0, Math.PI * 2);
+    this.ctx.arc(x + 3*width/5, y + height/3, width/10, 0, Math.PI * 2);
+    this.ctx.fill();
+    
+    // Pupils
+    this.ctx.fillStyle = 'black';
+    this.ctx.beginPath();
+    this.ctx.arc(x + 2*width/5, y + height/3, width/20, 0, Math.PI * 2);
+    this.ctx.arc(x + 3*width/5, y + height/3, width/20, 0, Math.PI * 2);
+    this.ctx.fill();
+
+    // Restore the context state
+    this.ctx.restore();
+  }
 
 }

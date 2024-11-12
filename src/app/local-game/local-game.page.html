@@ -1,10 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>localGame</ion-title>
+    <ion-title>Local 1v1 Nom Kitties!</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
 
   <div style="display:flex; flex-direction: row; justify-content: space-between; margin:2rem">
     <div style="width:25%">
@@ -13,33 +14,70 @@
     </div>
 
     <div>
-      <div style="display:flex;justify-content: center;">
-        <ion-button color="success"> {{timer}}</ion-button>
+      <div style="display:flex; flex-direction: row; padding: .25rem; position: relative; width: 100%;">
+        <ion-button color="timer" style="position: absolute; left: 50%; transform: translateX(-50%);">
+          <p style="font-size: 1.5rem; margin:0rem"><strong>{{timer}}</strong></p>
+        </ion-button>
+      
+        <ion-button *ngIf="!active" (click)="settingsView = !settingsView" color="medium" style="margin-left: auto;">
+          <p style="font-size: 1.5rem; margin:0rem"><ion-icon name="settings-outline"></ion-icon></p>
+        </ion-button>
       </div>
-      <app-gameboard [active]="active" (scoreChanges)="scoreChange($event)" [player1Color]="player1Color"
+
+      <div *ngIf="!active && !settingsView" style="width: 600px; height:600px; background-color: bisque; display: flex; justify-content: center; align-items: center;">
+        <div *ngIf="player1Score === 0 && player2Score === 0">
+          <p style="text-align: center; font-size: 2rem; margin: 0rem;">Nom Kitties!</p>
+          <p style="text-align: center; font-size: 1rem; margin: .25rem;">A game of strategy and skill.</p>
+          <p style="text-align: center; font-size: 1rem; margin: 0rem;">Collect the most treats to win!</p>
+        </div>
+
+        <div *ngIf="(player1Score !== 0 || player2Score !== 0) && timer === 0">
+          <p style="text-align: center; font-size: 1.5rem; margin: 0rem;">Winner!</p>
+          <p *ngIf="player1Score !== player2Score" style="text-align: center; font-size: 1.5rem; margin: 0rem;">{{ player1Score > player2Score ? 'Player1': 'Player2'}}</p>
+          <p *ngIf="player1Score === player2Score" style="text-align: center; font-size: 1.5rem; margin: 0rem;">Everyone!</p>
+      
+        </div>
+
+      </div>
+
+      <div *ngIf="!active && settingsView" style="width: 600px; height:600px; background-color: bisque; display: flex; justify-content: center; align-items: center;">
+
+        <div>
+          <form [formGroup]="form">
+            <ion-item>
+              
+            </ion-item>
+          </form>
+
+        </div>
+      </div>
+
+      <!-- Gameboard -->
+      <app-gameboard [ngClass]="{'hide': !active, 'show': active }" [active]="active" (scoreChanges)="scoreChange($event)" [player1Color]="player1Color"
         [player2Color]="player2Color"></app-gameboard>
+
       <div style="width: 100%; padding-inline:1rem; text-align: center; ">
-      <ion-button expand="block" *ngIf="!active && timer ===30 || timer <1" (click)="startGame()">
-        <div>
-          <p style="font-size: 1.5rem;">Start Game</p>
-          <p style="font-size: .75rem;">(space bar)</p>
-        </div>
-      </ion-button>
+        <ion-button expand="block" *ngIf="!active && (timer ===30 || timer <1)" (click)="startGame()">
+          <div>
+            <p class="game-action">Start Game</p>
+            <p class="space-bar">(space bar)</p>
+          </div>
+        </ion-button>
 
-      <ion-button expand="block" *ngIf="!active && timer <30 && timer > 1" (click)="resumeGame()">
-        <div>
-          <p style="font-size: 1.5rem;">Resume Game</p>
-          <p style="font-size: .75rem;">(space bar)</p>
-        </div>
-      </ion-button>
-      <ion-button *ngIf="active" color="warning" (click)="pauseGame()">
-        <div>
-          <p style="font-size: 1.5rem;">Pause Game</p>
-          <p style="font-size: .75rem;">(space bar)</p>
-        </div>
+        <ion-button expand="block" *ngIf="!active && timer <30 && timer > 1" (click)="resumeGame()">
+          <div>
+            <p class="game-action">Resume Game</p>
+            <p class="space-bar">(space bar)</p>
+          </div>
+        </ion-button>
+        <ion-button *ngIf="active " color="warning" (click)="pauseGame()">
+          <div>
+            <p class="game-action">Pause Game</p>
+            <p class="space-bar">(space bar)</p>
+          </div>
 
-      </ion-button>
-    </div>
+        </ion-button>
+      </div>
     </div>
 
 
