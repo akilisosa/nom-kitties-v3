@@ -81,6 +81,113 @@ export type DeleteKittyInput = {
   id: string,
 };
 
+export type CreateUserInput = {
+  id?: string | null,
+  name: string,
+  color?: string | null,
+  type?: string | null,
+};
+
+export type ModelUserConditionInput = {
+  name?: ModelStringInput | null,
+  color?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  and?: Array< ModelUserConditionInput | null > | null,
+  or?: Array< ModelUserConditionInput | null > | null,
+  not?: ModelUserConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+};
+
+export type User = {
+  __typename: "User",
+  id: string,
+  name: string,
+  color?: string | null,
+  type?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  owner?: string | null,
+};
+
+export type UpdateUserInput = {
+  id: string,
+  name?: string | null,
+  color?: string | null,
+  type?: string | null,
+};
+
+export type DeleteUserInput = {
+  id: string,
+};
+
+export type CreateRoomInput = {
+  id?: string | null,
+  name: string,
+  mode?: string | null,
+  rounds?: number | null,
+  timeLimit?: number | null,
+  roomLimit?: number | null,
+  simpleCode?: string | null,
+};
+
+export type ModelRoomConditionInput = {
+  name?: ModelStringInput | null,
+  mode?: ModelStringInput | null,
+  rounds?: ModelIntInput | null,
+  timeLimit?: ModelIntInput | null,
+  roomLimit?: ModelIntInput | null,
+  simpleCode?: ModelStringInput | null,
+  and?: Array< ModelRoomConditionInput | null > | null,
+  or?: Array< ModelRoomConditionInput | null > | null,
+  not?: ModelRoomConditionInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type Room = {
+  __typename: "Room",
+  id: string,
+  name: string,
+  mode?: string | null,
+  rounds?: number | null,
+  timeLimit?: number | null,
+  roomLimit?: number | null,
+  users?:  Array<User | null > | null,
+  simpleCode?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  owner?: string | null,
+};
+
+export type UpdateRoomInput = {
+  id: string,
+  name?: string | null,
+  mode?: string | null,
+  rounds?: number | null,
+  timeLimit?: number | null,
+  roomLimit?: number | null,
+  simpleCode?: string | null,
+};
+
+export type DeleteRoomInput = {
+  id: string,
+};
+
 export type ModelKittyFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -114,6 +221,53 @@ export type ModelKittyConnection = {
   items:  Array<Kitty | null >,
   nextToken?: string | null,
 };
+
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  color?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
+  owner?: ModelStringInput | null,
+};
+
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection",
+  items:  Array<User | null >,
+  nextToken?: string | null,
+};
+
+export type ModelRoomFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  mode?: ModelStringInput | null,
+  rounds?: ModelIntInput | null,
+  timeLimit?: ModelIntInput | null,
+  roomLimit?: ModelIntInput | null,
+  simpleCode?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelRoomFilterInput | null > | null,
+  or?: Array< ModelRoomFilterInput | null > | null,
+  not?: ModelRoomFilterInput | null,
+  owner?: ModelStringInput | null,
+};
+
+export type ModelRoomConnection = {
+  __typename: "ModelRoomConnection",
+  items:  Array<Room | null >,
+  nextToken?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelSubscriptionKittyFilterInput = {
   id?: ModelSubscriptionIDInput | null,
@@ -154,6 +308,45 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null,
   in?: Array< string | null > | null,
   notIn?: Array< string | null > | null,
+};
+
+export type ModelSubscriptionUserFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  color?: ModelSubscriptionStringInput | null,
+  type?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  owner?: ModelStringInput | null,
+};
+
+export type ModelSubscriptionRoomFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  name?: ModelSubscriptionStringInput | null,
+  mode?: ModelSubscriptionStringInput | null,
+  rounds?: ModelSubscriptionIntInput | null,
+  timeLimit?: ModelSubscriptionIntInput | null,
+  roomLimit?: ModelSubscriptionIntInput | null,
+  simpleCode?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionRoomFilterInput | null > | null,
+  or?: Array< ModelSubscriptionRoomFilterInput | null > | null,
+  owner?: ModelStringInput | null,
+};
+
+export type ModelSubscriptionIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  in?: Array< number | null > | null,
+  notIn?: Array< number | null > | null,
 };
 
 export type CreateKittyMutationVariables = {
@@ -207,6 +400,153 @@ export type DeleteKittyMutation = {
   } | null,
 };
 
+export type CreateUserMutationVariables = {
+  input: CreateUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type CreateUserMutation = {
+  createUser?:  {
+    __typename: "User",
+    id: string,
+    name: string,
+    color?: string | null,
+    type?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateUserMutationVariables = {
+  input: UpdateUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type UpdateUserMutation = {
+  updateUser?:  {
+    __typename: "User",
+    id: string,
+    name: string,
+    color?: string | null,
+    type?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteUserMutationVariables = {
+  input: DeleteUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type DeleteUserMutation = {
+  deleteUser?:  {
+    __typename: "User",
+    id: string,
+    name: string,
+    color?: string | null,
+    type?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type CreateRoomMutationVariables = {
+  input: CreateRoomInput,
+  condition?: ModelRoomConditionInput | null,
+};
+
+export type CreateRoomMutation = {
+  createRoom?:  {
+    __typename: "Room",
+    id: string,
+    name: string,
+    mode?: string | null,
+    rounds?: number | null,
+    timeLimit?: number | null,
+    roomLimit?: number | null,
+    users?:  Array< {
+      __typename: "User",
+      id: string,
+      name: string,
+      color?: string | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null > | null,
+    simpleCode?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateRoomMutationVariables = {
+  input: UpdateRoomInput,
+  condition?: ModelRoomConditionInput | null,
+};
+
+export type UpdateRoomMutation = {
+  updateRoom?:  {
+    __typename: "Room",
+    id: string,
+    name: string,
+    mode?: string | null,
+    rounds?: number | null,
+    timeLimit?: number | null,
+    roomLimit?: number | null,
+    users?:  Array< {
+      __typename: "User",
+      id: string,
+      name: string,
+      color?: string | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null > | null,
+    simpleCode?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteRoomMutationVariables = {
+  input: DeleteRoomInput,
+  condition?: ModelRoomConditionInput | null,
+};
+
+export type DeleteRoomMutation = {
+  deleteRoom?:  {
+    __typename: "Room",
+    id: string,
+    name: string,
+    mode?: string | null,
+    rounds?: number | null,
+    timeLimit?: number | null,
+    roomLimit?: number | null,
+    users?:  Array< {
+      __typename: "User",
+      id: string,
+      name: string,
+      color?: string | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null > | null,
+    simpleCode?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
 export type GetKittyQueryVariables = {
   id: string,
 };
@@ -240,6 +580,130 @@ export type ListKittiesQuery = {
       type?: string | null,
       createdAt: string,
       updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetUserQueryVariables = {
+  id: string,
+};
+
+export type GetUserQuery = {
+  getUser?:  {
+    __typename: "User",
+    id: string,
+    name: string,
+    color?: string | null,
+    type?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUsersQuery = {
+  listUsers?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      name: string,
+      color?: string | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetRoomQueryVariables = {
+  id: string,
+};
+
+export type GetRoomQuery = {
+  getRoom?:  {
+    __typename: "Room",
+    id: string,
+    name: string,
+    mode?: string | null,
+    rounds?: number | null,
+    timeLimit?: number | null,
+    roomLimit?: number | null,
+    users?:  Array< {
+      __typename: "User",
+      id: string,
+      name: string,
+      color?: string | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null > | null,
+    simpleCode?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListRoomsQueryVariables = {
+  filter?: ModelRoomFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListRoomsQuery = {
+  listRooms?:  {
+    __typename: "ModelRoomConnection",
+    items:  Array< {
+      __typename: "Room",
+      id: string,
+      name: string,
+      mode?: string | null,
+      rounds?: number | null,
+      timeLimit?: number | null,
+      roomLimit?: number | null,
+      simpleCode?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type RoomsBySimpleCodeQueryVariables = {
+  simpleCode: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelRoomFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type RoomsBySimpleCodeQuery = {
+  roomsBySimpleCode?:  {
+    __typename: "ModelRoomConnection",
+    items:  Array< {
+      __typename: "Room",
+      id: string,
+      name: string,
+      mode?: string | null,
+      rounds?: number | null,
+      timeLimit?: number | null,
+      roomLimit?: number | null,
+      simpleCode?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -290,5 +754,152 @@ export type OnDeleteKittySubscription = {
     type?: string | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type OnCreateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateUserSubscription = {
+  onCreateUser?:  {
+    __typename: "User",
+    id: string,
+    name: string,
+    color?: string | null,
+    type?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateUserSubscription = {
+  onUpdateUser?:  {
+    __typename: "User",
+    id: string,
+    name: string,
+    color?: string | null,
+    type?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteUserSubscription = {
+  onDeleteUser?:  {
+    __typename: "User",
+    id: string,
+    name: string,
+    color?: string | null,
+    type?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreateRoomSubscriptionVariables = {
+  filter?: ModelSubscriptionRoomFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateRoomSubscription = {
+  onCreateRoom?:  {
+    __typename: "Room",
+    id: string,
+    name: string,
+    mode?: string | null,
+    rounds?: number | null,
+    timeLimit?: number | null,
+    roomLimit?: number | null,
+    users?:  Array< {
+      __typename: "User",
+      id: string,
+      name: string,
+      color?: string | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null > | null,
+    simpleCode?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateRoomSubscriptionVariables = {
+  filter?: ModelSubscriptionRoomFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateRoomSubscription = {
+  onUpdateRoom?:  {
+    __typename: "Room",
+    id: string,
+    name: string,
+    mode?: string | null,
+    rounds?: number | null,
+    timeLimit?: number | null,
+    roomLimit?: number | null,
+    users?:  Array< {
+      __typename: "User",
+      id: string,
+      name: string,
+      color?: string | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null > | null,
+    simpleCode?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteRoomSubscriptionVariables = {
+  filter?: ModelSubscriptionRoomFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteRoomSubscription = {
+  onDeleteRoom?:  {
+    __typename: "Room",
+    id: string,
+    name: string,
+    mode?: string | null,
+    rounds?: number | null,
+    timeLimit?: number | null,
+    roomLimit?: number | null,
+    users?:  Array< {
+      __typename: "User",
+      id: string,
+      name: string,
+      color?: string | null,
+      type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null > | null,
+    simpleCode?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
   } | null,
 };

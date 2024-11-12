@@ -53,3 +53,156 @@ export const onDeleteKitty = /* GraphQL */ `subscription OnDeleteKitty($filter: 
   APITypes.OnDeleteKittySubscriptionVariables,
   APITypes.OnDeleteKittySubscription
 >;
+export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
+  $filter: ModelSubscriptionUserFilterInput
+  $owner: String
+) {
+  onCreateUser(filter: $filter, owner: $owner) {
+    id
+    name
+    color
+    type
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateUserSubscriptionVariables,
+  APITypes.OnCreateUserSubscription
+>;
+export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser(
+  $filter: ModelSubscriptionUserFilterInput
+  $owner: String
+) {
+  onUpdateUser(filter: $filter, owner: $owner) {
+    id
+    name
+    color
+    type
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateUserSubscriptionVariables,
+  APITypes.OnUpdateUserSubscription
+>;
+export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
+  $filter: ModelSubscriptionUserFilterInput
+  $owner: String
+) {
+  onDeleteUser(filter: $filter, owner: $owner) {
+    id
+    name
+    color
+    type
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteUserSubscriptionVariables,
+  APITypes.OnDeleteUserSubscription
+>;
+export const onCreateRoom = /* GraphQL */ `subscription OnCreateRoom(
+  $filter: ModelSubscriptionRoomFilterInput
+  $owner: String
+) {
+  onCreateRoom(filter: $filter, owner: $owner) {
+    id
+    name
+    mode
+    rounds
+    timeLimit
+    roomLimit
+    users {
+      id
+      name
+      color
+      type
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    simpleCode
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateRoomSubscriptionVariables,
+  APITypes.OnCreateRoomSubscription
+>;
+export const onUpdateRoom = /* GraphQL */ `subscription OnUpdateRoom(
+  $filter: ModelSubscriptionRoomFilterInput
+  $owner: String
+) {
+  onUpdateRoom(filter: $filter, owner: $owner) {
+    id
+    name
+    mode
+    rounds
+    timeLimit
+    roomLimit
+    users {
+      id
+      name
+      color
+      type
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    simpleCode
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateRoomSubscriptionVariables,
+  APITypes.OnUpdateRoomSubscription
+>;
+export const onDeleteRoom = /* GraphQL */ `subscription OnDeleteRoom(
+  $filter: ModelSubscriptionRoomFilterInput
+  $owner: String
+) {
+  onDeleteRoom(filter: $filter, owner: $owner) {
+    id
+    name
+    mode
+    rounds
+    timeLimit
+    roomLimit
+    users {
+      id
+      name
+      color
+      type
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    simpleCode
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteRoomSubscriptionVariables,
+  APITypes.OnDeleteRoomSubscription
+>;

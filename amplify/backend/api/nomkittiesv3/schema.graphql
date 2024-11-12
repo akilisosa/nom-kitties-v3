@@ -9,6 +9,24 @@ type Kitty @model {
   type: String
 }
 
+type User @model @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
+  id: ID!
+  name: String!
+  color: String
+  type: String
+}
+
+type Room @model @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
+  id: ID!
+  name: String!
+  mode: String
+  rounds: Int
+  timeLimit: Int
+  roomLimit: Int
+  users: [User]
+  simpleCode: String @index(name: "simpleCode")
+}
+
 
 
 
