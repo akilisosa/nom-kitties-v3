@@ -1,0 +1,27 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>auth</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">auth</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+
+  <div style="padding:3rem">
+  <amplify-authenticator>
+    <ng-template
+      amplifySlot="authenticated"
+      let-user="user"
+      let-signOut="signOut"
+    >
+      <h1>Welcome {{ user.username }}!</h1>
+      <button (click)="signOut()">Sign Out</button>
+    </ng-template>
+  </amplify-authenticator>
+</div>
+</ion-content>

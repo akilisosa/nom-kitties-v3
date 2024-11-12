@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./auth/auth.module').then( m => m.AuthPageModule)
   },
   {
     path: 'local-game',
@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'learn-more',
     loadChildren: () => import('./learn-more/learn-more.module').then( m => m.LearnMorePageModule)
-  }
+  },
 ];
 
 @NgModule({

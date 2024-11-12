@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "nomkittiesv3",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authnomkittiesv3c4207b7c",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

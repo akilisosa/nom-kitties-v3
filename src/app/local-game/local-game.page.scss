@@ -13,3 +13,27 @@
 .show {
     display: block;
 }
+
+.square-container {
+    width: 100%;
+    max-width: 600px; /* Optional: limits maximum size */
+    position: relative;
+    background-color: bisque;
+  }
+  
+  .square-container::before {
+    content: '';
+    display: block;
+    padding-bottom: 100%; /* This creates the 1:1 ratio */
+  }
+  
+  .square-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

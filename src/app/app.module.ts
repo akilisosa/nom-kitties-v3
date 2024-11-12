@@ -8,6 +8,12 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SideNavComponent } from './side-nav/side-nav.component';
 
+
+import { Amplify } from 'aws-amplify';
+import awsconfig from '../aws-exports';
+
+Amplify.configure(awsconfig);
+
 @NgModule({
   declarations: [AppComponent, SideNavComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],

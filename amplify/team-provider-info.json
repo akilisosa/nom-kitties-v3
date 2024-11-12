@@ -10,6 +10,14 @@
       "StackName": "amplify-nomkittiesv3-dev-054b9",
       "StackId": "arn:aws:cloudformation:us-east-1:707277074539:stack/amplify-nomkittiesv3-dev-054b9/c8246a10-9fa3-11ef-b019-0ef26697d685",
       "AmplifyAppId": "d3d52t0lpz2q03"
+    },
+    "categories": {
+      "auth": {
+        "nomkittiesv3c4207b7c": {}
+      },
+      "api": {
+        "nomkittiesv3": {}
+      }
     }
   }
 }
