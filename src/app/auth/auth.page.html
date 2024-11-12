@@ -19,8 +19,10 @@
       let-user="user"
       let-signOut="signOut"
     >
-      <h1>Welcome {{ user.username }}!</h1>
-      <button (click)="signOut()">Sign Out</button>
+      <h1>Welcome! You aren't typically suppose to see this view, but sometimes it happens. It just means you're logged in!</h1>
+      <p>You can always use the side bar to navigate to wherever you need to go.</p>
+      <ion-button routerLink="/dashboard">Continue to Dashboard</ion-button>
+      <ion-button color="warning" (click)="signOut()">Sign Out</ion-button>
     </ng-template>
   </amplify-authenticator>
 </div>
