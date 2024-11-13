@@ -9,15 +9,19 @@ import { RoomPageRoutingModule } from './room-routing.module';
 import { RoomPage } from './room.page';
 import { GameDataService } from './services/game-data.service';
 import { PlayerPositionService } from './services/player-position.service';
+import { LobbyComponent } from './components/lobby/lobby.component';
+import { GameComponent } from './components/game/game.component';
+import { ChatRoomModule } from 'src/app/shared/components/chat-room/chat-room.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RoomPageRoutingModule
+    RoomPageRoutingModule,
+    ChatRoomModule
   ],
   providers: [GameDataService, PlayerPositionService],
-  declarations: [RoomPage]
+  declarations: [RoomPage, LobbyComponent, GameComponent]
 })
 export class RoomPageModule {}

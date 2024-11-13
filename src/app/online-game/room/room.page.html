@@ -11,7 +11,10 @@
     </ion-toolbar>
   </ion-header>
 
-  <p>room works!</p>
+ <!-- -->
+  <div id="lobbyContainer" #lobbyContainer style="width: 100%">
+    <app-lobby [size]="size" [room]="room" [playerList]="playerList"></app-lobby>
+  </div>
 
   
 </ion-content>
