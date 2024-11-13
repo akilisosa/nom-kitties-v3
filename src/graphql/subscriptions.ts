@@ -116,11 +116,13 @@ export const onCreateRoom = /* GraphQL */ `subscription OnCreateRoom(
 ) {
   onCreateRoom(filter: $filter, owner: $owner) {
     id
-    name
+    public
     mode
     rounds
     timeLimit
+    players
     roomLimit
+    createdAt
     users {
       id
       name
@@ -132,7 +134,6 @@ export const onCreateRoom = /* GraphQL */ `subscription OnCreateRoom(
       __typename
     }
     simpleCode
-    createdAt
     updatedAt
     owner
     __typename
@@ -148,11 +149,13 @@ export const onUpdateRoom = /* GraphQL */ `subscription OnUpdateRoom(
 ) {
   onUpdateRoom(filter: $filter, owner: $owner) {
     id
-    name
+    public
     mode
     rounds
     timeLimit
+    players
     roomLimit
+    createdAt
     users {
       id
       name
@@ -164,7 +167,6 @@ export const onUpdateRoom = /* GraphQL */ `subscription OnUpdateRoom(
       __typename
     }
     simpleCode
-    createdAt
     updatedAt
     owner
     __typename
@@ -180,11 +182,13 @@ export const onDeleteRoom = /* GraphQL */ `subscription OnDeleteRoom(
 ) {
   onDeleteRoom(filter: $filter, owner: $owner) {
     id
-    name
+    public
     mode
     rounds
     timeLimit
+    players
     roomLimit
+    createdAt
     users {
       id
       name
@@ -196,7 +200,6 @@ export const onDeleteRoom = /* GraphQL */ `subscription OnDeleteRoom(
       __typename
     }
     simpleCode
-    createdAt
     updatedAt
     owner
     __typename

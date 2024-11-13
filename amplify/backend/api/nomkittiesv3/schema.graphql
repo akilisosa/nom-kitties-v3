@@ -20,12 +20,14 @@ type User @model @auth(rules: [{ allow: owner }, { allow: public, operations: [r
 
 type Room @model @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
   id: ID!
-  public: String @index(name: "public")
-  mode: String
+  public: String @index(name: "public", sortKeyFields: ["createdAt"])
+  mode: String @index(name: "mode")
   rounds: Int
   timeLimit: Int
   players: Int
   roomLimit: Int
+  inGame: Int
+  createdAt: AWSDateTime
   users: [User]
   simpleCode: String @index(name: "simpleCode")
 }

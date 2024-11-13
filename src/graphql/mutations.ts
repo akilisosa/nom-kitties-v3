@@ -125,11 +125,13 @@ export const createRoom = /* GraphQL */ `mutation CreateRoom(
 ) {
   createRoom(input: $input, condition: $condition) {
     id
-    name
+    public
     mode
     rounds
     timeLimit
+    players
     roomLimit
+    createdAt
     users {
       id
       name
@@ -141,7 +143,6 @@ export const createRoom = /* GraphQL */ `mutation CreateRoom(
       __typename
     }
     simpleCode
-    createdAt
     updatedAt
     owner
     __typename
@@ -157,11 +158,13 @@ export const updateRoom = /* GraphQL */ `mutation UpdateRoom(
 ) {
   updateRoom(input: $input, condition: $condition) {
     id
-    name
+    public
     mode
     rounds
     timeLimit
+    players
     roomLimit
+    createdAt
     users {
       id
       name
@@ -173,7 +176,6 @@ export const updateRoom = /* GraphQL */ `mutation UpdateRoom(
       __typename
     }
     simpleCode
-    createdAt
     updatedAt
     owner
     __typename
@@ -189,11 +191,13 @@ export const deleteRoom = /* GraphQL */ `mutation DeleteRoom(
 ) {
   deleteRoom(input: $input, condition: $condition) {
     id
-    name
+    public
     mode
     rounds
     timeLimit
+    players
     roomLimit
+    createdAt
     users {
       id
       name
@@ -205,7 +209,6 @@ export const deleteRoom = /* GraphQL */ `mutation DeleteRoom(
       __typename
     }
     simpleCode
-    createdAt
     updatedAt
     owner
     __typename

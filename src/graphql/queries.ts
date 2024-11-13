@@ -112,11 +112,13 @@ export const usersByOwner = /* GraphQL */ `query UsersByOwner(
 export const getRoom = /* GraphQL */ `query GetRoom($id: ID!) {
   getRoom(id: $id) {
     id
-    name
+    public
     mode
     rounds
     timeLimit
+    players
     roomLimit
+    createdAt
     users {
       id
       name
@@ -128,7 +130,6 @@ export const getRoom = /* GraphQL */ `query GetRoom($id: ID!) {
       __typename
     }
     simpleCode
-    createdAt
     updatedAt
     owner
     __typename
@@ -143,13 +144,14 @@ export const listRooms = /* GraphQL */ `query ListRooms(
   listRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      name
+      public
       mode
       rounds
       timeLimit
+      players
       roomLimit
-      simpleCode
       createdAt
+      simpleCode
       updatedAt
       owner
       __typename
@@ -159,6 +161,44 @@ export const listRooms = /* GraphQL */ `query ListRooms(
   }
 }
 ` as GeneratedQuery<APITypes.ListRoomsQueryVariables, APITypes.ListRoomsQuery>;
+export const roomsByPublicAndCreatedAt = /* GraphQL */ `query RoomsByPublicAndCreatedAt(
+  $public: String!
+  $createdAt: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelRoomFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  roomsByPublicAndCreatedAt(
+    public: $public
+    createdAt: $createdAt
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      players
+      roomLimit
+      createdAt
+      simpleCode
+      updatedAt
+      owner
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.RoomsByPublicAndCreatedAtQueryVariables,
+  APITypes.RoomsByPublicAndCreatedAtQuery
+>;
 export const roomsBySimpleCode = /* GraphQL */ `query RoomsBySimpleCode(
   $simpleCode: String!
   $sortDirection: ModelSortDirection
@@ -175,13 +215,14 @@ export const roomsBySimpleCode = /* GraphQL */ `query RoomsBySimpleCode(
   ) {
     items {
       id
-      name
+      public
       mode
       rounds
       timeLimit
+      players
       roomLimit
-      simpleCode
       createdAt
+      simpleCode
       updatedAt
       owner
       __typename

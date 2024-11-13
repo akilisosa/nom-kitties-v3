@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { RoomService } from 'src/app/shared/services/room.service';
 
 @Component({
   selector: 'app-quick-start',
@@ -13,17 +14,19 @@ export class QuickStartComponent  implements OnInit {
   newGameForm = new FormGroup({
     public: new FormControl(true),
     mode: new FormControl('classic'),
-    rounds: new FormControl(3),
+    rounds: new FormControl('3'),
     timeLimit: new FormControl('30'),
     players: new FormControl('4'),
-    roomLimit: new FormControl(4),
+    roomLimit: new FormControl('4'),
     simpleCode: new FormControl(''),
     type: new FormControl('cat')
   })
 
-  constructor() { }
+  constructor(private roomService: RoomService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   generate6DigitAlphaNumericCode() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -35,7 +38,17 @@ export class QuickStartComponent  implements OnInit {
   }
 
 
-  startGame() {
+  async startGame() {
+await this.roomService.createNewRoom({
+      public: this.newGameForm.value.public,
+      mode: this.newGameForm.value.mode,
+      rounds: this.newGameForm.value.rounds,
+      timeLimit: this.newGameForm.value.timeLimit,
+      players: this.newGameForm.value.players,
+      roomLimit: this.newGameForm.value.roomLimit,
+      simpleCode: this.newGameForm.value.simpleCode,
+      type: this.newGameForm.value.type
+    })
     console.log('start game');
   }
 
