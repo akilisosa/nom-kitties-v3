@@ -1,8 +1,9 @@
 <div  class="flex-column" style="justify-content: center; margin:1rem;">
   <ng-container *ngIf="view === 'quickstart'">
-  <ion-button (click)="view = 'start'">Start A Game</ion-button>
-  <ion-button (click)="joinGame()">Join Game</ion-button>
-  <ion-button (click)="joinPrivate()">Enter A Code</ion-button>
+  <ion-button (click)="view = 'start'">Start A Game &nbsp;<ion-icon name="rocket-outline"></ion-icon></ion-button>
+  <ion-button color="tertiary" *ngIf="!showRefresh" (click)="joinGame()">Join Game &nbsp;<ion-icon name="football-outline"></ion-icon></ion-button>
+  <ion-button color="tertiary" *ngIf="showRefresh" (click)="refreshEmit.emit()">Refresh List &nbsp;<ion-icon name="refresh-outline"></ion-icon> </ion-button>
+  <ion-button color="warning" (click)="joinPrivate()">Enter A Code &nbsp;<ion-icon name="code-working-outline"></ion-icon></ion-button>
 </ng-container>
   <ng-container *ngIf="view == 'start'">
     <form [formGroup]="newGameForm">

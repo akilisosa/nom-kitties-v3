@@ -15,6 +15,14 @@ export class OnlineGamePage implements OnInit {
 
   ngOnInit() {
     this.roomService.getRoomList();
+    this.subscribeToRoomList();
+  }
+
+  subscribeToRoomList() {
+    this.subscription.add(this.roomService.roomListShared().subscribe((roomList) => {
+      console.log('room list', roomList);
+      this.roomList = [...roomList];
+    }));
   }
 
   joinGame(game: any) {

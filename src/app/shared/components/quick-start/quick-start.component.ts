@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RoomStatus } from 'src/API';
@@ -11,6 +11,9 @@ import { RoomService } from 'src/app/shared/services/room.service';
   styleUrls: ['./quick-start.component.scss'],
 })
 export class QuickStartComponent implements OnInit {
+
+  @Input() showRefresh: boolean = false; 
+  @Output() refreshEmit = new EventEmitter<void>();
 
   view: 'quickstart' | 'start' | 'join' | 'private' = 'quickstart';
 
@@ -64,7 +67,7 @@ export class QuickStartComponent implements OnInit {
   }
 
   joinGame() {
-    console.log('join game');
+    this.router.navigate(['online-game']);
   }
 
   joinPrivate() {
