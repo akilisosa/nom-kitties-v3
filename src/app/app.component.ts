@@ -28,8 +28,14 @@ export class AppComponent {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       const urlSegments = this.router.url.split('/');
-      const lastSegment = urlSegments[urlSegments.length - 1];
+      console.log('URL segments:', urlSegments, urlSegments.length);
+      let lastSegment = urlSegments[urlSegments.length - 1];
+      if(urlSegments[urlSegments.length - 2] === 'room') {
+        lastSegment = urlSegments[urlSegments.length - 2];
+      }
+
       console.log('Current page:', lastSegment);
+
       // Update your title here
       this.updateTitle(lastSegment);
     });
@@ -44,9 +50,6 @@ export class AppComponent {
   }
 
   private updateTitle(segment: string) {
-    // Convert URL segment to a nice title
-    // e.g., 'my-page' becomes 'My Page'
-
     console.log('Segment:', segment);
     if(segment === 'local-game') {
       this.title = 'Local Game'
@@ -54,12 +57,12 @@ export class AppComponent {
       this.title = 'Online Game'
     } else if(segment === 'learn-more') {
       this.title = 'Learn More'
+    } else if(segment === 'room') {
+      const urlSegments = this.router.url.split('/');
+      let lastSegment = urlSegments[urlSegments.length - 1];
+      this.title = 'Room' + '-' + lastSegment
     } else {
       this.title = 'Nom Kitties'
     }
-  
-    // Update your title here
-    // For example, if using ion-title:
-    // this.pageTitle = title;
   }
 }
