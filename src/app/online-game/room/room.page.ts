@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RoomService } from 'src/app/shared/services/room.service';
 
 @Component({
@@ -8,15 +9,20 @@ import { RoomService } from 'src/app/shared/services/room.service';
 })
 export class RoomPage implements OnInit {
 
+
   size = 10;
 
   room: any;  
   playerList = [];
 
-  constructor(private roomService: RoomService, ) { }
+  constructor(private roomService: RoomService, private router: Router) { }
 
   ngOnInit() {
 
   }
+
+  leaveRoom() {
+    this.router.navigate(['/online-game']);
+    }
 
 }

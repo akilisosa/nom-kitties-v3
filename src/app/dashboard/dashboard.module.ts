@@ -8,7 +8,8 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
-import { QuickStartComponent } from './components/quick-start/quick-start.component';
+import { QuickStartComponent } from '../shared/components/quick-start/quick-start.component';
+import { QuickStartModule } from '../shared/components/quick-start/quick-start.module';
 
 @NgModule({
   imports: [
@@ -16,8 +17,9 @@ import { QuickStartComponent } from './components/quick-start/quick-start.compon
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    QuickStartModule,
     DashboardPageRoutingModule
   ],
-  declarations: [DashboardPage, UserProfileComponent, QuickStartComponent]
+  declarations: [DashboardPage, UserProfileComponent]
 })
 export class DashboardPageModule {}

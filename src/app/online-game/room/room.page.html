@@ -12,6 +12,11 @@
   </ion-header>
 
  <!-- -->
+
+ <ion-item style="width:100%">
+  <ion-button slot="end" (click)="leaveRoom()">Leave Room</ion-button>
+ </ion-item>
+
   <div id="lobbyContainer" #lobbyContainer style="width: 100%">
     <app-lobby [size]="size" [room]="room" [playerList]="playerList"></app-lobby>
   </div>

@@ -12,7 +12,7 @@ import { RoomService } from 'src/app/shared/services/room.service';
 })
 export class QuickStartComponent implements OnInit {
 
-  view: 'quickstart' | 'start' | 'join' | 'private' = 'start';
+  view: 'quickstart' | 'start' | 'join' | 'private' = 'quickstart';
 
   newGameForm = new FormGroup({
     public: new FormControl(true),
