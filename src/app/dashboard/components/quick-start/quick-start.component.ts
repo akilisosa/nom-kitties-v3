@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RoomStatus } from 'src/API';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { RoomService } from 'src/app/shared/services/room.service';
 
 @Component({
@@ -7,25 +10,28 @@ import { RoomService } from 'src/app/shared/services/room.service';
   templateUrl: './quick-start.component.html',
   styleUrls: ['./quick-start.component.scss'],
 })
-export class QuickStartComponent  implements OnInit {
+export class QuickStartComponent implements OnInit {
 
-  view : 'quickstart' |'start' | 'join' | 'private' = 'start';
+  view: 'quickstart' | 'start' | 'join' | 'private' = 'start';
 
   newGameForm = new FormGroup({
     public: new FormControl(true),
     mode: new FormControl('classic'),
     rounds: new FormControl('3'),
     timeLimit: new FormControl('30'),
-    players: new FormControl('4'),
+    currentPlayers: new FormControl('4'),
     roomLimit: new FormControl('4'),
     simpleCode: new FormControl(''),
     type: new FormControl('cat')
   })
 
-  constructor(private roomService: RoomService) { }
+  constructor(private roomService: RoomService,
+    private router: Router,
+    private authService: AuthService) { }
 
   ngOnInit() {
-    
+    const code = this.generate6DigitAlphaNumericCode();
+    this.newGameForm.patchValue({ simpleCode: code });
   }
 
   generate6DigitAlphaNumericCode() {
@@ -39,17 +45,22 @@ export class QuickStartComponent  implements OnInit {
 
 
   async startGame() {
-await this.roomService.createNewRoom({
-      public: this.newGameForm.value.public,
+    // todo check for room generated code. 
+    const hostID = (await this.authService.getCurrentUser()).userId
+    
+    await this.roomService.createNewRoom({
+      public: this.newGameForm.value.public?.toString() || 'true',
       mode: this.newGameForm.value.mode,
-      rounds: this.newGameForm.value.rounds,
-      timeLimit: this.newGameForm.value.timeLimit,
-      players: this.newGameForm.value.players,
-      roomLimit: this.newGameForm.value.roomLimit,
+      rounds: Number(this.newGameForm.value.rounds),
+      timeLimit: Number(this.newGameForm.value.timeLimit),
+      currentPlayers: Number(this.newGameForm.value.currentPlayers),
+      roomLimit: Number(this.newGameForm.value.roomLimit),
       simpleCode: this.newGameForm.value.simpleCode,
-      type: this.newGameForm.value.type
+      hostID,
+      status: RoomStatus.WAITING,
     })
-    console.log('start game');
+
+    this.router.navigate(['online-game', 'room', this.newGameForm.value.simpleCode]);
   }
 
   joinGame() {

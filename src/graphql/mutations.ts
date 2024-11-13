@@ -8,6 +8,135 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
+export const joinRoom = /* GraphQL */ `mutation JoinRoom($roomId: ID!) {
+  joinRoom(roomId: $roomId) {
+    id
+    public
+    mode
+    rounds
+    timeLimit
+    currentPlayers
+    roomLimit
+    inGame
+    status
+    full
+    createdAt
+    playing
+    players
+    tempPlayers
+    simpleCode
+    hostID
+    currentRound
+    updatedAt
+    gameData {
+      id
+      roomID
+      activePlayers
+      scores
+      currentRound
+      roundData
+      lastUpdated
+      gameStarted
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    roomGameDataId
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.JoinRoomMutationVariables,
+  APITypes.JoinRoomMutation
+>;
+export const leaveRoom = /* GraphQL */ `mutation LeaveRoom($roomId: ID!) {
+  leaveRoom(roomId: $roomId) {
+    id
+    public
+    mode
+    rounds
+    timeLimit
+    currentPlayers
+    roomLimit
+    inGame
+    status
+    full
+    createdAt
+    playing
+    players
+    tempPlayers
+    simpleCode
+    hostID
+    currentRound
+    updatedAt
+    gameData {
+      id
+      roomID
+      activePlayers
+      scores
+      currentRound
+      roundData
+      lastUpdated
+      gameStarted
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    roomGameDataId
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.LeaveRoomMutationVariables,
+  APITypes.LeaveRoomMutation
+>;
+export const updateGameState = /* GraphQL */ `mutation UpdateGameState($roomId: ID!, $gameData: GameStateInput!) {
+  updateGameState(roomId: $roomId, gameData: $gameData) {
+    id
+    public
+    mode
+    rounds
+    timeLimit
+    currentPlayers
+    roomLimit
+    inGame
+    status
+    full
+    createdAt
+    playing
+    players
+    tempPlayers
+    simpleCode
+    hostID
+    currentRound
+    updatedAt
+    gameData {
+      id
+      roomID
+      activePlayers
+      scores
+      currentRound
+      roundData
+      lastUpdated
+      gameStarted
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    roomGameDataId
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateGameStateMutationVariables,
+  APITypes.UpdateGameStateMutation
+>;
 export const createKitty = /* GraphQL */ `mutation CreateKitty(
   $input: CreateKittyInput!
   $condition: ModelKittyConditionInput
@@ -129,21 +258,34 @@ export const createRoom = /* GraphQL */ `mutation CreateRoom(
     mode
     rounds
     timeLimit
-    players
+    currentPlayers
     roomLimit
+    inGame
+    status
+    full
     createdAt
-    users {
+    playing
+    players
+    tempPlayers
+    simpleCode
+    hostID
+    currentRound
+    updatedAt
+    gameData {
       id
-      name
-      color
-      type
-      owner
+      roomID
+      activePlayers
+      scores
+      currentRound
+      roundData
+      lastUpdated
+      gameStarted
       createdAt
       updatedAt
+      owner
       __typename
     }
-    simpleCode
-    updatedAt
+    roomGameDataId
     owner
     __typename
   }
@@ -162,21 +304,34 @@ export const updateRoom = /* GraphQL */ `mutation UpdateRoom(
     mode
     rounds
     timeLimit
-    players
+    currentPlayers
     roomLimit
+    inGame
+    status
+    full
     createdAt
-    users {
+    playing
+    players
+    tempPlayers
+    simpleCode
+    hostID
+    currentRound
+    updatedAt
+    gameData {
       id
-      name
-      color
-      type
-      owner
+      roomID
+      activePlayers
+      scores
+      currentRound
+      roundData
+      lastUpdated
+      gameStarted
       createdAt
       updatedAt
+      owner
       __typename
     }
-    simpleCode
-    updatedAt
+    roomGameDataId
     owner
     __typename
   }
@@ -195,21 +350,34 @@ export const deleteRoom = /* GraphQL */ `mutation DeleteRoom(
     mode
     rounds
     timeLimit
-    players
+    currentPlayers
     roomLimit
+    inGame
+    status
+    full
     createdAt
-    users {
+    playing
+    players
+    tempPlayers
+    simpleCode
+    hostID
+    currentRound
+    updatedAt
+    gameData {
       id
-      name
-      color
-      type
-      owner
+      roomID
+      activePlayers
+      scores
+      currentRound
+      roundData
+      lastUpdated
+      gameStarted
       createdAt
       updatedAt
+      owner
       __typename
     }
-    simpleCode
-    updatedAt
+    roomGameDataId
     owner
     __typename
   }
@@ -217,4 +385,325 @@ export const deleteRoom = /* GraphQL */ `mutation DeleteRoom(
 ` as GeneratedMutation<
   APITypes.DeleteRoomMutationVariables,
   APITypes.DeleteRoomMutation
+>;
+export const createGameData = /* GraphQL */ `mutation CreateGameData(
+  $input: CreateGameDataInput!
+  $condition: ModelGameDataConditionInput
+) {
+  createGameData(input: $input, condition: $condition) {
+    id
+    roomID
+    activePlayers
+    scores
+    currentRound
+    roundData
+    lastUpdated
+    gameStarted
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateGameDataMutationVariables,
+  APITypes.CreateGameDataMutation
+>;
+export const updateGameData = /* GraphQL */ `mutation UpdateGameData(
+  $input: UpdateGameDataInput!
+  $condition: ModelGameDataConditionInput
+) {
+  updateGameData(input: $input, condition: $condition) {
+    id
+    roomID
+    activePlayers
+    scores
+    currentRound
+    roundData
+    lastUpdated
+    gameStarted
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateGameDataMutationVariables,
+  APITypes.UpdateGameDataMutation
+>;
+export const deleteGameData = /* GraphQL */ `mutation DeleteGameData(
+  $input: DeleteGameDataInput!
+  $condition: ModelGameDataConditionInput
+) {
+  deleteGameData(input: $input, condition: $condition) {
+    id
+    roomID
+    activePlayers
+    scores
+    currentRound
+    roundData
+    lastUpdated
+    gameStarted
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteGameDataMutationVariables,
+  APITypes.DeleteGameDataMutation
+>;
+export const createMessage = /* GraphQL */ `mutation CreateMessage(
+  $input: CreateMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  createMessage(input: $input, condition: $condition) {
+    id
+    roomID
+    content
+    playerID
+    playerName
+    createdAt
+    type
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateMessageMutationVariables,
+  APITypes.CreateMessageMutation
+>;
+export const updateMessage = /* GraphQL */ `mutation UpdateMessage(
+  $input: UpdateMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  updateMessage(input: $input, condition: $condition) {
+    id
+    roomID
+    content
+    playerID
+    playerName
+    createdAt
+    type
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateMessageMutationVariables,
+  APITypes.UpdateMessageMutation
+>;
+export const deleteMessage = /* GraphQL */ `mutation DeleteMessage(
+  $input: DeleteMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  deleteMessage(input: $input, condition: $condition) {
+    id
+    roomID
+    content
+    playerID
+    playerName
+    createdAt
+    type
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteMessageMutationVariables,
+  APITypes.DeleteMessageMutation
+>;
+export const createTempPlayer = /* GraphQL */ `mutation CreateTempPlayer(
+  $input: CreateTempPlayerInput!
+  $condition: ModelTempPlayerConditionInput
+) {
+  createTempPlayer(input: $input, condition: $condition) {
+    id
+    playerID
+    playerName
+    color
+    type
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateTempPlayerMutationVariables,
+  APITypes.CreateTempPlayerMutation
+>;
+export const updateTempPlayer = /* GraphQL */ `mutation UpdateTempPlayer(
+  $input: UpdateTempPlayerInput!
+  $condition: ModelTempPlayerConditionInput
+) {
+  updateTempPlayer(input: $input, condition: $condition) {
+    id
+    playerID
+    playerName
+    color
+    type
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateTempPlayerMutationVariables,
+  APITypes.UpdateTempPlayerMutation
+>;
+export const deleteTempPlayer = /* GraphQL */ `mutation DeleteTempPlayer(
+  $input: DeleteTempPlayerInput!
+  $condition: ModelTempPlayerConditionInput
+) {
+  deleteTempPlayer(input: $input, condition: $condition) {
+    id
+    playerID
+    playerName
+    color
+    type
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteTempPlayerMutationVariables,
+  APITypes.DeleteTempPlayerMutation
+>;
+export const createPlayerPosition = /* GraphQL */ `mutation CreatePlayerPosition(
+  $input: CreatePlayerPositionInput!
+  $condition: ModelPlayerPositionConditionInput
+) {
+  createPlayerPosition(input: $input, condition: $condition) {
+    id
+    roomID
+    playerID
+    x
+    y
+    timestamp
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreatePlayerPositionMutationVariables,
+  APITypes.CreatePlayerPositionMutation
+>;
+export const updatePlayerPosition = /* GraphQL */ `mutation UpdatePlayerPosition(
+  $input: UpdatePlayerPositionInput!
+  $condition: ModelPlayerPositionConditionInput
+) {
+  updatePlayerPosition(input: $input, condition: $condition) {
+    id
+    roomID
+    playerID
+    x
+    y
+    timestamp
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdatePlayerPositionMutationVariables,
+  APITypes.UpdatePlayerPositionMutation
+>;
+export const deletePlayerPosition = /* GraphQL */ `mutation DeletePlayerPosition(
+  $input: DeletePlayerPositionInput!
+  $condition: ModelPlayerPositionConditionInput
+) {
+  deletePlayerPosition(input: $input, condition: $condition) {
+    id
+    roomID
+    playerID
+    x
+    y
+    timestamp
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeletePlayerPositionMutationVariables,
+  APITypes.DeletePlayerPositionMutation
 >;

@@ -8,7 +8,7 @@
     <form [formGroup]="newGameForm">
       <ion-toggle formControlName="public">{{ newGameForm.controls.public.value ? 'Public' : 'Private'}}</ion-toggle>
     
-      <ion-select formControlName="players" label="No of Players" labelPlacement="floating" placeholder="Players">
+      <ion-select formControlName="currentPlayers" label="No of Players" labelPlacement="floating" placeholder="Players">
         <ion-select-option value="1">1</ion-select-option>
         <ion-select-option value="2">2</ion-select-option>
         <ion-select-option value="3">3</ion-select-option>

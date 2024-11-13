@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: OnlineGamePage
+  },  {
+    path: 'room',
+    loadChildren: () => import('./room/room.module').then( m => m.RoomPageModule)
   }
+
 ];
 
 @NgModule({

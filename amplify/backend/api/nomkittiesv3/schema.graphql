@@ -18,20 +18,109 @@ type User @model @auth(rules: [{ allow: owner }, { allow: public, operations: [r
   owner: String! @index(name: "owner") @auth(rules: [{ allow: owner, operations: [create, read, delete] }, { allow: public, operations: [read] }])
 }
 
-type Room @model @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
+type Room @model @auth(rules: [{ allow: owner }, 
+{ allow: public, operations: [read] }]) {
   id: ID!
-  public: String @index(name: "public", sortKeyFields: ["createdAt"])
+  public: String @index(name: "public", sortKeyFields: ["createdAt"]) 
   mode: String @index(name: "mode")
   rounds: Int
   timeLimit: Int
-  players: Int
+  currentPlayers: Int 
   roomLimit: Int
-  inGame: Int
+  inGame: Boolean 
+  status: RoomStatus! @index(name: "status")
+  full: Boolean
   createdAt: AWSDateTime
-  users: [User]
+  playing: [String]
+  players: [String]
+  tempPlayers: [String]
   simpleCode: String @index(name: "simpleCode")
+  hostID: ID! 
+  currentRound: Int
+  updatedAt: AWSDateTime
+ gameData: GameData @hasOne
 }
 
+enum RoomStatus {
+  WAITING
+  PLAYING
+  FINISHED
+  CANCELLED
+}
+
+type GameData @model @auth(rules: [
+  { allow: owner },
+  { allow: private, operations: [read, update] }
+]) {
+  id: ID!
+  roomID: ID! @index(name: "byRoom")
+  activePlayers: [String]! # players actually in the game
+  scores: AWSJSON # can store player scores as {playerId: score}
+  currentRound: Int
+  roundData: AWSJSON # store current round state
+  lastUpdated: AWSDateTime
+  gameStarted: AWSDateTime
+  room: Room @belongsTo(fields: ["roomID"])
+}
+
+type TempPlayer @model @auth(rules: [
+  { allow: public}
+]) {
+  id: ID!
+  playerID: String!
+  playerName: String
+  color: String
+  type: String
+}
+
+type PlayerPosition @model 
+  @auth(rules: [
+    { allow: owner },
+    { allow: public}
+  ]) {
+  id: ID!
+  roomID: ID! @index(name: "byRoom")
+  playerID: String!
+  x: Float!
+  y: Float!
+  timestamp: AWSTimestamp!
+}
+
+type Message @model @auth(rules: [
+  { allow: owner },
+  { allow: public, operations: [read] }
+]) {
+  id: ID!
+  roomID: ID! @index(name: "byRoom")
+  content: String!
+  playerID: String!
+  playerName: String
+  createdAt: AWSDateTime!
+  type: MessageType # For different message types (chat, system, etc.)
+}
+
+
+enum MessageType {
+  CHAT
+  SYSTEM
+  GAME_EVENT
+}
+
+type Subscription {
+  onCreateMessageByRoomId(roomID: ID!): Message @aws_subscribe(mutations: ["createMessage"])
+}
+
+type Mutation {
+  joinRoom(roomId: ID!): Room
+  leaveRoom(roomId: ID!): Room
+  updateGameState(roomId: ID!, gameData: GameStateInput!): Room
+}
+
+input GameStateInput {
+  currentRound: Int
+  status: RoomStatus
+  gameData: AWSJSON
+}
 
 
 

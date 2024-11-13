@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -24,7 +24,7 @@ export class UserProfileComponent  implements OnInit {
 
   loading = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.subcribeToUser();
@@ -44,7 +44,9 @@ export class UserProfileComponent  implements OnInit {
     this.subscription.add(
       this.userService.userShared().subscribe((user) => {
         if (user) {
+          console.log('user', user)
           this.form.patchValue(user);
+          this.cdr.detectChanges();
         }
       })
     );

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { generateClient } from 'aws-amplify/api';
 import { BehaviorSubject } from 'rxjs';
-import { createRoom } from 'src/graphql/mutations';
+import { createRoom } from 'src/graphQLSlim/slim-mutations';
 import { roomsByPublicAndCreatedAt, roomsBySimpleCode } from 'src/graphql/queries';
-import { ModelSortDirection } from 'src/API';
+import { CreateRoomInput, ModelSortDirection } from 'src/API';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +43,7 @@ export class RoomService {
     return res;
   }
 
-  async createNewRoom(room: any) {
+  async createNewRoom(room: CreateRoomInput) {
     const client = generateClient({authMode: 'userPool'})
     let res;
     try {

@@ -31,7 +31,6 @@ export class UserService {
           owner
         }
       })
-      console.log('user', res.data.usersByOwner.items[0]);
     } catch (error) {
       console.log(error);
     }
@@ -40,12 +39,13 @@ export class UserService {
   
 
   async save(user: any) {
-    let { id = '', ...userToSave } = { ...user };
-
+    
     let res = user;
     if (user.id) {
-      res = await this.updateUser(user);
+      const { owner = '', ...ownerLess} = user;
+      res = await this.updateUser(ownerLess);
     } else {
+      let { id = '', ...userToSave } = user;
      res = await this.createUser(userToSave);
     }
     this.user.next(res);
@@ -55,12 +55,12 @@ export class UserService {
     const client = generateClient({ authMode: 'userPool' });
     let res;
     try {
-      res = await client.graphql({
+      res = (await client.graphql({
         query: updateUser,
         variables: {
           input: user
         }
-      })
+      })).data.updateUser;
     } catch (error) {
       console.log(error);
     }
@@ -73,13 +73,13 @@ export class UserService {
     const owner = (await this.authService.getCurrentUser()).userId;
     user.owner = owner;
     try {
-      res = await client.graphql({
+      res = (await client.graphql({
         query: createUser,
         variables: {
           input: user
         }
 
-      })
+      })).data.createUser;
     } catch (error) {
       console.log(error);
     }

@@ -8,6 +8,24 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
+export const onCreateMessageByRoomId = /* GraphQL */ `subscription OnCreateMessageByRoomId($roomID: ID!) {
+  onCreateMessageByRoomId(roomID: $roomID) {
+    id
+    roomID
+    content
+    playerID
+    playerName
+    createdAt
+    type
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateMessageByRoomIdSubscriptionVariables,
+  APITypes.OnCreateMessageByRoomIdSubscription
+>;
 export const onCreateKitty = /* GraphQL */ `subscription OnCreateKitty($filter: ModelSubscriptionKittyFilterInput) {
   onCreateKitty(filter: $filter) {
     id
@@ -52,6 +70,144 @@ export const onDeleteKitty = /* GraphQL */ `subscription OnDeleteKitty($filter: 
 ` as GeneratedSubscription<
   APITypes.OnDeleteKittySubscriptionVariables,
   APITypes.OnDeleteKittySubscription
+>;
+export const onCreateGameData = /* GraphQL */ `subscription OnCreateGameData(
+  $filter: ModelSubscriptionGameDataFilterInput
+  $owner: String
+) {
+  onCreateGameData(filter: $filter, owner: $owner) {
+    id
+    roomID
+    activePlayers
+    scores
+    currentRound
+    roundData
+    lastUpdated
+    gameStarted
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateGameDataSubscriptionVariables,
+  APITypes.OnCreateGameDataSubscription
+>;
+export const onUpdateGameData = /* GraphQL */ `subscription OnUpdateGameData(
+  $filter: ModelSubscriptionGameDataFilterInput
+  $owner: String
+) {
+  onUpdateGameData(filter: $filter, owner: $owner) {
+    id
+    roomID
+    activePlayers
+    scores
+    currentRound
+    roundData
+    lastUpdated
+    gameStarted
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateGameDataSubscriptionVariables,
+  APITypes.OnUpdateGameDataSubscription
+>;
+export const onDeleteGameData = /* GraphQL */ `subscription OnDeleteGameData(
+  $filter: ModelSubscriptionGameDataFilterInput
+  $owner: String
+) {
+  onDeleteGameData(filter: $filter, owner: $owner) {
+    id
+    roomID
+    activePlayers
+    scores
+    currentRound
+    roundData
+    lastUpdated
+    gameStarted
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteGameDataSubscriptionVariables,
+  APITypes.OnDeleteGameDataSubscription
 >;
 export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
   $filter: ModelSubscriptionUserFilterInput
@@ -120,21 +276,34 @@ export const onCreateRoom = /* GraphQL */ `subscription OnCreateRoom(
     mode
     rounds
     timeLimit
-    players
+    currentPlayers
     roomLimit
+    inGame
+    status
+    full
     createdAt
-    users {
+    playing
+    players
+    tempPlayers
+    simpleCode
+    hostID
+    currentRound
+    updatedAt
+    gameData {
       id
-      name
-      color
-      type
-      owner
+      roomID
+      activePlayers
+      scores
+      currentRound
+      roundData
+      lastUpdated
+      gameStarted
       createdAt
       updatedAt
+      owner
       __typename
     }
-    simpleCode
-    updatedAt
+    roomGameDataId
     owner
     __typename
   }
@@ -153,21 +322,34 @@ export const onUpdateRoom = /* GraphQL */ `subscription OnUpdateRoom(
     mode
     rounds
     timeLimit
-    players
+    currentPlayers
     roomLimit
+    inGame
+    status
+    full
     createdAt
-    users {
+    playing
+    players
+    tempPlayers
+    simpleCode
+    hostID
+    currentRound
+    updatedAt
+    gameData {
       id
-      name
-      color
-      type
-      owner
+      roomID
+      activePlayers
+      scores
+      currentRound
+      roundData
+      lastUpdated
+      gameStarted
       createdAt
       updatedAt
+      owner
       __typename
     }
-    simpleCode
-    updatedAt
+    roomGameDataId
     owner
     __typename
   }
@@ -186,21 +368,34 @@ export const onDeleteRoom = /* GraphQL */ `subscription OnDeleteRoom(
     mode
     rounds
     timeLimit
-    players
+    currentPlayers
     roomLimit
+    inGame
+    status
+    full
     createdAt
-    users {
+    playing
+    players
+    tempPlayers
+    simpleCode
+    hostID
+    currentRound
+    updatedAt
+    gameData {
       id
-      name
-      color
-      type
-      owner
+      roomID
+      activePlayers
+      scores
+      currentRound
+      roundData
+      lastUpdated
+      gameStarted
       createdAt
       updatedAt
+      owner
       __typename
     }
-    simpleCode
-    updatedAt
+    roomGameDataId
     owner
     __typename
   }
@@ -208,4 +403,184 @@ export const onDeleteRoom = /* GraphQL */ `subscription OnDeleteRoom(
 ` as GeneratedSubscription<
   APITypes.OnDeleteRoomSubscriptionVariables,
   APITypes.OnDeleteRoomSubscription
+>;
+export const onCreateTempPlayer = /* GraphQL */ `subscription OnCreateTempPlayer(
+  $filter: ModelSubscriptionTempPlayerFilterInput
+) {
+  onCreateTempPlayer(filter: $filter) {
+    id
+    playerID
+    playerName
+    color
+    type
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateTempPlayerSubscriptionVariables,
+  APITypes.OnCreateTempPlayerSubscription
+>;
+export const onUpdateTempPlayer = /* GraphQL */ `subscription OnUpdateTempPlayer(
+  $filter: ModelSubscriptionTempPlayerFilterInput
+) {
+  onUpdateTempPlayer(filter: $filter) {
+    id
+    playerID
+    playerName
+    color
+    type
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateTempPlayerSubscriptionVariables,
+  APITypes.OnUpdateTempPlayerSubscription
+>;
+export const onDeleteTempPlayer = /* GraphQL */ `subscription OnDeleteTempPlayer(
+  $filter: ModelSubscriptionTempPlayerFilterInput
+) {
+  onDeleteTempPlayer(filter: $filter) {
+    id
+    playerID
+    playerName
+    color
+    type
+    createdAt
+    updatedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteTempPlayerSubscriptionVariables,
+  APITypes.OnDeleteTempPlayerSubscription
+>;
+export const onCreatePlayerPosition = /* GraphQL */ `subscription OnCreatePlayerPosition(
+  $filter: ModelSubscriptionPlayerPositionFilterInput
+  $owner: String
+) {
+  onCreatePlayerPosition(filter: $filter, owner: $owner) {
+    id
+    roomID
+    playerID
+    x
+    y
+    timestamp
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreatePlayerPositionSubscriptionVariables,
+  APITypes.OnCreatePlayerPositionSubscription
+>;
+export const onUpdatePlayerPosition = /* GraphQL */ `subscription OnUpdatePlayerPosition(
+  $filter: ModelSubscriptionPlayerPositionFilterInput
+  $owner: String
+) {
+  onUpdatePlayerPosition(filter: $filter, owner: $owner) {
+    id
+    roomID
+    playerID
+    x
+    y
+    timestamp
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdatePlayerPositionSubscriptionVariables,
+  APITypes.OnUpdatePlayerPositionSubscription
+>;
+export const onDeletePlayerPosition = /* GraphQL */ `subscription OnDeletePlayerPosition(
+  $filter: ModelSubscriptionPlayerPositionFilterInput
+  $owner: String
+) {
+  onDeletePlayerPosition(filter: $filter, owner: $owner) {
+    id
+    roomID
+    playerID
+    x
+    y
+    timestamp
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeletePlayerPositionSubscriptionVariables,
+  APITypes.OnDeletePlayerPositionSubscription
+>;
+export const onCreateMessage = /* GraphQL */ `subscription OnCreateMessage(
+  $filter: ModelSubscriptionMessageFilterInput
+  $owner: String
+) {
+  onCreateMessage(filter: $filter, owner: $owner) {
+    id
+    roomID
+    content
+    playerID
+    playerName
+    createdAt
+    type
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateMessageSubscriptionVariables,
+  APITypes.OnCreateMessageSubscription
+>;
+export const onUpdateMessage = /* GraphQL */ `subscription OnUpdateMessage(
+  $filter: ModelSubscriptionMessageFilterInput
+  $owner: String
+) {
+  onUpdateMessage(filter: $filter, owner: $owner) {
+    id
+    roomID
+    content
+    playerID
+    playerName
+    createdAt
+    type
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateMessageSubscriptionVariables,
+  APITypes.OnUpdateMessageSubscription
+>;
+export const onDeleteMessage = /* GraphQL */ `subscription OnDeleteMessage(
+  $filter: ModelSubscriptionMessageFilterInput
+  $owner: String
+) {
+  onDeleteMessage(filter: $filter, owner: $owner) {
+    id
+    roomID
+    content
+    playerID
+    playerName
+    createdAt
+    type
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteMessageSubscriptionVariables,
+  APITypes.OnDeleteMessageSubscription
 >;
