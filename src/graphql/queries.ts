@@ -156,9 +156,33 @@ export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
     name
     color
     type
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
     owner
     createdAt
     updatedAt
+    userRoomId
     __typename
   }
 }
@@ -177,6 +201,7 @@ export const listUsers = /* GraphQL */ `query ListUsers(
       owner
       createdAt
       updatedAt
+      userRoomId
       __typename
     }
     nextToken
@@ -206,6 +231,7 @@ export const usersByOwner = /* GraphQL */ `query UsersByOwner(
       owner
       createdAt
       updatedAt
+      userRoomId
       __typename
     }
     nextToken
@@ -233,6 +259,17 @@ export const getRoom = /* GraphQL */ `query GetRoom($id: ID!) {
     players
     tempPlayers
     simpleCode
+    host {
+      id
+      name
+      color
+      type
+      owner
+      createdAt
+      updatedAt
+      userRoomId
+      __typename
+    }
     hostID
     currentRound
     updatedAt
@@ -471,6 +508,51 @@ export const roomsBySimpleCode = /* GraphQL */ `query RoomsBySimpleCode(
 ` as GeneratedQuery<
   APITypes.RoomsBySimpleCodeQueryVariables,
   APITypes.RoomsBySimpleCodeQuery
+>;
+export const roomsByHostID = /* GraphQL */ `query RoomsByHostID(
+  $hostID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelRoomFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  roomsByHostID(
+    hostID: $hostID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.RoomsByHostIDQueryVariables,
+  APITypes.RoomsByHostIDQuery
 >;
 export const getTempPlayer = /* GraphQL */ `query GetTempPlayer($id: ID!) {
   getTempPlayer(id: $id) {

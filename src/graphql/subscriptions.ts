@@ -218,9 +218,33 @@ export const onCreateUser = /* GraphQL */ `subscription OnCreateUser(
     name
     color
     type
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
     owner
     createdAt
     updatedAt
+    userRoomId
     __typename
   }
 }
@@ -237,9 +261,33 @@ export const onUpdateUser = /* GraphQL */ `subscription OnUpdateUser(
     name
     color
     type
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
     owner
     createdAt
     updatedAt
+    userRoomId
     __typename
   }
 }
@@ -256,9 +304,33 @@ export const onDeleteUser = /* GraphQL */ `subscription OnDeleteUser(
     name
     color
     type
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
     owner
     createdAt
     updatedAt
+    userRoomId
     __typename
   }
 }
@@ -286,6 +358,17 @@ export const onCreateRoom = /* GraphQL */ `subscription OnCreateRoom(
     players
     tempPlayers
     simpleCode
+    host {
+      id
+      name
+      color
+      type
+      owner
+      createdAt
+      updatedAt
+      userRoomId
+      __typename
+    }
     hostID
     currentRound
     updatedAt
@@ -332,6 +415,17 @@ export const onUpdateRoom = /* GraphQL */ `subscription OnUpdateRoom(
     players
     tempPlayers
     simpleCode
+    host {
+      id
+      name
+      color
+      type
+      owner
+      createdAt
+      updatedAt
+      userRoomId
+      __typename
+    }
     hostID
     currentRound
     updatedAt
@@ -378,6 +472,17 @@ export const onDeleteRoom = /* GraphQL */ `subscription OnDeleteRoom(
     players
     tempPlayers
     simpleCode
+    host {
+      id
+      name
+      color
+      type
+      owner
+      createdAt
+      updatedAt
+      userRoomId
+      __typename
+    }
     hostID
     currentRound
     updatedAt

@@ -25,6 +25,17 @@ export const joinRoom = /* GraphQL */ `mutation JoinRoom($roomId: ID!) {
     players
     tempPlayers
     simpleCode
+    host {
+      id
+      name
+      color
+      type
+      owner
+      createdAt
+      updatedAt
+      userRoomId
+      __typename
+    }
     hostID
     currentRound
     updatedAt
@@ -68,6 +79,17 @@ export const leaveRoom = /* GraphQL */ `mutation LeaveRoom($roomId: ID!) {
     players
     tempPlayers
     simpleCode
+    host {
+      id
+      name
+      color
+      type
+      owner
+      createdAt
+      updatedAt
+      userRoomId
+      __typename
+    }
     hostID
     currentRound
     updatedAt
@@ -111,6 +133,17 @@ export const updateGameState = /* GraphQL */ `mutation UpdateGameState($roomId: 
     players
     tempPlayers
     simpleCode
+    host {
+      id
+      name
+      color
+      type
+      owner
+      createdAt
+      updatedAt
+      userRoomId
+      __typename
+    }
     hostID
     currentRound
     updatedAt
@@ -200,9 +233,33 @@ export const createUser = /* GraphQL */ `mutation CreateUser(
     name
     color
     type
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
     owner
     createdAt
     updatedAt
+    userRoomId
     __typename
   }
 }
@@ -219,9 +276,33 @@ export const updateUser = /* GraphQL */ `mutation UpdateUser(
     name
     color
     type
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
     owner
     createdAt
     updatedAt
+    userRoomId
     __typename
   }
 }
@@ -238,9 +319,33 @@ export const deleteUser = /* GraphQL */ `mutation DeleteUser(
     name
     color
     type
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
     owner
     createdAt
     updatedAt
+    userRoomId
     __typename
   }
 }
@@ -268,6 +373,17 @@ export const createRoom = /* GraphQL */ `mutation CreateRoom(
     players
     tempPlayers
     simpleCode
+    host {
+      id
+      name
+      color
+      type
+      owner
+      createdAt
+      updatedAt
+      userRoomId
+      __typename
+    }
     hostID
     currentRound
     updatedAt
@@ -314,6 +430,17 @@ export const updateRoom = /* GraphQL */ `mutation UpdateRoom(
     players
     tempPlayers
     simpleCode
+    host {
+      id
+      name
+      color
+      type
+      owner
+      createdAt
+      updatedAt
+      userRoomId
+      __typename
+    }
     hostID
     currentRound
     updatedAt
@@ -360,6 +487,17 @@ export const deleteRoom = /* GraphQL */ `mutation DeleteRoom(
     players
     tempPlayers
     simpleCode
+    host {
+      id
+      name
+      color
+      type
+      owner
+      createdAt
+      updatedAt
+      userRoomId
+      __typename
+    }
     hostID
     currentRound
     updatedAt

@@ -15,6 +15,7 @@ type User @model @auth(rules: [{ allow: owner }, { allow: public, operations: [r
   name: String! @auth(rules: [{ allow: owner, operations: [create, update, read, delete] },  { allow: public, operations: [read] }])
   color: String
   type: String
+  room: Room @hasOne
   owner: String! @index(name: "owner") @auth(rules: [{ allow: owner, operations: [create, read, delete] }, { allow: public, operations: [read] }])
 }
 
@@ -35,10 +36,11 @@ type Room @model @auth(rules: [{ allow: owner },
   players: [String]
   tempPlayers: [String]
   simpleCode: String @index(name: "simpleCode")
-  hostID: ID! 
+  host: User @belongsTo(fields: ["hostID"])
+  hostID: ID! @index(name: "hostID")
   currentRound: Int
   updatedAt: AWSDateTime
- gameData: GameData @hasOne
+  gameData: GameData @hasOne
 }
 
 enum RoomStatus {

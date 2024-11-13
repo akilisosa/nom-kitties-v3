@@ -3,12 +3,15 @@ import { generateClient } from 'aws-amplify/api';
 import { BehaviorSubject } from 'rxjs';
 import { createRoom } from 'src/graphQLSlim/slim-mutations';
 import { roomsByPublicAndCreatedAt, roomsBySimpleCode } from 'src/graphql/queries';
-import { CreateRoomInput, ModelSortDirection } from 'src/API';
+import { CreateRoomInput, ModelSortDirection, RoomStatus } from 'src/API';
+import { onUpdateRoom } from 'src/graphql/subscriptions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
+
+
 
   room = new BehaviorSubject<any>(null);
 
@@ -25,18 +28,46 @@ export class RoomService {
     return this.roomList.asObservable();
   }
 
+  subscribeToRoomByID(id: any) {
+    const client = generateClient({authMode: 'apiKey'})
+    let res;
+    try {
+      client.graphql({
+        query: onUpdateRoom,
+        variables: {
+          owner: id
+
+      }
+    }).subscribe({
+        next: (event) => {
+          console.log(event);
+          this.room.next(event.data.onUpdateRoom);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      })
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
   async getRoomByCode(code: string) {
     const client = generateClient({authMode: 'apiKey'})
     let res; 
     try {
-      res = await client.graphql({
+      res = (await client.graphql({
         query: roomsBySimpleCode,
         variables: {
-          simpleCode: code
-        }
-      })
-      this.room.next(res.data.roomsBySimpleCode.items[0]);
-      console.log('room by code', res);
+          simpleCode: code,
+          // filter: {
+          //   status: {
+          //     eq: RoomStatus.WAITING
+          //   }
+          //   }
+          }
+      })).data.roomsBySimpleCode.items[0]
+      this.room.next(res);
     } catch(error) {
       console.log(error);
     }

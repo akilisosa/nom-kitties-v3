@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RoomService } from '../shared/services/room.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-online-game',
@@ -11,7 +12,7 @@ export class OnlineGamePage implements OnInit {
 
   roomList: any[] = [];
   subscription = new Subscription();
-  constructor(private roomService: RoomService) { }
+  constructor(private roomService: RoomService, private router: Router) { }
 
   ngOnInit() {
     this.roomService.getRoomList();
@@ -26,7 +27,8 @@ export class OnlineGamePage implements OnInit {
   }
 
   joinGame(game: any) {
-    console.log('join game');
+    console.log('join game', game);
+    this.router.navigate(['online-game', 'room', game.simpleCode]);
   }
   
 
