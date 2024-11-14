@@ -195,27 +195,8 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
 
   gameLoop() {
 
-    const getPlayerDirection = (keys: any) => {
-      if (keys.w || keys.ArrowUp) return 'up';
-      if (keys.s || keys.ArrowDown) return 'down';
-      if (keys.a || keys.ArrowLeft) return 'left';
-      if (keys.d || keys.ArrowRight) return 'right';
-      return 'idle';
-    }
 
-    const player1Direction = getPlayerDirection({
-      w: this.keys.w,
-      s: this.keys.s,
-      a: this.keys.a,
-      d: this.keys.d
-    });
-  
-    const player2Direction = getPlayerDirection({
-      ArrowUp: this.keys.ArrowUp,
-      ArrowDown: this.keys.ArrowDown,
-      ArrowLeft: this.keys.ArrowLeft,
-      ArrowRight: this.keys.ArrowRight
-    });
+
     // Calculate potential new positions
     const newP1X = this.player1.x + (this.keys.d ? this.player1.speed : (this.keys.a ? -this.player1.speed : 0));
     const newP1Y = this.player1.y + (this.keys.s ? this.player1.speed : (this.keys.w ? -this.player1.speed : 0));

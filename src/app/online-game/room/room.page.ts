@@ -28,19 +28,10 @@ export class RoomPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.getRoom();
     this.subscribeToRoom();
-    // get width of lobby container
-    const width = this.lobbyContainer.nativeElement.clientWidth;
-    console.log('width', width);
   }
 
   ngAfterViewInit() {
-    const width = this.lobbyContainer.nativeElement.clientWidth;
-    console.log('width', width);
-    if(width < 400) {
-      this.size = 6;
-    } else {
-      this.size = 10;
-    }
+
   
   }
 
@@ -50,8 +41,13 @@ export class RoomPage implements OnInit, OnDestroy {
     if(this.lobbyWidth !== width || this.lobbyHeight !== height){
       this.lobbyWidth = width;
       this.lobbyHeight = height;
-
+      
       this.gameSize = Math.min(width, height) - 5;
+      if(this.gameSize > 600) {
+        this.gameSize = 600;
+      }
+
+
       this.cdr.detectChanges();
     }
 
