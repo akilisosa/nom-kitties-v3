@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { get } from 'aws-amplify/api';
 
 @Component({
@@ -6,13 +6,15 @@ import { get } from 'aws-amplify/api';
   templateUrl: './lobby.component.html',
   styleUrls: ['./lobby.component.scss'],
 })
-export class LobbyComponent implements OnInit, OnChanges {
+export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('gameCanvas') gameCanvas!: ElementRef;
 
   @Input() room: any;
   @Input() size: number = 500;
   @Input() playerList: any[] = []
 
+  
+  animationFrameId:any;
   ctx: any;
   canvas: any;
 
@@ -88,8 +90,19 @@ export class LobbyComponent implements OnInit, OnChanges {
     }
   }
 
+  ngOnDestroy(): void {
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+  }
+  }
+
 
   drawCanvas() {
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+  }
+
     this.canvas = this.gameCanvas.nativeElement;
     this.ctx = this.canvas.getContext('2d');
     this.ctx.fillStyle = '#ebebd3';
@@ -141,7 +154,7 @@ export class LobbyComponent implements OnInit, OnChanges {
     // const kittyX = this.getScaledValue(50);
     // const kittyY = this.getScaledValue(50);
     this.drawKitty(this.player1.x, this.player1.y, 50, '#040607');
-    requestAnimationFrame(() => this.gameLoop());
+    this.animationFrameId = requestAnimationFrame(() => this.gameLoop());
   }
 
   drawKitty(x: number, y: number, width: number, color: string = '#040607') {
