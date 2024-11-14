@@ -20,11 +20,6 @@ export class FelineForumPage implements OnInit {
     this.messageService.sendChatMessage('123', 'Hello World');
   }
 
-  // sendMessage() {
-  //   this.messageService.sendMessage('123', 'Hello World');
-  
-  // }
-
   subscribeToMessages() {
      this.subscription.add(this.messageService.subscribeToChatMessages('123'))
 
