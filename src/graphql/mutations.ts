@@ -170,6 +170,19 @@ export const updateGameState = /* GraphQL */ `mutation UpdateGameState($roomId: 
   APITypes.UpdateGameStateMutationVariables,
   APITypes.UpdateGameStateMutation
 >;
+export const sendChatMessage = /* GraphQL */ `mutation SendChatMessage($roomId: ID!, $message: String!, $sender: String!) {
+  sendChatMessage(roomId: $roomId, message: $message, sender: $sender) {
+    roomId
+    message
+    sender
+    timestamp
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.SendChatMessageMutationVariables,
+  APITypes.SendChatMessageMutation
+>;
 export const createKitty = /* GraphQL */ `mutation CreateKitty(
   $input: CreateKittyInput!
   $condition: ModelKittyConditionInput

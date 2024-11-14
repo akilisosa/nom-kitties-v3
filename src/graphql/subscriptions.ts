@@ -26,6 +26,19 @@ export const onCreateMessageByRoomId = /* GraphQL */ `subscription OnCreateMessa
   APITypes.OnCreateMessageByRoomIdSubscriptionVariables,
   APITypes.OnCreateMessageByRoomIdSubscription
 >;
+export const onMessageReceived = /* GraphQL */ `subscription OnMessageReceived($roomId: ID!) {
+  onMessageReceived(roomId: $roomId) {
+    roomId
+    message
+    sender
+    timestamp
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnMessageReceivedSubscriptionVariables,
+  APITypes.OnMessageReceivedSubscription
+>;
 export const onCreateKitty = /* GraphQL */ `subscription OnCreateKitty($filter: ModelSubscriptionKittyFilterInput) {
   onCreateKitty(filter: $filter) {
     id

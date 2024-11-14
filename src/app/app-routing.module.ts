@@ -37,6 +37,10 @@ const routes: Routes = [
     path: 'shop',
     loadChildren: () => import('./shop/shop.module').then( m => m.ShopPageModule)
   },
+  {
+    path: 'feline-forum',
+    loadChildren: () => import('./feline-forum/feline-forum.module').then( m => m.FelineForumPageModule)
+  },
 ];
 
 @NgModule({

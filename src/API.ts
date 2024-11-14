@@ -71,6 +71,14 @@ export type GameStateInput = {
   gameData?: string | null,
 };
 
+export type ChatMessage = {
+  __typename: "ChatMessage",
+  roomId: string,
+  message: string,
+  sender: string,
+  timestamp: number,
+};
+
 export type CreateKittyInput = {
   id?: string | null,
   name: string,
@@ -1004,6 +1012,22 @@ export type UpdateGameStateMutation = {
     } | null,
     roomGameDataId?: string | null,
     owner?: string | null,
+  } | null,
+};
+
+export type SendChatMessageMutationVariables = {
+  roomId: string,
+  message: string,
+  sender: string,
+};
+
+export type SendChatMessageMutation = {
+  sendChatMessage?:  {
+    __typename: "ChatMessage",
+    roomId: string,
+    message: string,
+    sender: string,
+    timestamp: number,
   } | null,
 };
 
@@ -2370,6 +2394,20 @@ export type OnCreateMessageByRoomIdSubscription = {
     type?: MessageType | null,
     updatedAt: string,
     owner?: string | null,
+  } | null,
+};
+
+export type OnMessageReceivedSubscriptionVariables = {
+  roomId: string,
+};
+
+export type OnMessageReceivedSubscription = {
+  onMessageReceived?:  {
+    __typename: "ChatMessage",
+    roomId: string,
+    message: string,
+    sender: string,
+    timestamp: number,
   } | null,
 };
 
