@@ -45,10 +45,10 @@ export class ChatService {
         query: messagesByRoomIDAndCreatedAt,
         variables: {
           roomID: id,
-          sortDirection: ModelSortDirection.ASC,
+          sortDirection: ModelSortDirection.DESC,
           limit: 20,
         }}
-      )).data.messagesByRoomIDAndCreatedAt.items;
+      )).data.messagesByRoomIDAndCreatedAt.items.reverse();
       console.log('res', res);
     } catch (error) {
       console.error(error);

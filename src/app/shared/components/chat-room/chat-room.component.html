@@ -1,5 +1,5 @@
 <ion-content >
-<div #chatContainer id="chatContainer" style=" overflow-y: auto; " 
+<div #chatContainer id="chatContainer"
 > 
   <ng-container *ngFor="let message of chatMessageList">
     <div>
@@ -24,10 +24,13 @@
 </div>
 
 <div >
-  <ion-input [formControl]="message" label="Message" label-placement="floating" fill="outline" placeholder="Enter text">
+  <ion-input [formControl]="message" label="Message:" label-placement="stacked"  placeholder="Enter text">
     <ion-button (click)="sendChat()" fill="clear" slot="end" aria-label="Show/hide">
       <ion-icon name="navigate-outline"></ion-icon>
     </ion-button>
   </ion-input>
+</div>
+<div style="margin:2rem">
+
 </div>
 </ion-content>
