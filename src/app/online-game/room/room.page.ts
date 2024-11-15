@@ -13,13 +13,16 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
 
   size = 10;
 
-  room: any;  
+  room: any=  {simpleCode: '------'};  
   playerList = [];
 
   lobbyHeight = 0;
   lobbyWidth = 0;
 
   gameSize = 0;
+
+  isModalOpen = true //false;
+  fullScreen = false;
 
 
   subscription = new Subscription();
@@ -48,6 +51,14 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  async cancel() {
+    this.isModalOpen = false;
+  }
+
+  onWillDismiss(event: Event) {
+
   }
 
   async getRoom() {
