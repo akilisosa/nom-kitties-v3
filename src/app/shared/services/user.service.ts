@@ -4,6 +4,7 @@ import { generateClient } from 'aws-amplify/api';
 import { createUser, updateUser } from 'src/graphql/mutations';
 import { usersByOwner } from 'src/graphql/queries';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { createUserSlim, updateUserSlim } from 'src/graph-slim/slim-mutations';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,7 @@ export class UserService {
     let res;
     try {
       res = (await client.graphql({
-        query: updateUser,
+        query: updateUserSlim,
         variables: {
           input: user
         }
@@ -75,7 +76,7 @@ export class UserService {
     user.owner = owner;
     try {
       res = (await client.graphql({
-        query: createUser,
+        query: createUserSlim,
         variables: {
           input: user
         }
@@ -86,7 +87,6 @@ export class UserService {
     }
     return res;
   }
-
 
 
 }

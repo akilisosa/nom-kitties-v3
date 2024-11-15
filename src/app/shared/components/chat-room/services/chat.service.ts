@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { generateClient } from 'aws-amplify/api';
+import { ModelSortDirection } from 'src/API';
 import { createMessage, sendChatMessage } from 'src/graphql/mutations';
+import { messagesByRoomIDAndCreatedAt } from 'src/graphql/queries';
 import { onCreateMessage, onMessageReceived } from 'src/graphql/subscriptions';
 // import { events } from 'aws-amplify/data';
 
@@ -9,6 +11,7 @@ import { onCreateMessage, onMessageReceived } from 'src/graphql/subscriptions';
   providedIn: 'root'
 })
 export class ChatService {
+
 
 
   constructor() { }
@@ -33,6 +36,28 @@ export class ChatService {
       console.error(error);
     }
   }
+
+ async getLastMessages(id: string) {
+  console.log('does me')
+    const client = generateClient({authMode: 'userPool'});
+    let res;
+    try {
+      res = (await client.graphql({
+        query: messagesByRoomIDAndCreatedAt,
+        variables: {
+          roomID: id,
+          sortDirection: ModelSortDirection.ASC,
+          limit: 20,
+        }}
+      )).data.messagesByRoomIDAndCreatedAt.items;
+      console.log('res', res);
+    } catch (error) {
+      console.error(error);
+    }
+
+    return res;
+  }
+
 
   subscribeToChat(roomID: string) {
     const client = generateClient({authMode: 'userPool'});

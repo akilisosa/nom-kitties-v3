@@ -10,6 +10,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class UserProfileComponent  implements OnInit {
 
+  user: any;
 
   form = new FormGroup({
     id: new FormControl(''),
@@ -35,7 +36,10 @@ export class UserProfileComponent  implements OnInit {
     this.loading = true;
     const user = this.userService.user.getValue()
     if(!user) {
-    await this.userService.getUser();
+     this.user =  await this.userService.getUser();
+     if(!this.user) {
+      this.user = await this.userService.save(this.form.value);
+     }
     }
     this.loading = false;
   }

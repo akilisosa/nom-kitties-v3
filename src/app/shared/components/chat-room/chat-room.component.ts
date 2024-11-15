@@ -1,4 +1,4 @@
-import { Component, Host, HostListener, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Host, HostListener, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ChatService } from './services/chat.service';
 import { Subscription } from 'rxjs';
 
@@ -27,7 +27,9 @@ import { FormControl } from '@angular/forms';
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
 })
-export class ChatRoomComponent  implements OnInit, OnChanges, OnDestroy {
+export class ChatRoomComponent implements OnInit, OnChanges, AfterViewChecked, OnDestroy {
+  @ViewChild('chatContainer') private chatContainer!: ElementRef;
+  private shouldScroll = true;
 
 
   @Input() id: string = '';
@@ -49,7 +51,7 @@ export class ChatRoomComponent  implements OnInit, OnChanges, OnDestroy {
   handleKeyboardEvent(event: KeyboardEvent) {
     const input = event.target as HTMLInputElement;
     if (input.value && this.user.name) {
-    this.sendChat()
+      this.sendChat()
     }
   }
 
@@ -57,10 +59,17 @@ export class ChatRoomComponent  implements OnInit, OnChanges, OnDestroy {
     this.getUser()
   }
 
+  ngAfterViewChecked() {
+    if (this.shouldScroll) {
+      this.scrollToBottom();
+    }
+  }
+
   ngOnChanges() {
-    if(this.id !== ''){
+    if (this.id !== '') {
       this.subscription.unsubscribe();
-    this.subscribeToChat(this.id)
+      this.getLastMessages(this.id);
+      this.subscribeToChat(this.id)
     }
   }
 
@@ -70,56 +79,75 @@ export class ChatRoomComponent  implements OnInit, OnChanges, OnDestroy {
 
   async sendChat() {
     this.loading = true;
-    if(this.message.value){
-      console.log('id, message, name, color', this.id, this.message.value, this.user.name, this.user.color);
-    await this.chatService.sendChat(this.id, this.message.value, this.user.name, this.user.color);
-    this.message.setValue('');
-  }
+    if (this.message.value) {
+      await this.chatService.sendChat(this.id, this.message.value, this.user.color, this.user.name,);
+      this.message.setValue('');
+    }
     this.loading = false;
   }
 
- async getUser() {
-    this.user =await this.userService.user.getValue();
-    if(!this.user) {
-     this.user = await this.userService.getUser();
-     console.log(this.user);
+  async getLastMessages(id: string) {
+    const messages = await this.chatService.getLastMessages(id) || [];
+    this.chatMessageList = [...messages];
+    this.scrollToBottom();
+  }
+
+  async getUser() {
+    this.user = await this.userService.user.getValue();
+    if (!this.user) {
+      this.user = await this.userService.getUser();
+      console.log(this.user);
     }
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+    } catch (err) {}
+  }
+
+  // Add this method to handle manual scrolling
+  onScroll(): void {
+    const element = this.chatContainer.nativeElement;
+    const atBottom = element.scrollHeight - element.scrollTop - element.clientHeight < 1;
+    this.shouldScroll = atBottom;
   }
 
   subscribeToChat(id: string) {
     console.log('subscribing to chat', id);
     this.subscription = this.chatService.subscribeToChat(id)
-    .subscribe({
-      next: (data: any) => {
-        console.log(data);
-      },
-      error: (error: any) => {
-        console.error(error);
-      },
-    });
-    
+      .subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.updateMessageList(data.data.onCreateMessage)
+        },
+        error: (error: any) => {
+          console.error(error);
+        },
+      });
+
   }
 
-  updateMessages(message: any) {
+  updateMessageList(message: any) {
     this.chatMessageList.push(message);
-    if(this.chatMessageList.length > 20) {
+    if (this.chatMessageList.length > 20) {
       this.chatMessageList.shift();
     }
   }
 
-//   async sendMessage(id: string, message: string) {
-//     const channel = await events.post(`/gameroom/${id}`, message);
-//   }
+  //   async sendMessage(id: string, message: string) {
+  //     const channel = await events.post(`/gameroom/${id}`, message);
+  //   }
 
-//   async subscribeToChat(id: string) {
-//     const channel = await events.connect(`/gameroom/${id}`);
-//     return channel.subscribe({
-//       next: (data) => {
-//         console.log(data);
-//       },
-//       error: (error) => {
-//         console.error(error);
-//       },
-//   })
-// }
+  //   async subscribeToChat(id: string) {
+  //     const channel = await events.connect(`/gameroom/${id}`);
+  //     return channel.subscribe({
+  //       next: (data) => {
+  //         console.log(data);
+  //       },
+  //       error: (error) => {
+  //         console.error(error);
+  //       },
+  //   })
+  // }
 }

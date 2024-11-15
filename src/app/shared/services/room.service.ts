@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { generateClient } from 'aws-amplify/api';
 import { BehaviorSubject } from 'rxjs';
-import { createRoom } from 'src/graphQLSlim/slim-mutations';
+import { createRoom } from 'src/graph-slim/slim-mutations';
 import { roomsByPublicAndCreatedAt, roomsBySimpleCode } from 'src/graphql/queries';
 import { CreateRoomInput, ModelSortDirection, RoomStatus } from 'src/API';
 import { onUpdateRoom } from 'src/graphql/subscriptions';

@@ -90,10 +90,11 @@ type PlayerPosition @model
 
 type Message @model @auth(rules: [
   { allow: owner },
+  { allow: private, operations: [read] },
   { allow: public, operations: [read] }
 ]) {
   id: ID!
-  roomID: ID! @index(name: "byRoom")
+  roomID: ID! @index(name: "byRoom", sortKeyFields: ["createdAt"])
   content: String!
   playerID: String!
   playerName: String

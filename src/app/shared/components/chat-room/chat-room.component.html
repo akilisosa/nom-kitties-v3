@@ -1,9 +1,37 @@
-<div style="height: 80vh">
+<div #chatContainer id="chatContainer" style="height: 80vh;   overflow-y: auto; "  (scroll)="onScroll()">
+  <ng-container *ngFor="let message of chatMessageList">
+    <div>
+      <ion-card>
+        <ion-card-header>
+          <!-- <div style="display:flex; flex-direction: row; justify-content: space-between;"> -->
+          <ion-card-subtitle>
+            <div style="display:flex; flex-direction: row; align-items: center;">{{message.playerName}}
+            <ion-icon src="assets/svg/kitty.svg" [ngStyle]="{'color': message.playerID}"></ion-icon>
+            </div>
+          </ion-card-subtitle>
+          <ion-card-title>{{ message.content }}</ion-card-title>
+          <!-- </div> -->
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+
+  </ng-container>
+
 
 </div>
 
-<ion-input [formControl]="message" label="Outline input" label-placement="floating" fill="outline" placeholder="Enter text">
-  <ion-button (click)="sendChat()" fill="clear" slot="end" aria-label="Show/hide">
-    <ion-icon name="navigate-outline"></ion-icon>
-  </ion-button>
-</ion-input>
+<div style="
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+background-color: white;
+border-top: 1px solid black;
+padding: 10px;">
+  <ion-input [formControl]="message" label="Message" label-placement="floating" fill="outline" placeholder="Enter text">
+    <ion-button (click)="sendChat()" fill="clear" slot="end" aria-label="Show/hide">
+      <ion-icon name="navigate-outline"></ion-icon>
+    </ion-button>
+  </ion-input>
+</div>

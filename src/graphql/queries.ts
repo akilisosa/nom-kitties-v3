@@ -716,15 +716,17 @@ export const listMessages = /* GraphQL */ `query ListMessages(
   APITypes.ListMessagesQueryVariables,
   APITypes.ListMessagesQuery
 >;
-export const messagesByRoomID = /* GraphQL */ `query MessagesByRoomID(
+export const messagesByRoomIDAndCreatedAt = /* GraphQL */ `query MessagesByRoomIDAndCreatedAt(
   $roomID: ID!
+  $createdAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
   $filter: ModelMessageFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  messagesByRoomID(
+  messagesByRoomIDAndCreatedAt(
     roomID: $roomID
+    createdAt: $createdAt
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -747,6 +749,6 @@ export const messagesByRoomID = /* GraphQL */ `query MessagesByRoomID(
   }
 }
 ` as GeneratedQuery<
-  APITypes.MessagesByRoomIDQueryVariables,
-  APITypes.MessagesByRoomIDQuery
+  APITypes.MessagesByRoomIDAndCreatedAtQueryVariables,
+  APITypes.MessagesByRoomIDAndCreatedAtQuery
 >;
