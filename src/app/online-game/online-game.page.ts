@@ -26,9 +26,10 @@ export class OnlineGamePage implements OnInit {
     }));
   }
 
-  joinGame(game: any) {
+ async joinGame(game: any) {
     console.log('join game', game);
-    this.router.navigate(['online-game', 'room', game.simpleCode]);
+   const success =  await this.roomService.joinRoom(game.id);
+  await this.router.navigate(['online-game', 'room', game.simpleCode]);
   }
   
 

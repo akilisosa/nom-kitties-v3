@@ -150,11 +150,13 @@ export class RoomService {
           roomID
         }
       })
-      console.log('room', res);
+      console.log('joinroom', res.data.joinRoom);
       this.room.next(res.data.joinRoom);
     } catch (error) {
       console.log(error);
     }
+
+    return res;
   }
 
   
