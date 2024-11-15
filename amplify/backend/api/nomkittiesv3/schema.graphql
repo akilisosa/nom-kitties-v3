@@ -109,22 +109,23 @@ enum MessageType {
 }
 
 type Subscription {
-  onCreateMessageByRoomId(roomID: ID!): Message @aws_subscribe(mutations: ["createMessage"])
-  onMessageReceived(roomId: ID!): ChatMessage @aws_subscribe(mutations: ["sendChatMessage"])
+  onCreateMessageByRoomID(roomID: ID!): Message @aws_subscribe(mutations: ["createMessage"])
+  onMessageReceived(roomID: ID!): ChatMessage @aws_subscribe(mutations: ["sendChatMessage"])
 }
 
 type Mutation {
-  joinRoom(roomId: ID!): Room
-  leaveRoom(roomId: ID!): Room
-  updateGameState(roomId: ID!, gameData: GameStateInput!): Room
+  joinRoom(roomID: ID!): Room
+  leaveRoom(roomID: ID!): Room
+  updateGameState(roomID: ID!, gameData: GameStateInput!): Room
   
-  sendChatMessage(roomId: ID!, message: String!, sender: String!): ChatMessage
+  sendChatMessage(roomID: ID!, message: String!, sender: String!, color: String!): ChatMessage
 }
 
 type ChatMessage {
-  roomId: ID!
+  roomID: ID!
   message: String!
   sender: String!
+  color: String!
   timestamp: AWSTimestamp!
 }
 

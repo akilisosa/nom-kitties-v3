@@ -17,11 +17,11 @@ export class FelineForumPage implements OnInit {
   }
 
   sendMessage() {
-    this.messageService.sendChatMessage('123', 'Hello World');
+  //  this.messageService.sendChatMessage('123', 'Hello World');
   }
 
   subscribeToMessages() {
-     this.subscription.add(this.messageService.subscribeToChatMessages('123'))
+   //  this.subscription.add(this.messageService.subscribeToChatMessages('123'))
 
    }
 

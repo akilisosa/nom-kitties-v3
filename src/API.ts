@@ -73,9 +73,10 @@ export type GameStateInput = {
 
 export type ChatMessage = {
   __typename: "ChatMessage",
-  roomId: string,
+  roomID: string,
   message: string,
   sender: string,
+  color: string,
   timestamp: number,
 };
 
@@ -850,7 +851,7 @@ export type ModelSubscriptionMessageFilterInput = {
 };
 
 export type JoinRoomMutationVariables = {
-  roomId: string,
+  roomID: string,
 };
 
 export type JoinRoomMutation = {
@@ -905,7 +906,7 @@ export type JoinRoomMutation = {
 };
 
 export type LeaveRoomMutationVariables = {
-  roomId: string,
+  roomID: string,
 };
 
 export type LeaveRoomMutation = {
@@ -960,7 +961,7 @@ export type LeaveRoomMutation = {
 };
 
 export type UpdateGameStateMutationVariables = {
-  roomId: string,
+  roomID: string,
   gameData: GameStateInput,
 };
 
@@ -1016,17 +1017,19 @@ export type UpdateGameStateMutation = {
 };
 
 export type SendChatMessageMutationVariables = {
-  roomId: string,
+  roomID: string,
   message: string,
   sender: string,
+  color: string,
 };
 
 export type SendChatMessageMutation = {
   sendChatMessage?:  {
     __typename: "ChatMessage",
-    roomId: string,
+    roomID: string,
     message: string,
     sender: string,
+    color: string,
     timestamp: number,
   } | null,
 };
@@ -2378,12 +2381,12 @@ export type MessagesByRoomIDQuery = {
   } | null,
 };
 
-export type OnCreateMessageByRoomIdSubscriptionVariables = {
+export type OnCreateMessageByRoomIDSubscriptionVariables = {
   roomID: string,
 };
 
-export type OnCreateMessageByRoomIdSubscription = {
-  onCreateMessageByRoomId?:  {
+export type OnCreateMessageByRoomIDSubscription = {
+  onCreateMessageByRoomID?:  {
     __typename: "Message",
     id: string,
     roomID: string,
@@ -2398,15 +2401,16 @@ export type OnCreateMessageByRoomIdSubscription = {
 };
 
 export type OnMessageReceivedSubscriptionVariables = {
-  roomId: string,
+  roomID: string,
 };
 
 export type OnMessageReceivedSubscription = {
   onMessageReceived?:  {
     __typename: "ChatMessage",
-    roomId: string,
+    roomID: string,
     message: string,
     sender: string,
+    color: string,
     timestamp: number,
   } | null,
 };

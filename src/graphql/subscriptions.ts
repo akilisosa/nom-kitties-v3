@@ -8,8 +8,8 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreateMessageByRoomId = /* GraphQL */ `subscription OnCreateMessageByRoomId($roomID: ID!) {
-  onCreateMessageByRoomId(roomID: $roomID) {
+export const onCreateMessageByRoomID = /* GraphQL */ `subscription OnCreateMessageByRoomID($roomID: ID!) {
+  onCreateMessageByRoomID(roomID: $roomID) {
     id
     roomID
     content
@@ -23,14 +23,15 @@ export const onCreateMessageByRoomId = /* GraphQL */ `subscription OnCreateMessa
   }
 }
 ` as GeneratedSubscription<
-  APITypes.OnCreateMessageByRoomIdSubscriptionVariables,
-  APITypes.OnCreateMessageByRoomIdSubscription
+  APITypes.OnCreateMessageByRoomIDSubscriptionVariables,
+  APITypes.OnCreateMessageByRoomIDSubscription
 >;
-export const onMessageReceived = /* GraphQL */ `subscription OnMessageReceived($roomId: ID!) {
-  onMessageReceived(roomId: $roomId) {
-    roomId
+export const onMessageReceived = /* GraphQL */ `subscription OnMessageReceived($roomID: ID!) {
+  onMessageReceived(roomID: $roomID) {
+    roomID
     message
     sender
+    color
     timestamp
     __typename
   }

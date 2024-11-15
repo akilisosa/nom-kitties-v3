@@ -55,7 +55,7 @@ export class MessageService {
 
   ///  TODO 
 
-  async sendChatMessage( roomId: string, message: string,) {
+  async sendChatMessage( roomID: string, message: string, sender: string, color: string) {
     // Implement this method
     const client = generateClient({ authMode: 'userPool' })
     let res;
@@ -65,9 +65,9 @@ export class MessageService {
         query: sendChatMessage,
         variables: {
           message,
-          roomId,
-          sender: 'user'
-
+          roomID,
+          sender,
+          color,
         }
       })
       console.log('message sent', res);
@@ -77,12 +77,12 @@ export class MessageService {
 
   }
 
-  subscribeToChatMessages(roomId: string) {
+  subscribeToChatMessages(roomID: string) {
     const client = generateClient({ authMode: 'userPool' })
     return client.graphql({
       query: onMessageReceived,
       variables: {
-        roomId,
+        roomID,
       }
     }).subscribe({
       next: ({ data }) => {

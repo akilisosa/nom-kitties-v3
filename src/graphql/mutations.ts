@@ -8,8 +8,8 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
-export const joinRoom = /* GraphQL */ `mutation JoinRoom($roomId: ID!) {
-  joinRoom(roomId: $roomId) {
+export const joinRoom = /* GraphQL */ `mutation JoinRoom($roomID: ID!) {
+  joinRoom(roomID: $roomID) {
     id
     public
     mode
@@ -62,8 +62,8 @@ export const joinRoom = /* GraphQL */ `mutation JoinRoom($roomId: ID!) {
   APITypes.JoinRoomMutationVariables,
   APITypes.JoinRoomMutation
 >;
-export const leaveRoom = /* GraphQL */ `mutation LeaveRoom($roomId: ID!) {
-  leaveRoom(roomId: $roomId) {
+export const leaveRoom = /* GraphQL */ `mutation LeaveRoom($roomID: ID!) {
+  leaveRoom(roomID: $roomID) {
     id
     public
     mode
@@ -116,8 +116,8 @@ export const leaveRoom = /* GraphQL */ `mutation LeaveRoom($roomId: ID!) {
   APITypes.LeaveRoomMutationVariables,
   APITypes.LeaveRoomMutation
 >;
-export const updateGameState = /* GraphQL */ `mutation UpdateGameState($roomId: ID!, $gameData: GameStateInput!) {
-  updateGameState(roomId: $roomId, gameData: $gameData) {
+export const updateGameState = /* GraphQL */ `mutation UpdateGameState($roomID: ID!, $gameData: GameStateInput!) {
+  updateGameState(roomID: $roomID, gameData: $gameData) {
     id
     public
     mode
@@ -170,11 +170,22 @@ export const updateGameState = /* GraphQL */ `mutation UpdateGameState($roomId: 
   APITypes.UpdateGameStateMutationVariables,
   APITypes.UpdateGameStateMutation
 >;
-export const sendChatMessage = /* GraphQL */ `mutation SendChatMessage($roomId: ID!, $message: String!, $sender: String!) {
-  sendChatMessage(roomId: $roomId, message: $message, sender: $sender) {
-    roomId
+export const sendChatMessage = /* GraphQL */ `mutation SendChatMessage(
+  $roomID: ID!
+  $message: String!
+  $sender: String!
+  $color: String!
+) {
+  sendChatMessage(
+    roomID: $roomID
+    message: $message
+    sender: $sender
+    color: $color
+  ) {
+    roomID
     message
     sender
+    color
     timestamp
     __typename
   }
