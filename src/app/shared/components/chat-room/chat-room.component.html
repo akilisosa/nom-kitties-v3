@@ -1,4 +1,5 @@
-<div #chatContainer id="chatContainer" style="height: 80vh;   overflow-y: auto; "  (scroll)="onScroll()">
+<ion-content>
+<div #chatContainer id="chatContainer" style=" overflow-y: auto; height:80%; "  (scroll)="onScroll()">
   <ng-container *ngFor="let message of chatMessageList">
     <div>
       <ion-card>
@@ -35,3 +36,4 @@ padding: 10px;">
     </ion-button>
   </ion-input>
 </div>
+</ion-content>
