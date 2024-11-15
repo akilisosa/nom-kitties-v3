@@ -1,4 +1,4 @@
-import { Component, Host, HostListener, Input, OnChanges, OnInit } from '@angular/core';
+import { Component, Host, HostListener, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { ChatService } from './services/chat.service';
 import { Subscription } from 'rxjs';
 
@@ -27,10 +27,10 @@ import { FormControl } from '@angular/forms';
   templateUrl: './chat-room.component.html',
   styleUrls: ['./chat-room.component.scss'],
 })
-export class ChatRoomComponent  implements OnInit, OnChanges {
+export class ChatRoomComponent  implements OnInit, OnChanges, OnDestroy {
 
 
-  @Input() id: string = '1234';
+  @Input() id: string = '';
   user: any = {};
 
   loading = false;
@@ -38,6 +38,8 @@ export class ChatRoomComponent  implements OnInit, OnChanges {
 
   message = new FormControl('')
 
+
+  chatMessageList: any[] = [];
 
   constructor(private chatService: ChatService, private userService: UserService) { }
 
@@ -53,15 +55,17 @@ export class ChatRoomComponent  implements OnInit, OnChanges {
 
   ngOnInit() {
     this.getUser()
-  //  this.subscibeToChat()
-    //this.subscribeToChat(id);
-  // this.chatService.sendMessage(this.id, 'Hello World');
   }
 
   ngOnChanges() {
-    if(this.id !== '1234'){
+    if(this.id !== ''){
+      this.subscription.unsubscribe();
     this.subscribeToChat(this.id)
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   async sendChat() {
@@ -69,7 +73,8 @@ export class ChatRoomComponent  implements OnInit, OnChanges {
     if(this.message.value){
       console.log('id, message, name, color', this.id, this.message.value, this.user.name, this.user.color);
     await this.chatService.sendChat(this.id, this.message.value, this.user.name, this.user.color);
-    }
+    this.message.setValue('');
+  }
     this.loading = false;
   }
 
@@ -82,15 +87,24 @@ export class ChatRoomComponent  implements OnInit, OnChanges {
   }
 
   subscribeToChat(id: string) {
-    this.subscription.add(this.chatService.subscribeToChat(id).subscribe({
+    console.log('subscribing to chat', id);
+    this.subscription = this.chatService.subscribeToChat(id)
+    .subscribe({
       next: (data: any) => {
         console.log(data);
       },
       error: (error: any) => {
         console.error(error);
       },
-    }));
+    });
     
+  }
+
+  updateMessages(message: any) {
+    this.chatMessageList.push(message);
+    if(this.chatMessageList.length > 20) {
+      this.chatMessageList.shift();
+    }
   }
 
 //   async sendMessage(id: string, message: string) {

@@ -1,6 +1,7 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { RoomService } from 'src/app/shared/services/room.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
 
   size = 10;
 
-  room: any=  {simpleCode: '------'};  
+  room: any=  {simpleCode: '------', id: ''};  
   playerList = [];
 
   lobbyHeight = 0;
@@ -21,12 +22,15 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
 
   gameSize = 0;
 
-  isModalOpen = true //false;
+  isModalOpen = false;
   fullScreen = false;
 
 
   subscription = new Subscription();
-  constructor(private roomService: RoomService, private router: Router, private cdr: ChangeDetectorRef) { }
+  constructor(private roomService: RoomService, 
+    private router: Router, 
+    private cdr: ChangeDetectorRef,
+  private authService: AuthService) { }
 
   ngOnInit() {
     this.getRoom();
@@ -86,8 +90,15 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
     this.router.navigate(['/online-game']);
   }
 
-  leaveRoom() {
-    this.router.navigate(['/online-game']);
+ async leaveRoom() {
+    const userID = (await this.authService.getCurrentUser()).userId;
+    if(this.room.owner === userID){
+      console.log('owner leaving room', this.room.id);
+      await this.roomService.deleteRoom(this.room.id);
+    }
+
+
+   await this.router.navigate(['/online-game']);
     }
 
 }

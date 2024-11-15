@@ -97,7 +97,7 @@ type Message @model @auth(rules: [
   content: String!
   playerID: String!
   playerName: String
-  createdAt: AWSDateTime!
+  createdAt: AWSDateTime
   type: MessageType # For different message types (chat, system, etc.)
 }
 

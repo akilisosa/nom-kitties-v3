@@ -3,7 +3,7 @@
 </div>
 
 <ion-input [formControl]="message" label="Outline input" label-placement="floating" fill="outline" placeholder="Enter text">
-  <ion-button fill="clear" slot="end" aria-label="Show/hide">
+  <ion-button (click)="sendChat()" fill="clear" slot="end" aria-label="Show/hide">
     <ion-icon name="navigate-outline"></ion-icon>
   </ion-button>
 </ion-input>

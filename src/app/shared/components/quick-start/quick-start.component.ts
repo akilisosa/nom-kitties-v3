@@ -61,6 +61,7 @@ export class QuickStartComponent implements OnInit {
       simpleCode: this.newGameForm.value.simpleCode,
       hostID,
       status: RoomStatus.WAITING,
+      updatedAt: new Date().toISOString(),
     })
 
     this.router.navigate(['online-game', 'room', this.newGameForm.value.simpleCode]);

@@ -5,11 +5,13 @@ import { createRoom } from 'src/graphQLSlim/slim-mutations';
 import { roomsByPublicAndCreatedAt, roomsBySimpleCode } from 'src/graphql/queries';
 import { CreateRoomInput, ModelSortDirection, RoomStatus } from 'src/API';
 import { onUpdateRoom } from 'src/graphql/subscriptions';
+import { deleteRoom, joinRoom } from 'src/graphql/mutations';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
+
 
 
 
@@ -60,11 +62,6 @@ export class RoomService {
         query: roomsBySimpleCode,
         variables: {
           simpleCode: code,
-          // filter: {
-          //   status: {
-          //     eq: RoomStatus.WAITING
-          //   }
-          //   }
           }
       })).data.roomsBySimpleCode.items[0]
       this.room.next(res);
@@ -93,6 +90,30 @@ export class RoomService {
     return res;
 
   }
+
+  async deleteRoom(id: any) {
+    const client = generateClient({authMode: 'userPool'})
+    let res;
+    try {
+      res = await client.graphql({
+        query:deleteRoom,
+        variables: {
+          input: {
+            id
+          }
+        }
+      })
+      this.removeFromRoomList(id);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  removeFromRoomList(id: string) {
+    const currentList = this.roomList.getValue();
+    const newList = currentList.filter((room) => room.id !== id);
+    this.roomList.next(newList);
+  }
   
 
   async getRoomList() {
@@ -104,6 +125,11 @@ export class RoomService {
         variables: {
           public: 'true',
           sortDirection: ModelSortDirection.DESC,
+          filter: {
+            status: {
+              eq: RoomStatus.WAITING
+            }
+          }
         }
       })
       console.log('room list', res);
@@ -112,6 +138,23 @@ export class RoomService {
       console.log(error);
     }
     return res;
+  }
+
+  async joinRoom(roomID: string){
+    const client = generateClient({authMode: 'userPool'})
+    let res;
+    try {
+      res = await client.graphql({
+        query: joinRoom,
+        variables: {
+          roomID
+        }
+      })
+      console.log('room', res);
+      this.room.next(res.data.joinRoom);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   
