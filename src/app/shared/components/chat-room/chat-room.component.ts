@@ -8,17 +8,17 @@ import awsconfig from '../../../../aws-exports';
 
 
 
-// Amplify.configure({
-//   ...awsconfig,
-//   "API": {
-//     "Events": {
-//       "endpoint": "https://hjzp2ynwl5ehvjn4lihvnesplm.appsync-api.us-east-1.amazonaws.com/event",
-//       "region": "us-east-1",
-//       "defaultAuthMode": "apiKey",
-//       "apiKey": "da2-bmfwwzhplnb4bg3vdkik62u3ba"
-//     }
-//   }
-// });
+Amplify.configure({
+  ...awsconfig,
+  // "API": {
+  //   "Events": {
+  //     "endpoint": "https://hjzp2ynwl5ehvjn4lihvnesplm.appsync-api.us-east-1.amazonaws.com/event",
+  //     "region": "us-east-1",
+  //     "defaultAuthMode": "apiKey",
+  //     "apiKey": "da2-bmfwwzhplnb4bg3vdkik62u3ba"
+  //   }
+  // }
+});
 
 
 @Component({
@@ -36,22 +36,22 @@ export class ChatRoomComponent  implements OnInit {
 
   ngOnInit() {
     //this.subscribeToChat(id);
-    this.subscribeToChat(this.id);
+  //  this.subscribeToChat(this.id);
   }
 
-  async sendMessage(id: string, message: string) {
-    const channel = await events.post(`/gameroom/${id}`, message);
-  }
+//   async sendMessage(id: string, message: string) {
+//     const channel = await events.post(`/gameroom/${id}`, message);
+//   }
 
-  async subscribeToChat(id: string) {
-    const channel = await events.connect(`/gameroom/${id}`);
-    return channel.subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: (error) => {
-        console.error(error);
-      },
-  })
-}
+//   async subscribeToChat(id: string) {
+//     const channel = await events.connect(`/gameroom/${id}`);
+//     return channel.subscribe({
+//       next: (data) => {
+//         console.log(data);
+//       },
+//       error: (error) => {
+//         console.error(error);
+//       },
+//   })
+// }
 }
