@@ -14,6 +14,7 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
   @Input() playerList: any[] = []
   @Input() isModalOpen: boolean = false;
   
+  
   animationFrameId:any;
   ctx: any;
   canvas: any;
@@ -148,8 +149,9 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
           this.player1.y = Math.max(0, Math.min(newP1Y, 600 - this.player1.size));
         }
 
-        this.ctx.fillStyle = '#ebebd3';
         this.ctx.clearRect(0, 0, this.size, this.size);
+        this.ctx.fillStyle = '#ebebd3';
+        this.ctx.fillRect(0, 0, this.size, this.size);
     
 
     // const kittySize = this.getScaledValue(50);
@@ -175,6 +177,9 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
 
     // Main body outline (cls-3)
     this.ctx.fillStyle = color;
+    this.ctx.strokeStyle = 'black'; // Add stroke color
+    this.ctx.lineWidth = 0.5; 
+
     this.ctx.beginPath();
     this.ctx.moveTo(8.6, 1.52);
     this.ctx.bezierCurveTo(11, 1.05, 14.3, 6.83, 15.71, 8.51);
