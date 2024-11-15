@@ -13,7 +13,7 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
   @Input() size: number = 500;
   @Input() playerList: any[] = []
   @Input() isModalOpen: boolean = false;
-  
+
   
   animationFrameId:any;
   ctx: any;
@@ -85,9 +85,6 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges() {
-    // console.log('room', this.room);
-    // console.log('size', this.size);
-    // console.log('playerList', this.playerList);
     if (this.size > 0) {
       this.drawCanvas();
     }
