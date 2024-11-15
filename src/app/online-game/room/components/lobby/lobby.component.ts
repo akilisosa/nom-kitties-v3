@@ -12,7 +12,7 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
   @Input() room: any;
   @Input() size: number = 500;
   @Input() playerList: any[] = []
-
+  @Input() isModalOpen: boolean = false;
   
   animationFrameId:any;
   ctx: any;
@@ -62,6 +62,7 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
   // Add keyboard event listeners
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
+    if(this.isModalOpen) return;
     // Check if the pressed key exists in our keys object
     if (event.key in this.keys) {
       event.preventDefault(); // Prevent default browser scrolling
@@ -71,6 +72,7 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
 
   @HostListener('window:keyup', ['$event'])
   handleKeyUp(event: KeyboardEvent) {
+    if(this.isModalOpen) return;
     // Check if the released key exists in our keys object
     if (event.key in this.keys) {
       event.preventDefault();

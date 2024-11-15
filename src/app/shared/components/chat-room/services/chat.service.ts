@@ -13,11 +13,11 @@ export class ChatService {
 
   constructor() { }
 
-  private sendChat(roomID: string, message: string, color: string, sender: string) {
+  async sendChat(roomID: string, message: string, color: string, sender: string) {
    const client = generateClient({authMode: 'userPool'});
     let res; 
     try {
-      res = client.graphql({
+      res = await client.graphql({
         query: sendChatMessage,
         variables: {
           roomID,

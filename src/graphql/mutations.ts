@@ -183,11 +183,6 @@ export const sendChatMessage = /* GraphQL */ `mutation SendChatMessage(
     color: $color
   ) {
     roomID
-    message
-    sender
-    color
-    timestamp
-    __typename
   }
 }
 ` as GeneratedMutation<
