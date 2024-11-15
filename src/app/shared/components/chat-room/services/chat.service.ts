@@ -38,7 +38,6 @@ export class ChatService {
   }
 
  async getLastMessages(id: string) {
-  console.log('does me')
     const client = generateClient({authMode: 'userPool'});
     let res;
     try {

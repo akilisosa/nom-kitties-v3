@@ -22,7 +22,6 @@ export class UserService {
   async getUser() {
     const client = generateClient({ authMode: 'userPool' });
     const owner = (await this.authService.getCurrentUser()).userId;
-    console.log('owner', owner);
     let res;
 
     try {
@@ -64,7 +63,7 @@ export class UserService {
         }
       })).data.updateUser;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     return res;
   }

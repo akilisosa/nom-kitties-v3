@@ -32,9 +32,9 @@ export class LocalGamePage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.form.valueChanges.subscribe((value) => {
-      console.log(value);
-    });
+    // this.form.valueChanges.subscribe((value) => {
+    //   console.log(value);
+    // });
   }
 
   ngOnDestroy() {

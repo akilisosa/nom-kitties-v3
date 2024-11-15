@@ -22,9 +22,7 @@ export class AuthPage implements OnInit {
 
 
   listen() {
-    console.log('listening')
     this.authListener = Hub.listen('auth', ({ payload }: { payload: any }) => {
-      console.log('payload:', payload);
       switch (payload.event) {
         case 'signedIn':
           this.router.navigate(['/dashboard']);

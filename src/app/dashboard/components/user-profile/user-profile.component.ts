@@ -48,7 +48,6 @@ export class UserProfileComponent  implements OnInit {
     this.subscription.add(
       this.userService.userShared().subscribe((user) => {
         if (user) {
-          console.log('user', user)
           this.form.patchValue(user);
           this.cdr.detectChanges();
         }

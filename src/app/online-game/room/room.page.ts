@@ -78,7 +78,6 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
 
   subscribeToRoom() {
     this.subscription.add(this.roomService.room.subscribe((room) => {
-      console.log('room', room)
       if(room) {
         this.room = room;
        // this.playerList = room.players.items;
@@ -93,7 +92,6 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
  async leaveRoom() {
     const userID = (await this.authService.getCurrentUser()).userId;
     if(this.room.owner === userID){
-      console.log('owner leaving room', this.room.id);
       await this.roomService.deleteRoom(this.room.id);
     }
 

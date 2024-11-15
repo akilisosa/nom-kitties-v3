@@ -28,14 +28,10 @@ export class AppComponent {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       const urlSegments = this.router.url.split('/');
-      console.log('URL segments:', urlSegments, urlSegments.length);
       let lastSegment = urlSegments[urlSegments.length - 1];
       if(urlSegments[urlSegments.length - 2] === 'room') {
         lastSegment = urlSegments[urlSegments.length - 2];
       }
-
-      console.log('Current page:', lastSegment);
-
       // Update your title here
       this.updateTitle(lastSegment);
     });
@@ -43,14 +39,12 @@ export class AppComponent {
     // Method 2: Using ActivatedRoute
     this.route.url.subscribe(segments => {
       const lastSegment = segments[segments.length - 1]?.path;
-      console.log('Current route segment:', lastSegment);
       // Update your title here
       this.updateTitle(lastSegment);
     });
   }
 
   private updateTitle(segment: string) {
-    console.log('Segment:', segment);
     if(segment === 'local-game') {
       this.title = 'Local Game'
     } else if(segment === 'online-game') {

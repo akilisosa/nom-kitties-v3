@@ -21,13 +21,11 @@ export class OnlineGamePage implements OnInit {
 
   subscribeToRoomList() {
     this.subscription.add(this.roomService.roomListShared().subscribe((roomList) => {
-      console.log('room list', roomList);
       this.roomList = [...roomList];
     }));
   }
 
  async joinGame(game: any) {
-    console.log('join game', game);
    const success =  await this.roomService.joinRoom(game.id);
   await this.router.navigate(['online-game', 'room', game.simpleCode]);
   }
