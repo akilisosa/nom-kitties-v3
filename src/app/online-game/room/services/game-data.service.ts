@@ -72,7 +72,7 @@ export class GameDataService {
           console.log('Subscription acknowledged:', data);
           break;
         case 'data':
-          this.messageSubject.next(data.payload);
+          this.messageSubject.next(data);
           break;
         case 'error':
           console.error('WebSocket error:', data);
