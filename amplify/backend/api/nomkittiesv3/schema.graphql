@@ -10,37 +10,40 @@ type Kitty @model {
   
 }
 
-type User @model @auth(rules: [{ allow: owner }, { allow: public, operations: [read] }]) {
-  id: ID!  @auth(rules: [{ allow: owner, operations: [create, update, read, delete] },  { allow: public, operations: [read] }])
-  name: String! @auth(rules: [{ allow: owner, operations: [create, update, read, delete] },  { allow: public, operations: [read] }])
+type User @model @auth(rules: [{ allow: owner }, {allow: private, operations:[read]} { allow: public, operations: [read] }]) {
+  id: ID!
+  name: String! 
   color: String
   type: String
   room: Room @hasOne
-  owner: String! @index(name: "owner") @auth(rules: [{ allow: owner, operations: [create, read, delete] }, { allow: public, operations: [read] }])
+  owner: String! @index(name: "owner")
 }
 
 type Room @model @auth(rules: [{ allow: owner }, 
-{ allow: public, operations: [read] }]) {
-  id: ID!
-  public: String @index(name: "public", sortKeyFields: ["createdAt"]) 
-  mode: String @index(name: "mode")
-  rounds: Int
-  timeLimit: Int
-  currentPlayers: Int 
-  roomLimit: Int
-  inGame: Boolean 
-  status: RoomStatus! @index(name: "status")
-  full: Boolean
-  createdAt: AWSDateTime
-  playing: [String]
-  players: [String]
-  tempPlayers: [String]
-  simpleCode: String @index(name: "simpleCode")
-  host: User @belongsTo(fields: ["hostID"])
-  hostID: ID! @index(name: "hostID")
-  currentRound: Int
-  updatedAt: AWSDateTime
-  gameData: GameData @hasOne
+  { allow: private, operations: [read, update] },
+{ allow: public, operations: [read] }]) 
+
+{
+  id: ID! @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  public: String @index(name: "public", sortKeyFields: ["createdAt"])  @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  mode: String @index(name: "mode") @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  rounds: Int @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  timeLimit: Int @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  currentPlayers: Int  @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  roomLimit: Int @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  inGame: Boolean @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  status: RoomStatus! @index(name: "status") @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  full: Boolean @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  createdAt: AWSDateTime @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  playing: [String] @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  players: [String] @auth(rules: [{ allow: owner },  { allow: private, operations: [read, update] },{ allow: public, operations: [read] }]) 
+  tempPlayers: [String] @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  simpleCode: String @index(name: "simpleCode") @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  host: User @belongsTo(fields: ["hostID"]) @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  hostID: ID! @index(name: "hostID") @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  currentRound: Int @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  updatedAt: AWSDateTime @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
+  gameData: GameData @hasOne @auth(rules: [{ allow: owner },  { allow: private, operations: [read] },{ allow: public, operations: [read] }]) 
 }
 
 enum RoomStatus {
@@ -52,7 +55,8 @@ enum RoomStatus {
 
 type GameData @model @auth(rules: [
   { allow: owner },
-  { allow: private, operations: [read, update] }
+  { allow: private, operations: [read] }
+  { allow: public, operations: [read] }
 ]) {
   id: ID!
   roomID: ID! @index(name: "byRoom")
@@ -75,18 +79,6 @@ type TempPlayer @model @auth(rules: [
   type: String
 }
 
-type PlayerPosition @model 
-  @auth(rules: [
-    { allow: owner },
-    { allow: public}
-  ]) {
-  id: ID!
-  roomID: ID! @index(name: "byRoom")
-  playerID: String!
-  x: Float!
-  y: Float!
-  timestamp: AWSTimestamp!
-}
 
 type Message @model @auth(rules: [
   { allow: owner },
@@ -111,18 +103,18 @@ enum MessageType {
 
 type Subscription {
   onCreateMessageByRoomID(roomID: ID!): Message @aws_subscribe(mutations: ["createMessage"])
-  onMessageReceived(roomID: ID!): ChatMessage @aws_subscribe(mutations: ["sendChatMessage"])
+  onMessageReceived(roomID: ID!): ChatMessage @aws_subscribe(mutations: ["sendChatMessage"]) # delete
 }
 
 type Mutation {
-  joinRoom(roomID: ID!): Room
+  joinRoom(roomID: ID!): Room #delete
   leaveRoom(roomID: ID!): Room
   updateGameState(roomID: ID!, gameData: GameStateInput!): Room
   
-  sendChatMessage(roomID: ID!, message: String!, sender: String!, color: String!): ChatMessage
+  sendChatMessage(roomID: ID!, message: String!, sender: String!, color: String!): ChatMessage #delete
 }
 
-type ChatMessage {
+type ChatMessage { # delete
   roomID: ID!
   message: String!
   sender: String!

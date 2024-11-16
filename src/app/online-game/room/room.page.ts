@@ -10,11 +10,11 @@ import { RoomService } from 'src/app/shared/services/room.service';
   styleUrls: ['./room.page.scss'],
 })
 export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
-@ViewChild('lobbyContainer', { static: true }) lobbyContainer!: ElementRef;
+  @ViewChild('lobbyContainer', { static: true }) lobbyContainer!: ElementRef;
 
   size = 10;
 
-  room: any=  {simpleCode: '------', id: ''};  
+  room: any = { simpleCode: '------', id: '' };
   playerList = [];
 
   lobbyHeight = 0;
@@ -27,10 +27,10 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
 
 
   subscription = new Subscription();
-  constructor(private roomService: RoomService, 
-    private router: Router, 
+  constructor(private roomService: RoomService,
+    private router: Router,
     private cdr: ChangeDetectorRef,
-  private authService: AuthService) { }
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.getRoom();
@@ -40,16 +40,14 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
   ngAfterViewChecked() {
     const width = this.lobbyContainer.nativeElement.clientWidth;
     const height = this.lobbyContainer.nativeElement.clientHeight;
-    if(this.lobbyWidth !== width || this.lobbyHeight !== height){
+    if (this.lobbyWidth !== width || this.lobbyHeight !== height) {
       this.lobbyWidth = width;
       this.lobbyHeight = height;
-      
+
       this.gameSize = Math.min(width, height) - 5;
-      if(this.gameSize > 600) {
+      if (this.gameSize > 600) {
         this.gameSize = 600;
       }
-
-      console.log('gamesize', this.gameSize);
       this.cdr.detectChanges();
     }
 
@@ -67,22 +65,58 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
 
   }
 
+  async joinGame(id: string, curr: any) {
+
+    if(!this.room?.id){
+      return;
+    }
+    // check if player is already in the room
+
+    if (this.room.players?.some((player: any) => player === curr.userId)) {
+      console.log('already joined');
+      return;
+    }
+
+    if (this.room.players?.length >= this.room.roomLimit) {
+      return;
+    }
+
+    const players = this.room.players || [];
+
+    players.push(curr.userId);
+    this.roomService.updateRoomWithPlayer(id,players );
+  }
+
   async getRoom() {
     const urlSegments = this.router.url.split('/');
     let lastSegment = urlSegments[urlSegments.length - 1];
+    const curr = await this.authService.getCurrentUser();
     this.room = await this.roomService.getRoomByCode(lastSegment);
-    if(!this.room) {
+    if (!this.room) {
       this.roomDoesntExist();
-    } else {
-    this.subscription.add(this.roomService.subscribeToRoomByID(this.room.id));
     }
+    else {
+      this.subscription.add(this.roomService.subscribeToRoomByID(this.room.id))
+      
+      // .subscribe((room) => {
+      //   this.room = { ...room };
+      //   console.log('room', room);
+      // });
+    }
+    // if (this.room.owner !== curr.userId) {
+    //   await this.joinGame(this.room.id, curr);
+    // }
   }
 
   subscribeToRoom() {
-    this.subscription.add(this.roomService.room.subscribe((room) => {
-      if(room) {
+    this.subscription.add(this.roomService.room.subscribe(async (room) => {
+      if (room) {
         this.room = room;
-       // this.playerList = room.players.items;
+        const curr = await this.authService.getCurrentUser();
+    if (this.room.owner !== curr.userId) {
+      console.log('room', room);
+      await this.joinGame(this.room.id, curr);
+    }
       }
     }));
   }
@@ -91,14 +125,20 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
     this.router.navigate(['/online-game']);
   }
 
- async leaveRoom() {
+  async leaveRoom() {
     const userID = (await this.authService.getCurrentUser()).userId;
-    if(this.room.owner === userID){
+    if (this.room.owner === userID) {
       await this.roomService.deleteRoom(this.room.id);
     }
 
-
-   await this.router.navigate(['/online-game']);
+    if(this.room.owner !== userID) {
+      const players = this.room.players?.items || [];
+      const newPlayers = players.filter((player: any) => player !== userID);
+      this.roomService.updateRoomWithPlayer(this.room.id, newPlayers);
     }
+
+
+    await this.router.navigate(['/online-game']);
+  }
 
 }

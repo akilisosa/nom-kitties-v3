@@ -26,7 +26,7 @@ export class OnlineGamePage implements OnInit {
   }
 
  async joinGame(game: any) {
-   const success =  await this.roomService.joinRoom(game.id);
+  // const success =  await this.roomService.joinRoom(game.id);
   await this.router.navigate(['online-game', 'room', game.simpleCode]);
   }
   

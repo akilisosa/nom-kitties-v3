@@ -455,67 +455,6 @@ export type DeleteTempPlayerInput = {
   id: string,
 };
 
-export type CreatePlayerPositionInput = {
-  id?: string | null,
-  roomID: string,
-  playerID: string,
-  x: number,
-  y: number,
-  timestamp: number,
-};
-
-export type ModelPlayerPositionConditionInput = {
-  roomID?: ModelIDInput | null,
-  playerID?: ModelStringInput | null,
-  x?: ModelFloatInput | null,
-  y?: ModelFloatInput | null,
-  timestamp?: ModelIntInput | null,
-  and?: Array< ModelPlayerPositionConditionInput | null > | null,
-  or?: Array< ModelPlayerPositionConditionInput | null > | null,
-  not?: ModelPlayerPositionConditionInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  owner?: ModelStringInput | null,
-};
-
-export type ModelFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type PlayerPosition = {
-  __typename: "PlayerPosition",
-  id: string,
-  roomID: string,
-  playerID: string,
-  x: number,
-  y: number,
-  timestamp: number,
-  createdAt: string,
-  updatedAt: string,
-  owner?: string | null,
-};
-
-export type UpdatePlayerPositionInput = {
-  id: string,
-  roomID?: string | null,
-  playerID?: string | null,
-  x?: number | null,
-  y?: number | null,
-  timestamp?: number | null,
-};
-
-export type DeletePlayerPositionInput = {
-  id: string,
-};
-
 export type ModelKittyFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -533,35 +472,6 @@ export type ModelKittyConnection = {
   items:  Array<Kitty | null >,
   nextToken?: string | null,
 };
-
-export type ModelGameDataFilterInput = {
-  id?: ModelIDInput | null,
-  roomID?: ModelIDInput | null,
-  activePlayers?: ModelStringInput | null,
-  scores?: ModelStringInput | null,
-  currentRound?: ModelIntInput | null,
-  roundData?: ModelStringInput | null,
-  lastUpdated?: ModelStringInput | null,
-  gameStarted?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelGameDataFilterInput | null > | null,
-  or?: Array< ModelGameDataFilterInput | null > | null,
-  not?: ModelGameDataFilterInput | null,
-  owner?: ModelStringInput | null,
-};
-
-export type ModelGameDataConnection = {
-  __typename: "ModelGameDataConnection",
-  items:  Array<GameData | null >,
-  nextToken?: string | null,
-};
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
@@ -582,6 +492,12 @@ export type ModelUserConnection = {
   items:  Array<User | null >,
   nextToken?: string | null,
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelRoomFilterInput = {
   id?: ModelIDInput | null,
@@ -625,6 +541,29 @@ export type ModelStringKeyConditionInput = {
   beginsWith?: string | null,
 };
 
+export type ModelGameDataFilterInput = {
+  id?: ModelIDInput | null,
+  roomID?: ModelIDInput | null,
+  activePlayers?: ModelStringInput | null,
+  scores?: ModelStringInput | null,
+  currentRound?: ModelIntInput | null,
+  roundData?: ModelStringInput | null,
+  lastUpdated?: ModelStringInput | null,
+  gameStarted?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelGameDataFilterInput | null > | null,
+  or?: Array< ModelGameDataFilterInput | null > | null,
+  not?: ModelGameDataFilterInput | null,
+  owner?: ModelStringInput | null,
+};
+
+export type ModelGameDataConnection = {
+  __typename: "ModelGameDataConnection",
+  items:  Array<GameData | null >,
+  nextToken?: string | null,
+};
+
 export type ModelTempPlayerFilterInput = {
   id?: ModelIDInput | null,
   playerID?: ModelStringInput | null,
@@ -641,27 +580,6 @@ export type ModelTempPlayerFilterInput = {
 export type ModelTempPlayerConnection = {
   __typename: "ModelTempPlayerConnection",
   items:  Array<TempPlayer | null >,
-  nextToken?: string | null,
-};
-
-export type ModelPlayerPositionFilterInput = {
-  id?: ModelIDInput | null,
-  roomID?: ModelIDInput | null,
-  playerID?: ModelStringInput | null,
-  x?: ModelFloatInput | null,
-  y?: ModelFloatInput | null,
-  timestamp?: ModelIntInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
-  and?: Array< ModelPlayerPositionFilterInput | null > | null,
-  or?: Array< ModelPlayerPositionFilterInput | null > | null,
-  not?: ModelPlayerPositionFilterInput | null,
-  owner?: ModelStringInput | null,
-};
-
-export type ModelPlayerPositionConnection = {
-  __typename: "ModelPlayerPositionConnection",
-  items:  Array<PlayerPosition | null >,
   nextToken?: string | null,
 };
 
@@ -727,34 +645,6 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionGameDataFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  roomID?: ModelSubscriptionIDInput | null,
-  activePlayers?: ModelSubscriptionStringInput | null,
-  scores?: ModelSubscriptionStringInput | null,
-  currentRound?: ModelSubscriptionIntInput | null,
-  roundData?: ModelSubscriptionStringInput | null,
-  lastUpdated?: ModelSubscriptionStringInput | null,
-  gameStarted?: ModelSubscriptionStringInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionGameDataFilterInput | null > | null,
-  or?: Array< ModelSubscriptionGameDataFilterInput | null > | null,
-  owner?: ModelStringInput | null,
-};
-
-export type ModelSubscriptionIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  in?: Array< number | null > | null,
-  notIn?: Array< number | null > | null,
-};
-
 export type ModelSubscriptionUserFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
@@ -793,9 +683,37 @@ export type ModelSubscriptionRoomFilterInput = {
   owner?: ModelStringInput | null,
 };
 
+export type ModelSubscriptionIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  in?: Array< number | null > | null,
+  notIn?: Array< number | null > | null,
+};
+
 export type ModelSubscriptionBooleanInput = {
   ne?: boolean | null,
   eq?: boolean | null,
+};
+
+export type ModelSubscriptionGameDataFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  roomID?: ModelSubscriptionIDInput | null,
+  activePlayers?: ModelSubscriptionStringInput | null,
+  scores?: ModelSubscriptionStringInput | null,
+  currentRound?: ModelSubscriptionIntInput | null,
+  roundData?: ModelSubscriptionStringInput | null,
+  lastUpdated?: ModelSubscriptionStringInput | null,
+  gameStarted?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
+  updatedAt?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionGameDataFilterInput | null > | null,
+  or?: Array< ModelSubscriptionGameDataFilterInput | null > | null,
+  owner?: ModelStringInput | null,
 };
 
 export type ModelSubscriptionTempPlayerFilterInput = {
@@ -808,32 +726,6 @@ export type ModelSubscriptionTempPlayerFilterInput = {
   updatedAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionTempPlayerFilterInput | null > | null,
   or?: Array< ModelSubscriptionTempPlayerFilterInput | null > | null,
-};
-
-export type ModelSubscriptionPlayerPositionFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  roomID?: ModelSubscriptionIDInput | null,
-  playerID?: ModelSubscriptionStringInput | null,
-  x?: ModelSubscriptionFloatInput | null,
-  y?: ModelSubscriptionFloatInput | null,
-  timestamp?: ModelSubscriptionIntInput | null,
-  createdAt?: ModelSubscriptionStringInput | null,
-  updatedAt?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionPlayerPositionFilterInput | null > | null,
-  or?: Array< ModelSubscriptionPlayerPositionFilterInput | null > | null,
-  owner?: ModelStringInput | null,
-};
-
-export type ModelSubscriptionFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  in?: Array< number | null > | null,
-  notIn?: Array< number | null > | null,
 };
 
 export type ModelSubscriptionMessageFilterInput = {
@@ -1628,66 +1520,6 @@ export type DeleteTempPlayerMutation = {
   } | null,
 };
 
-export type CreatePlayerPositionMutationVariables = {
-  input: CreatePlayerPositionInput,
-  condition?: ModelPlayerPositionConditionInput | null,
-};
-
-export type CreatePlayerPositionMutation = {
-  createPlayerPosition?:  {
-    __typename: "PlayerPosition",
-    id: string,
-    roomID: string,
-    playerID: string,
-    x: number,
-    y: number,
-    timestamp: number,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type UpdatePlayerPositionMutationVariables = {
-  input: UpdatePlayerPositionInput,
-  condition?: ModelPlayerPositionConditionInput | null,
-};
-
-export type UpdatePlayerPositionMutation = {
-  updatePlayerPosition?:  {
-    __typename: "PlayerPosition",
-    id: string,
-    roomID: string,
-    playerID: string,
-    x: number,
-    y: number,
-    timestamp: number,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type DeletePlayerPositionMutationVariables = {
-  input: DeletePlayerPositionInput,
-  condition?: ModelPlayerPositionConditionInput | null,
-};
-
-export type DeletePlayerPositionMutation = {
-  deletePlayerPosition?:  {
-    __typename: "PlayerPosition",
-    id: string,
-    roomID: string,
-    playerID: string,
-    x: number,
-    y: number,
-    timestamp: number,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
 export type GetKittyQueryVariables = {
   id: string,
 };
@@ -1721,106 +1553,6 @@ export type ListKittiesQuery = {
       type?: string | null,
       createdAt: string,
       updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetGameDataQueryVariables = {
-  id: string,
-};
-
-export type GetGameDataQuery = {
-  getGameData?:  {
-    __typename: "GameData",
-    id: string,
-    roomID: string,
-    activePlayers: Array< string | null >,
-    scores?: string | null,
-    currentRound?: number | null,
-    roundData?: string | null,
-    lastUpdated?: string | null,
-    gameStarted?: string | null,
-    room?:  {
-      __typename: "Room",
-      id: string,
-      public?: string | null,
-      mode?: string | null,
-      rounds?: number | null,
-      timeLimit?: number | null,
-      currentPlayers?: number | null,
-      roomLimit?: number | null,
-      inGame?: boolean | null,
-      status: RoomStatus,
-      full?: boolean | null,
-      createdAt?: string | null,
-      playing?: Array< string | null > | null,
-      players?: Array< string | null > | null,
-      tempPlayers?: Array< string | null > | null,
-      simpleCode?: string | null,
-      hostID: string,
-      currentRound?: number | null,
-      updatedAt?: string | null,
-      roomGameDataId?: string | null,
-      owner?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type ListGameDataQueryVariables = {
-  filter?: ModelGameDataFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListGameDataQuery = {
-  listGameData?:  {
-    __typename: "ModelGameDataConnection",
-    items:  Array< {
-      __typename: "GameData",
-      id: string,
-      roomID: string,
-      activePlayers: Array< string | null >,
-      scores?: string | null,
-      currentRound?: number | null,
-      roundData?: string | null,
-      lastUpdated?: string | null,
-      gameStarted?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GameDataByRoomIDQueryVariables = {
-  roomID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelGameDataFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type GameDataByRoomIDQuery = {
-  gameDataByRoomID?:  {
-    __typename: "ModelGameDataConnection",
-    items:  Array< {
-      __typename: "GameData",
-      id: string,
-      roomID: string,
-      activePlayers: Array< string | null >,
-      scores?: string | null,
-      currentRound?: number | null,
-      roundData?: string | null,
-      lastUpdated?: string | null,
-      gameStarted?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2199,6 +1931,106 @@ export type RoomsByHostIDQuery = {
   } | null,
 };
 
+export type GetGameDataQueryVariables = {
+  id: string,
+};
+
+export type GetGameDataQuery = {
+  getGameData?:  {
+    __typename: "GameData",
+    id: string,
+    roomID: string,
+    activePlayers: Array< string | null >,
+    scores?: string | null,
+    currentRound?: number | null,
+    roundData?: string | null,
+    lastUpdated?: string | null,
+    gameStarted?: string | null,
+    room?:  {
+      __typename: "Room",
+      id: string,
+      public?: string | null,
+      mode?: string | null,
+      rounds?: number | null,
+      timeLimit?: number | null,
+      currentPlayers?: number | null,
+      roomLimit?: number | null,
+      inGame?: boolean | null,
+      status: RoomStatus,
+      full?: boolean | null,
+      createdAt?: string | null,
+      playing?: Array< string | null > | null,
+      players?: Array< string | null > | null,
+      tempPlayers?: Array< string | null > | null,
+      simpleCode?: string | null,
+      hostID: string,
+      currentRound?: number | null,
+      updatedAt?: string | null,
+      roomGameDataId?: string | null,
+      owner?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListGameDataQueryVariables = {
+  filter?: ModelGameDataFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListGameDataQuery = {
+  listGameData?:  {
+    __typename: "ModelGameDataConnection",
+    items:  Array< {
+      __typename: "GameData",
+      id: string,
+      roomID: string,
+      activePlayers: Array< string | null >,
+      scores?: string | null,
+      currentRound?: number | null,
+      roundData?: string | null,
+      lastUpdated?: string | null,
+      gameStarted?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GameDataByRoomIDQueryVariables = {
+  roomID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelGameDataFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type GameDataByRoomIDQuery = {
+  gameDataByRoomID?:  {
+    __typename: "ModelGameDataConnection",
+    items:  Array< {
+      __typename: "GameData",
+      id: string,
+      roomID: string,
+      activePlayers: Array< string | null >,
+      scores?: string | null,
+      currentRound?: number | null,
+      roundData?: string | null,
+      lastUpdated?: string | null,
+      gameStarted?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetTempPlayerQueryVariables = {
   id: string,
 };
@@ -2234,77 +2066,6 @@ export type ListTempPlayersQuery = {
       type?: string | null,
       createdAt: string,
       updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetPlayerPositionQueryVariables = {
-  id: string,
-};
-
-export type GetPlayerPositionQuery = {
-  getPlayerPosition?:  {
-    __typename: "PlayerPosition",
-    id: string,
-    roomID: string,
-    playerID: string,
-    x: number,
-    y: number,
-    timestamp: number,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type ListPlayerPositionsQueryVariables = {
-  filter?: ModelPlayerPositionFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListPlayerPositionsQuery = {
-  listPlayerPositions?:  {
-    __typename: "ModelPlayerPositionConnection",
-    items:  Array< {
-      __typename: "PlayerPosition",
-      id: string,
-      roomID: string,
-      playerID: string,
-      x: number,
-      y: number,
-      timestamp: number,
-      createdAt: string,
-      updatedAt: string,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type PlayerPositionsByRoomIDQueryVariables = {
-  roomID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelPlayerPositionFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type PlayerPositionsByRoomIDQuery = {
-  playerPositionsByRoomID?:  {
-    __typename: "ModelPlayerPositionConnection",
-    items:  Array< {
-      __typename: "PlayerPosition",
-      id: string,
-      roomID: string,
-      playerID: string,
-      x: number,
-      y: number,
-      timestamp: number,
-      createdAt: string,
-      updatedAt: string,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -2461,141 +2222,6 @@ export type OnDeleteKittySubscription = {
     type?: string | null,
     createdAt: string,
     updatedAt: string,
-  } | null,
-};
-
-export type OnCreateGameDataSubscriptionVariables = {
-  filter?: ModelSubscriptionGameDataFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnCreateGameDataSubscription = {
-  onCreateGameData?:  {
-    __typename: "GameData",
-    id: string,
-    roomID: string,
-    activePlayers: Array< string | null >,
-    scores?: string | null,
-    currentRound?: number | null,
-    roundData?: string | null,
-    lastUpdated?: string | null,
-    gameStarted?: string | null,
-    room?:  {
-      __typename: "Room",
-      id: string,
-      public?: string | null,
-      mode?: string | null,
-      rounds?: number | null,
-      timeLimit?: number | null,
-      currentPlayers?: number | null,
-      roomLimit?: number | null,
-      inGame?: boolean | null,
-      status: RoomStatus,
-      full?: boolean | null,
-      createdAt?: string | null,
-      playing?: Array< string | null > | null,
-      players?: Array< string | null > | null,
-      tempPlayers?: Array< string | null > | null,
-      simpleCode?: string | null,
-      hostID: string,
-      currentRound?: number | null,
-      updatedAt?: string | null,
-      roomGameDataId?: string | null,
-      owner?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnUpdateGameDataSubscriptionVariables = {
-  filter?: ModelSubscriptionGameDataFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnUpdateGameDataSubscription = {
-  onUpdateGameData?:  {
-    __typename: "GameData",
-    id: string,
-    roomID: string,
-    activePlayers: Array< string | null >,
-    scores?: string | null,
-    currentRound?: number | null,
-    roundData?: string | null,
-    lastUpdated?: string | null,
-    gameStarted?: string | null,
-    room?:  {
-      __typename: "Room",
-      id: string,
-      public?: string | null,
-      mode?: string | null,
-      rounds?: number | null,
-      timeLimit?: number | null,
-      currentPlayers?: number | null,
-      roomLimit?: number | null,
-      inGame?: boolean | null,
-      status: RoomStatus,
-      full?: boolean | null,
-      createdAt?: string | null,
-      playing?: Array< string | null > | null,
-      players?: Array< string | null > | null,
-      tempPlayers?: Array< string | null > | null,
-      simpleCode?: string | null,
-      hostID: string,
-      currentRound?: number | null,
-      updatedAt?: string | null,
-      roomGameDataId?: string | null,
-      owner?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnDeleteGameDataSubscriptionVariables = {
-  filter?: ModelSubscriptionGameDataFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnDeleteGameDataSubscription = {
-  onDeleteGameData?:  {
-    __typename: "GameData",
-    id: string,
-    roomID: string,
-    activePlayers: Array< string | null >,
-    scores?: string | null,
-    currentRound?: number | null,
-    roundData?: string | null,
-    lastUpdated?: string | null,
-    gameStarted?: string | null,
-    room?:  {
-      __typename: "Room",
-      id: string,
-      public?: string | null,
-      mode?: string | null,
-      rounds?: number | null,
-      timeLimit?: number | null,
-      currentPlayers?: number | null,
-      roomLimit?: number | null,
-      inGame?: boolean | null,
-      status: RoomStatus,
-      full?: boolean | null,
-      createdAt?: string | null,
-      playing?: Array< string | null > | null,
-      players?: Array< string | null > | null,
-      tempPlayers?: Array< string | null > | null,
-      simpleCode?: string | null,
-      hostID: string,
-      currentRound?: number | null,
-      updatedAt?: string | null,
-      roomGameDataId?: string | null,
-      owner?: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 
@@ -2893,6 +2519,141 @@ export type OnDeleteRoomSubscription = {
   } | null,
 };
 
+export type OnCreateGameDataSubscriptionVariables = {
+  filter?: ModelSubscriptionGameDataFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateGameDataSubscription = {
+  onCreateGameData?:  {
+    __typename: "GameData",
+    id: string,
+    roomID: string,
+    activePlayers: Array< string | null >,
+    scores?: string | null,
+    currentRound?: number | null,
+    roundData?: string | null,
+    lastUpdated?: string | null,
+    gameStarted?: string | null,
+    room?:  {
+      __typename: "Room",
+      id: string,
+      public?: string | null,
+      mode?: string | null,
+      rounds?: number | null,
+      timeLimit?: number | null,
+      currentPlayers?: number | null,
+      roomLimit?: number | null,
+      inGame?: boolean | null,
+      status: RoomStatus,
+      full?: boolean | null,
+      createdAt?: string | null,
+      playing?: Array< string | null > | null,
+      players?: Array< string | null > | null,
+      tempPlayers?: Array< string | null > | null,
+      simpleCode?: string | null,
+      hostID: string,
+      currentRound?: number | null,
+      updatedAt?: string | null,
+      roomGameDataId?: string | null,
+      owner?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateGameDataSubscriptionVariables = {
+  filter?: ModelSubscriptionGameDataFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateGameDataSubscription = {
+  onUpdateGameData?:  {
+    __typename: "GameData",
+    id: string,
+    roomID: string,
+    activePlayers: Array< string | null >,
+    scores?: string | null,
+    currentRound?: number | null,
+    roundData?: string | null,
+    lastUpdated?: string | null,
+    gameStarted?: string | null,
+    room?:  {
+      __typename: "Room",
+      id: string,
+      public?: string | null,
+      mode?: string | null,
+      rounds?: number | null,
+      timeLimit?: number | null,
+      currentPlayers?: number | null,
+      roomLimit?: number | null,
+      inGame?: boolean | null,
+      status: RoomStatus,
+      full?: boolean | null,
+      createdAt?: string | null,
+      playing?: Array< string | null > | null,
+      players?: Array< string | null > | null,
+      tempPlayers?: Array< string | null > | null,
+      simpleCode?: string | null,
+      hostID: string,
+      currentRound?: number | null,
+      updatedAt?: string | null,
+      roomGameDataId?: string | null,
+      owner?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteGameDataSubscriptionVariables = {
+  filter?: ModelSubscriptionGameDataFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteGameDataSubscription = {
+  onDeleteGameData?:  {
+    __typename: "GameData",
+    id: string,
+    roomID: string,
+    activePlayers: Array< string | null >,
+    scores?: string | null,
+    currentRound?: number | null,
+    roundData?: string | null,
+    lastUpdated?: string | null,
+    gameStarted?: string | null,
+    room?:  {
+      __typename: "Room",
+      id: string,
+      public?: string | null,
+      mode?: string | null,
+      rounds?: number | null,
+      timeLimit?: number | null,
+      currentPlayers?: number | null,
+      roomLimit?: number | null,
+      inGame?: boolean | null,
+      status: RoomStatus,
+      full?: boolean | null,
+      createdAt?: string | null,
+      playing?: Array< string | null > | null,
+      players?: Array< string | null > | null,
+      tempPlayers?: Array< string | null > | null,
+      simpleCode?: string | null,
+      hostID: string,
+      currentRound?: number | null,
+      updatedAt?: string | null,
+      roomGameDataId?: string | null,
+      owner?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
 export type OnCreateTempPlayerSubscriptionVariables = {
   filter?: ModelSubscriptionTempPlayerFilterInput | null,
 };
@@ -2941,66 +2702,6 @@ export type OnDeleteTempPlayerSubscription = {
     type?: string | null,
     createdAt: string,
     updatedAt: string,
-  } | null,
-};
-
-export type OnCreatePlayerPositionSubscriptionVariables = {
-  filter?: ModelSubscriptionPlayerPositionFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnCreatePlayerPositionSubscription = {
-  onCreatePlayerPosition?:  {
-    __typename: "PlayerPosition",
-    id: string,
-    roomID: string,
-    playerID: string,
-    x: number,
-    y: number,
-    timestamp: number,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnUpdatePlayerPositionSubscriptionVariables = {
-  filter?: ModelSubscriptionPlayerPositionFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnUpdatePlayerPositionSubscription = {
-  onUpdatePlayerPosition?:  {
-    __typename: "PlayerPosition",
-    id: string,
-    roomID: string,
-    playerID: string,
-    x: number,
-    y: number,
-    timestamp: number,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnDeletePlayerPositionSubscriptionVariables = {
-  filter?: ModelSubscriptionPlayerPositionFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnDeletePlayerPositionSubscription = {
-  onDeletePlayerPosition?:  {
-    __typename: "PlayerPosition",
-    id: string,
-    roomID: string,
-    playerID: string,
-    x: number,
-    y: number,
-    timestamp: number,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
   } | null,
 };
 

@@ -5,7 +5,7 @@ import { createRoom } from 'src/graph-slim/slim-mutations';
 import { roomsByPublicAndCreatedAt, roomsBySimpleCode } from 'src/graphql/queries';
 import { CreateRoomInput, ModelSortDirection, RoomStatus } from 'src/API';
 import { onUpdateRoom } from 'src/graphql/subscriptions';
-import { deleteRoom, joinRoom } from 'src/graphql/mutations';
+import { deleteRoom, joinRoom, updateRoom } from 'src/graphql/mutations';
 
 @Injectable({
   providedIn: 'root'
@@ -31,55 +31,51 @@ export class RoomService {
   }
 
   subscribeToRoomByID(id: any) {
-    const client = generateClient({authMode: 'apiKey'})
-    let res;
-    try {
-      client.graphql({
-        query: onUpdateRoom,
-        variables: {
-          owner: id
-
+    const client = generateClient({ authMode: 'apiKey' })
+    return client.graphql({
+      query: onUpdateRoom,
+      variables: {
+        filter: {
+          id: {
+            eq: id
+          }
+        }
       }
     }).subscribe({
-        next: (event) => {
-          console.log(event);
-          this.room.next(event.data.onUpdateRoom);
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      })
-    } catch(error) {
-      console.log(error);
-    }
+      next: ({ data }) => {
+        console.log('room subscription', data);
+        this.room.next(data.onUpdateRoom);
+      },
+      error: (error) => console.warn(error)
+    });
   }
 
   async getRoomByCode(code: string) {
-    const client = generateClient({authMode: 'apiKey'})
-    let res; 
+    const client = generateClient({ authMode: 'apiKey' })
+    let res;
     try {
       res = (await client.graphql({
         query: roomsBySimpleCode,
         variables: {
           simpleCode: code,
-          }
+        }
       })).data.roomsBySimpleCode.items[0]
       this.room.next(res);
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
     return res;
   }
 
   async createNewRoom(room: CreateRoomInput) {
-    const client = generateClient({authMode: 'userPool'})
+    const client = generateClient({ authMode: 'userPool' })
     let res;
     try {
-    res = (await client.graphql({
-      query: createRoom,
-      variables: {
-        input: room
-      }
+      res = (await client.graphql({
+        query: createRoom,
+        variables: {
+          input: room
+        }
       })).data.createRoom;
       console.log('room created', res);
       this.room.next(res);
@@ -92,11 +88,11 @@ export class RoomService {
   }
 
   async deleteRoom(id: any) {
-    const client = generateClient({authMode: 'userPool'})
+    const client = generateClient({ authMode: 'userPool' })
     let res;
     try {
       res = await client.graphql({
-        query:deleteRoom,
+        query: deleteRoom,
         variables: {
           input: {
             id
@@ -114,10 +110,10 @@ export class RoomService {
     const newList = currentList.filter((room) => room.id !== id);
     this.roomList.next(newList);
   }
-  
+
 
   async getRoomList() {
-    const client = generateClient({authMode: 'apiKey'})
+    const client = generateClient({ authMode: 'apiKey' })
     let res;
     try {
       res = await client.graphql({
@@ -140,18 +136,23 @@ export class RoomService {
     return res;
   }
 
-  async joinRoom(roomID: string){
-    const client = generateClient({authMode: 'userPool'})
+  async updateRoomWithPlayer(roomID: string, players: any[]) {
+    const client = generateClient({ authMode: 'userPool' })
     let res;
     try {
       res = await client.graphql({
-        query: joinRoom,
+        query: updateRoom,
         variables: {
-          roomID
+          input: {
+            id: roomID,
+            players,
+          }
         }
       })
-      console.log('joinroom', res.data.joinRoom);
-      this.room.next(res.data.joinRoom);
+      console.log('joinroom', res.data.updateRoom);
+      this.room.next(res.data.updateRoom
+
+      );
     } catch (error) {
       console.log(error);
     }
@@ -159,5 +160,5 @@ export class RoomService {
     return res;
   }
 
-  
+
 }

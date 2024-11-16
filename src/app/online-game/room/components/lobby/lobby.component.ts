@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { get } from 'aws-amplify/api';
 
 @Component({
   selector: 'app-lobby',

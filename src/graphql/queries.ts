@@ -43,113 +43,6 @@ export const listKitties = /* GraphQL */ `query ListKitties(
   APITypes.ListKittiesQueryVariables,
   APITypes.ListKittiesQuery
 >;
-export const getGameData = /* GraphQL */ `query GetGameData($id: ID!) {
-  getGameData(id: $id) {
-    id
-    roomID
-    activePlayers
-    scores
-    currentRound
-    roundData
-    lastUpdated
-    gameStarted
-    room {
-      id
-      public
-      mode
-      rounds
-      timeLimit
-      currentPlayers
-      roomLimit
-      inGame
-      status
-      full
-      createdAt
-      playing
-      players
-      tempPlayers
-      simpleCode
-      hostID
-      currentRound
-      updatedAt
-      roomGameDataId
-      owner
-      __typename
-    }
-    createdAt
-    updatedAt
-    owner
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetGameDataQueryVariables,
-  APITypes.GetGameDataQuery
->;
-export const listGameData = /* GraphQL */ `query ListGameData(
-  $filter: ModelGameDataFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listGameData(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      roomID
-      activePlayers
-      scores
-      currentRound
-      roundData
-      lastUpdated
-      gameStarted
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListGameDataQueryVariables,
-  APITypes.ListGameDataQuery
->;
-export const gameDataByRoomID = /* GraphQL */ `query GameDataByRoomID(
-  $roomID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelGameDataFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  gameDataByRoomID(
-    roomID: $roomID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      roomID
-      activePlayers
-      scores
-      currentRound
-      roundData
-      lastUpdated
-      gameStarted
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GameDataByRoomIDQueryVariables,
-  APITypes.GameDataByRoomIDQuery
->;
 export const getUser = /* GraphQL */ `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
@@ -554,6 +447,113 @@ export const roomsByHostID = /* GraphQL */ `query RoomsByHostID(
   APITypes.RoomsByHostIDQueryVariables,
   APITypes.RoomsByHostIDQuery
 >;
+export const getGameData = /* GraphQL */ `query GetGameData($id: ID!) {
+  getGameData(id: $id) {
+    id
+    roomID
+    activePlayers
+    scores
+    currentRound
+    roundData
+    lastUpdated
+    gameStarted
+    room {
+      id
+      public
+      mode
+      rounds
+      timeLimit
+      currentPlayers
+      roomLimit
+      inGame
+      status
+      full
+      createdAt
+      playing
+      players
+      tempPlayers
+      simpleCode
+      hostID
+      currentRound
+      updatedAt
+      roomGameDataId
+      owner
+      __typename
+    }
+    createdAt
+    updatedAt
+    owner
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetGameDataQueryVariables,
+  APITypes.GetGameDataQuery
+>;
+export const listGameData = /* GraphQL */ `query ListGameData(
+  $filter: ModelGameDataFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listGameData(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      roomID
+      activePlayers
+      scores
+      currentRound
+      roundData
+      lastUpdated
+      gameStarted
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListGameDataQueryVariables,
+  APITypes.ListGameDataQuery
+>;
+export const gameDataByRoomID = /* GraphQL */ `query GameDataByRoomID(
+  $roomID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelGameDataFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  gameDataByRoomID(
+    roomID: $roomID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      roomID
+      activePlayers
+      scores
+      currentRound
+      roundData
+      lastUpdated
+      gameStarted
+      createdAt
+      updatedAt
+      owner
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GameDataByRoomIDQueryVariables,
+  APITypes.GameDataByRoomIDQuery
+>;
 export const getTempPlayer = /* GraphQL */ `query GetTempPlayer($id: ID!) {
   getTempPlayer(id: $id) {
     id
@@ -593,84 +593,6 @@ export const listTempPlayers = /* GraphQL */ `query ListTempPlayers(
 ` as GeneratedQuery<
   APITypes.ListTempPlayersQueryVariables,
   APITypes.ListTempPlayersQuery
->;
-export const getPlayerPosition = /* GraphQL */ `query GetPlayerPosition($id: ID!) {
-  getPlayerPosition(id: $id) {
-    id
-    roomID
-    playerID
-    x
-    y
-    timestamp
-    createdAt
-    updatedAt
-    owner
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.GetPlayerPositionQueryVariables,
-  APITypes.GetPlayerPositionQuery
->;
-export const listPlayerPositions = /* GraphQL */ `query ListPlayerPositions(
-  $filter: ModelPlayerPositionFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listPlayerPositions(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      roomID
-      playerID
-      x
-      y
-      timestamp
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.ListPlayerPositionsQueryVariables,
-  APITypes.ListPlayerPositionsQuery
->;
-export const playerPositionsByRoomID = /* GraphQL */ `query PlayerPositionsByRoomID(
-  $roomID: ID!
-  $sortDirection: ModelSortDirection
-  $filter: ModelPlayerPositionFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  playerPositionsByRoomID(
-    roomID: $roomID
-    sortDirection: $sortDirection
-    filter: $filter
-    limit: $limit
-    nextToken: $nextToken
-  ) {
-    items {
-      id
-      roomID
-      playerID
-      x
-      y
-      timestamp
-      createdAt
-      updatedAt
-      owner
-      __typename
-    }
-    nextToken
-    __typename
-  }
-}
-` as GeneratedQuery<
-  APITypes.PlayerPositionsByRoomIDQueryVariables,
-  APITypes.PlayerPositionsByRoomIDQuery
 >;
 export const getMessage = /* GraphQL */ `query GetMessage($id: ID!) {
   getMessage(id: $id) {
