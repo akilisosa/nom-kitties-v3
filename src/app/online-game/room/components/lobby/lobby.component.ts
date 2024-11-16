@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { GameEventService } from '../../services/game-event.service';
 import { Subscription } from 'rxjs';
+import { GameDataService } from '../../services/game-data.service';
 
 @Component({
   selector: 'app-lobby',
@@ -58,7 +59,7 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
 
 
   subscription = new Subscription();
-  constructor(private gameEvents: GameEventService) {
+  constructor(private gameEvents: GameEventService, private gameDataService: GameDataService) {
     this.gameLoop = this.gameLoop.bind(this);
   }
 
@@ -84,6 +85,31 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+
+    const messages = this.gameDataService.connect();
+
+    this.subscription = messages.subscribe({
+      next: (message) => {
+        console.log('Received message:', message);
+      },
+      error: (error) => {
+        console.error('Error:', error);
+      }
+    });
+
+    setTimeout(() => {
+      this.gameDataService.subscribe('/default/messages');
+    }, 1000); 
+
+    setTimeout(() => {
+      this.gameDataService.publishEvent('/default/messages', {
+        type: 'PLAYER_MOVE',
+        playerId: 'this.playerId',
+        position: 'wow' 
+      });
+    }, 2000);
+    
+
   this.gameEvents.subscribeToEvents('/default/channel/')
     .subscribe({
       next: (event: any) => {
