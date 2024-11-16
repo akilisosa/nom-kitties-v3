@@ -5,50 +5,63 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-item>
+    <div style="width:100%; display:flex; flex-direction:row; justify-content: space-between;">
+      <ion-button slot="start" routerLink="/dashboard">
+        Login
+      </ion-button>
 
+      <ion-button color="timer">
+        <p style="font-size: 1.5rem; margin:0rem"><strong>{{timer}}</strong></p>
+      </ion-button>
 
-  <div style="display:flex; flex-direction: row; justify-content: space-between; margin:2rem">
-    <div style="width:25%">
+      <ion-button [ngClass]="{'seethrough': active}" slot="end" (click)="settingsView = !settingsView" color="medium">
+        <p style="font-size: 1.5rem; margin:0rem"><ion-icon name="settings-outline"></ion-icon></p>
+      </ion-button>
+    </div>
+  </ion-item>
+
+  <div style="display:flex; flex-direction: row; justify-content: space-between; margin:1rem">
+    <div style="max-width:25%"  class="players">
       <app-character-select [score]="player1Score"
         (colorChange)="colorChange($event, 'player1')"></app-character-select>
     </div>
 
-    <div>
-      <div style="display:flex;  flex-direction: row; padding: .25rem; position: relative; width: 100%; justify-content: center;">
-        <ion-button color="timer" style="display:flex; justify-self: center; align-self: cen;">
-          <p style="font-size: 1.5rem; margin:0rem"><strong>{{timer}}</strong></p>
-        </ion-button>
-      
-        <ion-button *ngIf="!active" (click)="settingsView = !settingsView" color="medium" 
-        style="display:flex; justify-self: end;">
-          <p style="font-size: 1.5rem; margin:0rem"><ion-icon name="settings-outline"></ion-icon></p>
-        </ion-button>
+    <div #lobbyContainer id="lobbyContainer" style="width:100%; height: 80vh;">
 
+      <div *ngIf="!active && !settingsView"
+        style="width:100%; height: 75vh; background-color: bisque; display: flex; justify-content: center; align-items: center;">
 
-      </div>
-
-      <div *ngIf="!active && !settingsView" style="width: 600px; height:600px; background-color: bisque; display: flex; justify-content: center; align-items: center;">
-        <div *ngIf="player1Score === 0 && player2Score === 0">
+        <div style="width:100%;" *ngIf="player1Score === 0 && player2Score === 0">
           <p style="text-align: center; font-size: 2rem; margin: 0rem;">Nom Kitties!</p>
           <p style="text-align: center; font-size: 1rem; margin: .25rem;">A game of strategy and skill.</p>
           <p style="text-align: center; font-size: 1rem; margin: 0rem;">Collect the most treats to win!</p>
         </div>
 
-        <div *ngIf="(player1Score !== 0 || player2Score !== 0) && timer === 0">
+        <div style="width:100%;" *ngIf="(player1Score !== 0 || player2Score !== 0) && timer === 0">
           <p style="text-align: center; font-size: 1.5rem; margin: 0rem;">Winner!</p>
-          <p *ngIf="player1Score !== player2Score" style="text-align: center; font-size: 1.5rem; margin: 0rem;">{{ player1Score > player2Score ? 'Player1': 'Player2'}}</p>
-          <p *ngIf="player1Score === player2Score" style="text-align: center; font-size: 1.5rem; margin: 0rem;">Everyone!</p>
-      
+          <p *ngIf="player1Score !== player2Score" style="text-align: center; font-size: 1.5rem; margin: 0rem;">{{
+            player1Score > player2Score ? 'Player1': 'Player2'}}</p>
+          <p *ngIf="player1Score === player2Score" style="text-align: center; font-size: 1.5rem; margin: 0rem;">
+            Everyone!</p>
+        </div>
+      </div>
+        <div *ngIf="active" style="width:100%; display:flex; justify-content: center;">
+          <app-gameboard [size]="gameSize" [ngClass]="{'hide': !active, 'show': active }" [active]="active"
+            (scoreChanges)="scoreChange($event)" [player1Color]="player1Color" [player2Color]="player2Color"
+            [treatsOnFloor]="form.controls.treatsOnFloor.value || 0"></app-gameboard>
         </div>
 
-      </div>
+     
 
-      <div *ngIf="!active && settingsView" style="width: 600px; height:600px; background-color: bisque; display: flex; justify-content: center; align-items: center;">
+      <div *ngIf="!active && settingsView"
+        style="width:100%; height: 80vh; background-color: bisque; display: flex; justify-content: center; align-items: center;">
+
 
         <div>
           <form [formGroup]="form">
             <ion-item>
-              
+
               <ion-select formControlName="timeLimit" label="Time Limit" labelPlacement="floating" placeholder="30s">
                 <ion-select-option value="10">10s</ion-select-option>
                 <ion-select-option value="15">15s</ion-select-option>
@@ -59,22 +72,20 @@
               </ion-select>
             </ion-item>
 
-              <!-- TODO  rounds? -->
+            <!-- TODO  rounds? -->
 
-              <!-- treats on the floor-->
-               
-              <ion-item>
-                <ion-input labelPlacement="floating" label="Treats on the Floor"  max="10" formControlName="treatsOnFloor" type="number"></ion-input>
-              </ion-item>
+            <!-- treats on the floor-->
+
+            <ion-item>
+              <ion-input labelPlacement="floating" label="Treats on the Floor" max="10" formControlName="treatsOnFloor"
+                type="number"></ion-input>
+            </ion-item>
           </form>
 
         </div>
       </div>
 
       <!-- Gameboard -->
-      <app-gameboard [ngClass]="{'hide': !active, 'show': active }" [active]="active" (scoreChanges)="scoreChange($event)" [player1Color]="player1Color"
-        [player2Color]="player2Color" [treatsOnFloor]="form.controls.treatsOnFloor.value || 0"></app-gameboard>
-
       <div style="width: 100%; padding-inline:1rem; text-align: center; ">
         <ion-button expand="block" *ngIf="!active && (timer ===30 || timer <1)" (click)="startGame()">
           <div>
@@ -100,7 +111,7 @@
     </div>
 
 
-    <div style="width:25%">
+    <div style="max-width:25%" class="players">
       <app-character-select2 [score]="player2Score"
         (colorChange)="colorChange($event, 'player2')"></app-character-select2>
     </div>

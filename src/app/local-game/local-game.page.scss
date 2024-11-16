@@ -14,6 +14,10 @@
     display: block;
 }
 
+.seethrough {
+  opacity: 0;
+}
+
 .square-container {
     width: 100%;
     max-width: 600px; /* Optional: limits maximum size */
@@ -36,4 +40,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .players {
+    display:none
+  }
+
+   @media screen and (min-width: 600px) {
+    .players {
+      display:block
+    }
+    
   }

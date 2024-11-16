@@ -13,4 +13,20 @@
     display: block;
     margin: 0 auto;
   }
+
+  .button-container {
+    width:25%; margin:auto
+  }
   
+  @media screen and (max-width: 576px) {
+    .button-container {
+      width:100%; 
+    }
+  }
+
+
+  @media screen and (min-width: 576px) and (max-width: 768px) {
+    .button-container {
+      width:60%; 
+    }
+  }

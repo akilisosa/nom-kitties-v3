@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,9 @@ import { FormControl, FormGroup } from '@angular/forms';
   templateUrl: './local-game.page.html',
   styleUrls: ['./local-game.page.scss'],
 })
-export class LocalGamePage implements OnInit, OnDestroy, AfterViewInit {
+export class LocalGamePage implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
+  @ViewChild('lobbyContainer', { static: true }) lobbyContainer!: ElementRef;
+
 
   active: boolean = false;
   timer: number = 30;
@@ -26,7 +28,13 @@ export class LocalGamePage implements OnInit, OnDestroy, AfterViewInit {
     treatsOnFloor: new FormControl(3),
   });
 
-  constructor() { }
+  lobbyHeight = 0;
+  lobbyWidth = 0;
+  gameSize = 0;
+
+
+
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
   }
@@ -37,29 +45,46 @@ export class LocalGamePage implements OnInit, OnDestroy, AfterViewInit {
     // });
   }
 
+  ngAfterViewChecked() {
+    const width = this.lobbyContainer.nativeElement.clientWidth;
+    const height = this.lobbyContainer.nativeElement.clientHeight;
+    if(this.lobbyWidth !== width || this.lobbyHeight !== height){
+      this.lobbyWidth = width;
+      this.lobbyHeight = height;
+      console.log('gamesize', this.gameSize);
+      this.gameSize = Math.min(width, height) - 5;
+      if(this.gameSize > 600) {
+        this.gameSize = 600;
+        console.log('gamesize', this.gameSize);
+      }
+      this.cdr.detectChanges();
+    }
+
+  }
+
   ngOnDestroy() {
     this.clearGameInterval();
   }
 
   @HostListener('window:keydown.space', ['$event'])
-handleSpaceBar(event: KeyboardEvent) {
-  event.preventDefault(); // Prevent page scrolling
-  if(this.active) {
-    this.pauseGame()
-  } else {
-    if(this.timer === 30 || this.timer < 1) {
- 
-      this.startGame()
+  handleSpaceBar(event: KeyboardEvent) {
+    event.preventDefault(); // Prevent page scrolling
+    if (this.active) {
+      this.pauseGame()
     } else {
-    this.resumeGame()
+      if (this.timer === 30 || this.timer < 1) {
+
+        this.startGame()
+      } else {
+        this.resumeGame()
+      }
     }
+    // Add your spacebar logic here
   }
-  // Add your spacebar logic here
-}
 
   scoreChange(event: any) {
-   this.player1Score= event.player1Score
-   this.player2Score = event.player2Score
+    this.player1Score = event.player1Score
+    this.player2Score = event.player2Score
   }
 
   colorChange(event: any, player: string) {
@@ -71,11 +96,11 @@ handleSpaceBar(event: KeyboardEvent) {
 
   }
 
-   startGame() {
+  startGame() {
     this.active = true;
     this.timer = Number(this.form.controls.timeLimit.value) || 30;
     this.player1Score = 0;
-    this.player2Score = 0; 
+    this.player2Score = 0;
     this.isPaused = false;
     this.settingsView = false;
     this.startTimer();

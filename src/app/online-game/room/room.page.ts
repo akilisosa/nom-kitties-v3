@@ -48,6 +48,8 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
       if(this.gameSize > 600) {
         this.gameSize = 600;
       }
+
+      console.log('gamesize', this.gameSize);
       this.cdr.detectChanges();
     }
 

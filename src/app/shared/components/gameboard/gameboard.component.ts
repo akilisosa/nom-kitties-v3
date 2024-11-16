@@ -23,6 +23,9 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Output() scoreChanges = new EventEmitter<{ player1Score: number, player2Score: number }>();
 
+  @Input() size = 0;
+  standard = 600;
+
   player1 = {
     x: 100,
     y: 100,
@@ -117,16 +120,39 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
     this.canvas = this.gameCanvas.nativeElement;
     this.ctx = this.canvas.getContext('2d');
     this.ctx.fillStyle = 'gray';
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.fillRect(0, 0, this.size, this.size);
     this.gameLoop();
   }
 
   checkCollision(obj1: any, obj2: any): boolean {
-    return (obj1.x < obj2.x + obj2.width &&
-      obj1.x + obj1.width > obj2.x &&
-      obj1.y < obj2.y + obj2.height &&
-      obj1.y + obj1.height > obj2.y);
+    
+    const scaledObj1 = {
+      x: obj1.x,
+      y: obj1.y,
+      width: this.getScaledValue(obj1.width),
+      height: this.getScaledValue(obj1.height)
+    };
+  
+    const scaledObj2 = {
+      x: obj2.x,
+      y: obj2.y,
+      width: this.getScaledValue(obj2.width),
+      height: this.getScaledValue(obj2.height)
+    };
+  
+    return (scaledObj1.x < scaledObj2.x + scaledObj2.width &&
+            scaledObj1.x + scaledObj1.width > scaledObj2.x &&
+            scaledObj1.y < scaledObj2.y + scaledObj2.height &&
+            scaledObj1.y + scaledObj1.height > scaledObj2.y);
   }
+  //   console.log('obj1', obj1)
+  //   console.log('obj2', obj2)
+
+  //   return (obj1.x < obj2.x + obj2.width &&
+  //     obj1.x + obj1.width > obj2.x &&
+  //     obj1.y < obj2.y + obj2.height &&
+  //     obj1.y + obj1.height > obj2.y);
+  // }
 
   // Check if an object collides with any obstacle
   checkObstacleCollisions(obj: any, newX: number, newY: number): boolean {
@@ -138,10 +164,11 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
     let position: any;
     let validPosition = false;
 
+
     while (!validPosition) {
       position = {
-        x: Math.random() * (this.canvas.width - 2 * this.COLLECTIBLE_RADIUS) + this.COLLECTIBLE_RADIUS,
-        y: Math.random() * (this.canvas.height - 2 * this.COLLECTIBLE_RADIUS) + this.COLLECTIBLE_RADIUS
+        x: Math.random() * (this.size - 2 * this.COLLECTIBLE_RADIUS) + this.COLLECTIBLE_RADIUS,
+        y: Math.random() * (this.size - 2 * this.COLLECTIBLE_RADIUS) + this.COLLECTIBLE_RADIUS
       };
 
       // Check if position overlaps with any obstacles
@@ -193,6 +220,12 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
     });
   }
 
+  getScaledValue(originalValue: number): number {
+    const scaleFactor = this.size / 600;
+    return originalValue * scaleFactor;
+  }
+
+
   gameLoop() {
 
 
@@ -213,8 +246,8 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
       { ...this.player1, x: newP1X, y: newP1Y },
       this.player2
     ) && !p1CollidesWithObstacle) {
-      this.player1.x = Math.max(0, Math.min(newP1X, this.canvas.width - this.player1.width));
-      this.player1.y = Math.max(0, Math.min(newP1Y, this.canvas.height - this.player1.height));
+      this.player1.x = Math.max(0, Math.min(newP1X, this.size - this.player1.width));
+      this.player1.y = Math.max(0, Math.min(newP1Y, this.size - this.player1.height));
     }
 
     // Update player 2 position if no collisions
@@ -222,8 +255,8 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
       this.player1,
       { ...this.player2, x: newP2X, y: newP2Y }
     ) && !p2CollidesWithObstacle) {
-      this.player2.x = Math.max(0, Math.min(newP2X, this.canvas.width - this.player2.width));
-      this.player2.y = Math.max(0, Math.min(newP2Y, this.canvas.height - this.player2.height));
+      this.player2.x = Math.max(0, Math.min(newP2X, this.size - this.player2.width));
+      this.player2.y = Math.max(0, Math.min(newP2Y, this.size - this.player2.height));
     }
 
     // Check for collectible collection
@@ -240,16 +273,22 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
 
 
     // Clear canvas
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.clearRect(0, 0, this.size, this.size);
 
     // Draw background
     this.ctx.fillStyle = 'lightgray';
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.fillRect(0, 0, this.size, this.size);
 
     // Draw obstacles
+
+    const scale = this.size / this.standard;
+
     this.obstacles.forEach(obstacle => {
+      this.ctx.save();
+      this.ctx.scale(scale, scale);
       this.ctx.fillStyle = obstacle.color;
       this.ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+      this.ctx.restore();
     });
 
     // Draw collectibles
@@ -282,6 +321,10 @@ export class GameboardComponent implements OnInit, OnChanges, AfterViewInit {
   
 drawKitty(x: number, y: number, width: number, height: number, color: string = '#040607') {
   // Scale factor to maintain proportions
+  width = this.getScaledValue(width);
+  x = this.getScaledValue(x);
+  y = this.getScaledValue(y);
+
   const scale = width / 50; // SVG viewBox is 50x50
   
   this.ctx.save();
