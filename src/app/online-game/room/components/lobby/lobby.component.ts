@@ -1,4 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { GameEventService } from '../../services/game-event.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lobby',
@@ -55,7 +57,8 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
   ];
 
 
-  constructor() {
+  subscription = new Subscription();
+  constructor(private gameEvents: GameEventService) {
     this.gameLoop = this.gameLoop.bind(this);
   }
 
@@ -81,7 +84,64 @@ export class LobbyComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit() {
+  this.gameEvents.subscribeToEvents('/default/channel/')
+    .subscribe({
+      next: (event: any) => {
+        // Handle incoming game events
+        console.log('Received event:', event);
+        
+        // Example: Handle different event types
+        switch(event.message.type) {
+          case 'PLAYER_MOVE':
+            this.handlePlayerMove(event.message);
+            break;
+          case 'COLLECT_ITEM':
+            this.handleItemCollection(event.message);
+            break;
+          // Add other event types as needed
+        }
+      },
+      error: (error) => {
+        console.error('Subscription error:', error);
+      }
+    });
+
+    setTimeout(() => {
+      this.sendPlayerMove(100, 100);
+          }, 1000);
   }
+
+    // Example of sending a player movement event
+    sendPlayerMove(x: number, y: number) {
+      this.gameEvents.publishEvent('/default/channel/', {
+        type: 'PLAYER_MOVE',
+        playerId: 'this.playerId',
+        position: { x, y }
+      });
+    }
+  
+    // Example of sending a collect item event
+    sendCollectItem(itemId: string) {
+      this.gameEvents.publishEvent('/default/channel/', {
+        type: 'COLLECT_ITEM',
+        playerId: 'this.playerId',
+        itemId: itemId
+      });
+    }
+  
+    private handlePlayerMove(event: any) {
+      // if (event.playerId !== this.playerId) {
+      //   // Update other player's position
+      //   // this.updateOtherPlayerPosition(event.position);
+      // }
+    }
+  
+    private handleItemCollection(event: any) {
+      // if (event.playerId !== this.playerId) {
+      //   // Update item collection state
+      //   // this.removeCollectedItem(event.itemId);
+      // }
+    }
 
   ngOnChanges() {
     if (this.size > 0) {

@@ -67,7 +67,7 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
 
   async joinGame(id: string, curr: any) {
 
-    if(!this.room?.id){
+    if (!this.room?.id) {
       return;
     }
     // check if player is already in the room
@@ -84,7 +84,7 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
     const players = this.room.players || [];
 
     players.push(curr.userId);
-    this.roomService.updateRoomWithPlayer(id,players );
+    this.roomService.updateRoomWithPlayer(id, players);
   }
 
   async getRoom() {
@@ -97,7 +97,7 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
     }
     else {
       this.subscription.add(this.roomService.subscribeToRoomByID(this.room.id))
-      
+
       // .subscribe((room) => {
       //   this.room = { ...room };
       //   console.log('room', room);
@@ -113,10 +113,10 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
       if (room) {
         this.room = room;
         const curr = await this.authService.getCurrentUser();
-    if (this.room.owner !== curr.userId) {
-      console.log('room', room);
-      await this.joinGame(this.room.id, curr);
-    }
+        if (this.room.owner !== curr.userId) {
+          console.log('room', room);
+          await this.joinGame(this.room.id, curr);
+        }
       }
     }));
   }
@@ -131,7 +131,7 @@ export class RoomPage implements OnInit, OnDestroy, AfterViewChecked {
       await this.roomService.deleteRoom(this.room.id);
     }
 
-    if(this.room.owner !== userID) {
+    if (this.room.owner !== userID) {
       const players = this.room.players?.items || [];
       const newPlayers = players.filter((player: any) => player !== userID);
       this.roomService.updateRoomWithPlayer(this.room.id, newPlayers);
